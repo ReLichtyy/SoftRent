@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automation Catalog | SoftRent</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="gradient"></div>
+    <canvas id="paper"></canvas>
+    <header class="site-header">
+      <div class="header-left-capsule">
+        <div class="header-brand">
+          <a href="index.html" class="brand-link">
+            <img src="assets/images/softrent_logo_transparent.png" alt="SoftRent Logo" class="brand-img">
+          </a>
+        </div>
+        
+        <span class="brand-divider" aria-hidden="true"></span>
+
+        <nav class="main-nav" id="nav-links" aria-label="Main navigation">
+          <a href="services.html" class="nav-link" aria-label="Services">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            <span class="nav-label">Services</span>
+          </a>
+
+          <a href="membership.html" class="nav-link" aria-label="Membership">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            <span class="nav-label">Membership</span>
+          </a>
+
+          <!-- Separador vertical entre secciones -->
+          <span class="nav-divider" aria-hidden="true"></span>
+
+          <a href="index.html#security" class="nav-link" aria-label="Security">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+            <span class="nav-label">Security</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="header-user-bubble">
+        <button id="theme-toggle" class="btn-theme" aria-label="Toggle theme" style="background: none; border: 1px solid var(--color-border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff;">☀️</button>
+        
+        <button class="profile-btn" type="button" aria-label="Profile">
+          <span class="profile-avatar">S</span>
+        </button>
+
+        <div class="plan-chip-wrapper">
+          <span id="plan-badge" class="plan-badge">No plan</span>
+        </div>
+
+        <button id="change-plan-btn" class="change-plan-btn" type="button">
+          Change
+        </button>
+        
+        <button class="btn-menu" id="btn-menu" aria-label="Open menu" style="background: none; border: none; font-size: 1.5rem; color: #fff;">☰</button>
+      </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="section-header" style="margin-top: 3rem;">
+                <h1>Automation Catalog</h1>
+                <p>Explore and select the tools that will transform your business.</p>
+            </div>
+
+            <div id="resumen-plan" class="resumen-panel">
+                <div class="resumen-stat">
+                    <h4>Active Plan</h4>
+                    <p id="resumen-plan-nombre">Loading...</p>
+                </div>
+                <div class="resumen-stat">
+                    <h4>Selections</h4>
+                    <p><span id="resumen-usadas">0</span> / <span id="resumen-max">0</span></p>
+                </div>
+                <div class="resumen-stat">
+                    <h4>Projected Savings</h4>
+                    <p><span id="resumen-ahorro">0</span>h/week</p>
+                </div>
+            </div>
+
+            <div class="catalogo-controls">
+                <input type="text" id="cat-search" class="search-input" placeholder="Search by name or description..." style="flex: 1; min-width: 250px;">
+                
+                <select id="cat-categoria" class="select-input">
+                    <option value="All">All categories</option>
+                    <option value="Sales">Sales</option>
+                    <option value="Support">Support</option>
+                    <option value="Finance">Finance</option>
+                    <option value="Inventory">Inventory</option>
+                    <option value="Operations">Operations</option>
+                </select>
+                
+                <select id="cat-estado" class="select-input">
+                    <option value="All">All states</option>
+                    <option value="Recommended">Recommended</option>
+                    <option value="Available">Available</option>
+                    <option value="Evaluating">Evaluating</option>
+                </select>
+            </div>
+
+            <div class="feed-meta">
+                <span id="catalogo-counter">Loading catalog...</span>
+            </div>
+            
+            <div id="catalogo-empty-state" class="empty-state" style="display: none;">
+                No automations found for this search.
+            </div>
+
+            <div id="catalogo-grid" class="catalogo-grid">
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="footer-logo-link">
+                    <img src="assets/images/softrent_logo_transparent.png" alt="SoftRent" class="footer-logo-img">
+                </a>
+                <p class="footer-tagline">Automate your business. Save time. Scale smarter.</p>
+            </div>
+            <div class="footer-nav">
+                <h4>Navigate</h4>
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="membership.html">Membership</a>
+                <a href="index.html#security">Security</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Connect</h4>
+                <a href="mailto:hello@softrent.io">hello@softrent.io</a>
+                <p>Built for small businesses.<br>Powered by automation.</p>
+            </div>
+        </div>
+        <div class="container footer-bottom-bar">
+            <span>&copy; 2026 SoftRent. All rights reserved.</span>
+            <span class="footer-made">Made with care for your business</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/planes.js" defer></script>
+    <script src="js/catalogo.js" defer></script>
+    <script src="js/main.js" defer></script>
+    <script src="js/background.js" defer></script>
+</body>
+</html>

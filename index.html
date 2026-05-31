@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SoftRent — Automate your business</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div id="gradient"></div>
+    <canvas id="paper"></canvas>
+    <header class="site-header">
+      <div class="header-left-capsule">
+        <div class="header-brand">
+          <a href="index.html" class="brand-link">
+            <img src="assets/images/softrent_logo_transparent.png" alt="SoftRent Logo" class="brand-img">
+          </a>
+        </div>
+        
+        <span class="brand-divider" aria-hidden="true"></span>
+
+        <nav class="main-nav" id="nav-links" aria-label="Main navigation">
+          <a href="services.html" class="nav-link" aria-label="Services">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7" rx="1"/>
+              <rect x="14" y="3" width="7" height="7" rx="1"/>
+              <rect x="3" y="14" width="7" height="7" rx="1"/>
+              <rect x="14" y="14" width="7" height="7" rx="1"/>
+            </svg>
+            <span class="nav-label">Services</span>
+          </a>
+
+          <a href="membership.html" class="nav-link" aria-label="Membership">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            <span class="nav-label">Membership</span>
+          </a>
+
+          <!-- Separador vertical entre secciones -->
+          <span class="nav-divider" aria-hidden="true"></span>
+
+          <a href="#security" class="nav-link" aria-label="Security">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="1.8"
+                 stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+            <span class="nav-label">Security</span>
+          </a>
+        </nav>
+      </div>
+
+      <div class="header-user-bubble">
+        <button id="theme-toggle" class="btn-theme" aria-label="Toggle theme" style="background: none; border: 1px solid var(--color-border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff;">☀️</button>
+        
+        <button class="profile-btn" type="button" aria-label="Profile">
+          <span class="profile-avatar">S</span>
+        </button>
+
+        <div class="plan-chip-wrapper">
+          <span id="plan-badge" class="plan-badge">No plan</span>
+        </div>
+
+        <button id="change-plan-btn" class="change-plan-btn" type="button">
+          Change
+        </button>
+        
+        <button class="btn-menu" id="btn-menu" aria-label="Open menu" style="background: none; border: none; font-size: 1.5rem; color: #fff;">☰</button>
+      </div>
+    </header>
+
+    <main>
+        <!-- 1. HERO -->
+        <section id="hero" class="hero reveal">
+            <div class="container hero-grid">
+                <div class="hero-text">
+                    <h1>Automate your business's repetitive tasks</h1>
+                    <p>Discover simple tools to save hours of manual work, improve your customer service, and organize your finances.</p>
+                    <div class="hero-actions">
+                        <a href="services.html" class="btn btn-primary">Explore automations</a>
+                        <a href="membership.html" class="btn btn-secondary">View plans</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <div class="hero-glow"></div>
+                    <img src="assets/images/softrent_hero_v2.svg" alt="SoftRent platform preview" class="hero-img">
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. PROBLEM -->
+        <section id="problema" class="problema-section reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Does your business struggle with these problems?</h2>
+                </div>
+                <div class="problema-grid">
+                    <article class="problema-card">
+                        <div class="problema-icon-wrapper">
+                            <img src="assets/images/icon_repetitive_tasks.webp" alt="Repetitive tasks" class="problema-icon-img">
+                        </div>
+                        <h3>Repetitive manual tasks</h3>
+                        <p>You waste valuable hours copying data between different apps instead of focusing on growth.</p>
+                    </article>
+                    
+                    <article class="problema-card">
+                        <div class="problema-icon-wrapper">
+                            <img src="assets/images/icon_inventory_disorder.webp" alt="Inventory out of control" class="problema-icon-img">
+                        </div>
+                        <h3>Inventory out of control</h3>
+                        <p>You sell products you no longer have in stock and have to deal with refunds and angry clients.</p>
+                    </article>
+                    
+                    <article class="problema-card">
+                        <div class="problema-icon-wrapper">
+                            <img src="assets/images/icon_forgotten_invoices.webp" alt="Forgotten invoices" class="problema-icon-img">
+                        </div>
+                        <h3>Forgotten invoices</h3>
+                        <p>You fail to collect on time because the manual tracking and billing process is too tedious.</p>
+                    </article>
+                    
+                    <article class="problema-card">
+                        <div class="problema-icon-wrapper">
+                            <img src="assets/images/icon_slow_support.webp" alt="Slow support" class="problema-icon-img">
+                        </div>
+                        <h3>Slow support</h3>
+                        <p>Your clients wait days for a response because your inbox is a chaotic mess.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. TURN INTO (Bridge) -->
+        <section id="turn-into" class="turn-into-section reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Turn operational friction into clarity.</h2>
+                </div>
+                <div class="turn-into-grid">
+                    <div class="turn-state chaos-state">
+                        <div class="abstract-visual chaos-visual">
+                            <span class="chaos-line"></span>
+                            <span class="chaos-line"></span>
+                            <span class="chaos-line"></span>
+                        </div>
+                        <h3>Manual Chaos</h3>
+                        <p>Scattered tools and endless friction.</p>
+                    </div>
+                    <div class="turn-bridge">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="bridge-arrow">
+                            <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                    <div class="turn-state system-state">
+                        <div class="abstract-visual system-visual">
+                            <span class="system-line"></span>
+                            <span class="system-line"></span>
+                            <span class="system-line"></span>
+                        </div>
+                        <h3>Automated System</h3>
+                        <p>Seamless workflows and total control.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. BENEFITS -->
+        <section id="benefits" class="benefits-section reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>The results of working smarter</h2>
+                </div>
+                <div class="benefits-grid">
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrapper">
+                            <img src="assets/images/icon_save_time.webp" alt="Save time" class="benefit-icon-img">
+                        </div>
+                        <h3>Save time</h3>
+                        <p>Automate repetitive work and recover hours every week for higher-value tasks.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrapper">
+                            <img src="assets/images/icon_fewer_errors.webp" alt="Fewer errors" class="benefit-icon-img">
+                        </div>
+                        <h3>Fewer errors</h3>
+                        <p>Reduce manual mistakes by connecting processes and eliminating duplicated work.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrapper">
+                            <img src="assets/images/icon_faster_support.webp" alt="Faster support" class="benefit-icon-img">
+                        </div>
+                        <h3>Faster support</h3>
+                        <p>Respond sooner with more organized communication and better operational flow.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrapper">
+                            <img src="assets/images/icon_better_control.webp" alt="Better control" class="benefit-icon-img">
+                        </div>
+                        <h3>Better control</h3>
+                        <p>Get clearer visibility over your workflows, operations, and business activity.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrapper">
+                            <img src="assets/images/icon_better_organization.webp" alt="Better organization" class="benefit-icon-img">
+                        </div>
+                        <h3>Better organization</h3>
+                        <p>Replace scattered tasks with structured systems your team can actually follow.</p>
+                    </div>
+                    <div class="benefit-card">
+                        <div class="benefit-icon-wrapper">
+                            <img src="assets/images/icon_connected_workflows.webp" alt="Connected workflows" class="benefit-icon-img">
+                        </div>
+                        <h3>Connected workflows</h3>
+                        <p>Unify tools, steps, and data into a smoother process across your business.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <section id="security" class="section-security reveal">
+      <div class="container">
+        <h2 class="section-title">Security & Privacy</h2>
+        <p class="section-subtitle">
+          Your data is protected with industry-standard encryption. 
+          We never sell or share your information with third parties.
+        </p>
+        <div class="security-grid">
+          <div class="security-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" width="32" height="32">
+              <rect x="3" y="11" width="18" height="11" rx="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+            <h3>Encrypted data</h3>
+            <p>All information is transmitted over HTTPS and stored encrypted.</p>
+          </div>
+          <div class="security-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" width="32" height="32">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+            <h3>Privacy first</h3>
+            <p>We never sell your data. You control what you share.</p>
+          </div>
+          <div class="security-card">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" width="32" height="32">
+              <polyline points="9 11 12 14 22 4"/>
+              <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+            </svg>
+            <h3>Plan management</h3>
+            <p>Upgrade, downgrade or cancel your plan at any time.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. SHORTCUTS -->
+    <section id="shortcuts" class="shortcuts-section reveal">
+        <div class="container">
+            <div class="section-header">
+                <h2>Quick Access</h2>
+                <p>Explore our core offerings and learn how we protect your data.</p>
+            </div>
+            <div class="shortcuts-grid">
+                <a href="services.html" class="shortcut-card">
+                    <div class="shortcut-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="7" height="7" rx="1"/>
+                            <rect x="14" y="3" width="7" height="7" rx="1"/>
+                            <rect x="3" y="14" width="7" height="7" rx="1"/>
+                            <rect x="14" y="14" width="7" height="7" rx="1"/>
+                        </svg>
+                    </div>
+                    <h3>Services</h3>
+                    <p>Discover automations to save hours of manual work.</p>
+                </a>
+                <a href="membership.html" class="shortcut-card">
+                    <div class="shortcut-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="12" y1="18" x2="12" y2="12"/>
+                            <line x1="9" y1="15" x2="15" y2="15"/>
+                        </svg>
+                    </div>
+                    <h3>Membership</h3>
+                    <p>Manage your account, plan, and billing.</p>
+                </a>
+                <a href="#security" class="shortcut-card">
+                    <div class="shortcut-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                            <polyline points="9 12 11 14 15 10"/>
+                        </svg>
+                    </div>
+                    <h3>Security</h3>
+                    <p>Learn how we protect your business data.</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="site-footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <a href="index.html" class="footer-logo-link">
+                    <img src="assets/images/softrent_logo_transparent.png" alt="SoftRent" class="footer-logo-img">
+                </a>
+                <p class="footer-tagline">Automate your business. Save time. Scale smarter.</p>
+            </div>
+            <div class="footer-nav">
+                <h4>Navigate</h4>
+                <a href="index.html">Home</a>
+                <a href="services.html">Services</a>
+                <a href="membership.html">Membership</a>
+                <a href="index.html#security">Security</a>
+            </div>
+            <div class="footer-contact">
+                <h4>Connect</h4>
+                <a href="mailto:hello@softrent.io">hello@softrent.io</a>
+                <p>Built for small businesses.<br>Powered by automation.</p>
+            </div>
+        </div>
+        <div class="container footer-bottom-bar">
+            <span>&copy; 2026 SoftRent. All rights reserved.</span>
+            <span class="footer-made">Made with care for your business</span>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js" defer></script>
+    <script src="js/background.js" defer></script>
+</body>
+
+</html>

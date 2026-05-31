@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "nombre": "Automated CRM",
+    "descripcion": "Automatically saves customer contacts from emails to a database.",
+    "beneficio": "Never lose a potential customer's number again.",
+    "categoria": "Sales",
+    "estado": "Recommended",
+    "ahorroHoras": 5,
+    "planRequerido": "todos",
+    "icono": "👥"
+  },
+  {
+    "id": 2,
+    "nombre": "Low Stock Alerts",
+    "descripcion": "Receive an SMS or email when a product reaches its minimum quantity.",
+    "beneficio": "Avoid running out of key products.",
+    "categoria": "Inventory",
+    "estado": "Available",
+    "ahorroHoras": 3,
+    "planRequerido": "todos",
+    "icono": "📦"
+  },
+  {
+    "id": 3,
+    "nombre": "Quick Replies",
+    "descripcion": "Configures automatic templates for frequent customer questions.",
+    "beneficio": "Responds in seconds without retyping.",
+    "categoria": "Support",
+    "estado": "Recommended",
+    "ahorroHoras": 4,
+    "planRequerido": "todos",
+    "icono": "💬"
+  },
+  {
+    "id": 4,
+    "nombre": "Receipt Scanner",
+    "descripcion": "Extracts data from photos of receipts and sends them to your spreadsheet.",
+    "beneficio": "Simplifies tax preparation and expenses.",
+    "categoria": "Finance",
+    "estado": "Available",
+    "ahorroHoras": 6,
+    "planRequerido": "todos",
+    "icono": "🧾"
+  },
+  {
+    "id": 5,
+    "nombre": "Automated Billing",
+    "descripcion": "Generates and sends invoices automatically upon receiving an online payment.",
+    "beneficio": "Ensures timely collections and professional image.",
+    "categoria": "Finance",
+    "estado": "Recommended",
+    "ahorroHoras": 8,
+    "planRequerido": "intermediate",
+    "icono": "💸"
+  },
+  {
+    "id": 6,
+    "nombre": "Multi-channel Sync",
+    "descripcion": "Syncs your stock between your physical store and online sales channels.",
+    "beneficio": "Prevents overselling items you no longer have.",
+    "categoria": "Inventory",
+    "estado": "Available",
+    "ahorroHoras": 10,
+    "planRequerido": "intermediate",
+    "icono": "🔄"
+  },
+  {
+    "id": 7,
+    "nombre": "Appointment Scheduling",
+    "descripcion": "Allows clients to self-book available time slots on your calendar.",
+    "beneficio": "Eliminates back-and-forth messages to find a date.",
+    "categoria": "Operations",
+    "estado": "Evaluating",
+    "ahorroHoras": 4,
+    "planRequerido": "intermediate",
+    "icono": "📅"
+  },
+  {
+    "id": 8,
+    "nombre": "Automated Follow-ups",
+    "descripcion": "Sends a sequence of emails to abandoned carts or inactive clients.",
+    "beneficio": "Recovers lost sales automatically.",
+    "categoria": "Sales",
+    "estado": "Recommended",
+    "ahorroHoras": 6,
+    "planRequerido": "intermediate",
+    "icono": "📩"
+  },
+  {
+    "id": 9,
+    "nombre": "AI Support Bot",
+    "descripcion": "Intelligent chatbot that resolves 80% of frequent queries autonomously.",
+    "beneficio": "Provide 24/7 support without hiring more staff.",
+    "categoria": "Support",
+    "estado": "Recommended",
+    "ahorroHoras": 20,
+    "planRequerido": "vip",
+    "icono": "🤖"
+  },
+  {
+    "id": 10,
+    "nombre": "Demand Forecasting",
+    "descripcion": "Analyzes past sales to predict what you will need to buy next month.",
+    "beneficio": "Optimizes your purchasing budget and avoids dead stock.",
+    "categoria": "Inventory",
+    "estado": "Available",
+    "ahorroHoras": 12,
+    "planRequerido": "vip",
+    "icono": "📈"
+  },
+  {
+    "id": 11,
+    "nombre": "Dynamic Pricing",
+    "descripcion": "Adjusts your prices automatically based on demand and competition.",
+    "beneficio": "Maximizes your profit margin at all times.",
+    "categoria": "Finance",
+    "estado": "Evaluating",
+    "ahorroHoras": 8,
+    "planRequerido": "vip",
+    "icono": "🏷️"
+  },
+  {
+    "id": 12,
+    "nombre": "Custom Workflows",
+    "descripcion": "Connects over 50 internal apps to create any automation you imagine.",
+    "beneficio": "Total flexibility for complex operational processes.",
+    "categoria": "Operations",
+    "estado": "Available",
+    "ahorroHoras": 15,
+    "planRequerido": "vip",
+    "icono": "⚙️"
+  }
+]

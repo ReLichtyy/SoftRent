@@ -1,0 +1,102 @@
+[
+  {
+    "id": 101,
+    "titulo": "New WhatsApp Bot integration!",
+    "descripcion": "Now you can connect your WhatsApp Business account to respond to your customers using our automated templates.",
+    "categoria": "News",
+    "fecha": "2026-05-28",
+    "icono": "📱",
+    "plan": "todos",
+    "estado": "destacado"
+  },
+  {
+    "id": 102,
+    "titulo": "How to save 5 hours on payroll",
+    "descripcion": "Discover how the new automated calculation system reduces errors when paying your employees at the end of the month.",
+    "categoria": "Tip",
+    "fecha": "2026-05-25",
+    "icono": "💡",
+    "plan": "todos",
+    "estado": "normal"
+  },
+  {
+    "id": 103,
+    "titulo": "Pastelería El Horno grew by 200%",
+    "descripcion": "Read the story of how a small bakery used our inventory alerts to stop losing sales due to lack of ingredients.",
+    "categoria": "Success Story",
+    "fecha": "2026-05-20",
+    "icono": "🌟",
+    "plan": "todos",
+    "estado": "normal"
+  },
+  {
+    "id": 104,
+    "titulo": "Advanced Billing 2.0",
+    "descripcion": "We've added multi-currency support and integration with digital tax authorities. A huge leap for your finance department.",
+    "categoria": "Update",
+    "fecha": "2026-05-18",
+    "icono": "🚀",
+    "plan": "intermediate",
+    "estado": "nuevo"
+  },
+  {
+    "id": 105,
+    "titulo": "5 tricks for better inventory sync",
+    "descripcion": "Learn how to correctly map your physical store SKUs with your online store to prevent syncing errors.",
+    "categoria": "Tip",
+    "fecha": "2026-05-15",
+    "icono": "🎓",
+    "plan": "intermediate",
+    "estado": "normal"
+  },
+  {
+    "id": 106,
+    "titulo": "AI Support Bot is now available",
+    "descripcion": "Our most requested feature is finally here. Deploy an intelligent agent that learns from your documentation.",
+    "categoria": "News",
+    "fecha": "2026-05-10",
+    "icono": "🤖",
+    "plan": "vip",
+    "estado": "destacado"
+  },
+  {
+    "id": 107,
+    "titulo": "GlobalCorp's Automation Strategy",
+    "descripcion": "A deep dive into how a multinational manages over 50 internal apps using our Custom Workflows engine.",
+    "categoria": "Success Story",
+    "fecha": "2026-05-05",
+    "icono": "🏆",
+    "plan": "vip",
+    "estado": "normal"
+  },
+  {
+    "id": 108,
+    "titulo": "Demand Forecasting Beta Access",
+    "descripcion": "VIP members can now opt-in to test our predictive purchasing algorithm before the public release.",
+    "categoria": "Update",
+    "fecha": "2026-05-01",
+    "icono": "🧪",
+    "plan": "vip",
+    "estado": "nuevo"
+  },
+  {
+    "id": 109,
+    "titulo": "Organizing your support inbox",
+    "descripcion": "Simple practices to label and categorize emails before the automation system processes them.",
+    "categoria": "Tip",
+    "fecha": "2026-04-28",
+    "icono": "📥",
+    "plan": "todos",
+    "estado": "normal"
+  },
+  {
+    "id": 110,
+    "titulo": "Platform Maintenance Notice",
+    "descripcion": "Scheduled maintenance this weekend to upgrade our core database servers. Expect 15 minutes of downtime.",
+    "categoria": "News",
+    "fecha": "2026-04-25",
+    "icono": "⚠️",
+    "plan": "todos",
+    "estado": "normal"
+  }
+]

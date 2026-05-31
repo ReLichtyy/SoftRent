@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "nombre": "Standar",
+    "monthlyPrice": 9,
+    "annualDiscount": 0.16,
+    "descripcion": "Everything you need to get started with smart automation.",
+    "accentColor": "#4ade80",
+    "icono": "⚡",
+    "benefits": [
+      "1 active automation",
+      "Basic support",
+      "Essential catalog access",
+      "Simple tracking",
+      "Ideal for getting started"
+    ],
+    "automatizacionesMax": 4,
+    "seleccionesMax": 2,
+    "solicitudesMax": 1,
+    "soporte": "Community"
+  },
+  {
+    "id": 2,
+    "nombre": "Premium",
+    "monthlyPrice": 19,
+    "annualDiscount": 0.12,
+    "descripcion": "Advanced tools for growing teams that need more control.",
+    "accentColor": "#818cf8",
+    "icono": "🚀",
+    "popular": true,
+    "benefits": [
+      "2 active automations",
+      "Priority support",
+      "Advanced automations access",
+      "Basic analytics & reports",
+      "Minor adjustments included"
+    ],
+    "automatizacionesMax": 8,
+    "seleccionesMax": 5,
+    "solicitudesMax": 3,
+    "soporte": "Email (48h)"
+  },
+  {
+    "id": 3,
+    "nombre": "VIP",
+    "monthlyPrice": 39,
+    "annualDiscount": 0.10,
+    "descripcion": "A fully personalized concierge experience for your business.",
+    "accentColor": "#fbbf24",
+    "icono": "👑",
+    "benefits": [
+      "4 active automations",
+      "Fully personalized experience",
+      "Extended premium support",
+      "Special integrations",
+      "Continuous optimization",
+      "Concierge-level service"
+    ],
+    "automatizacionesMax": 999,
+    "seleccionesMax": 999,
+    "solicitudesMax": 999,
+    "soporte": "Priority 24/7"
+  }
+]
