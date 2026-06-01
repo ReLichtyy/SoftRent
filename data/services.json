@@ -1,0 +1,133 @@
+[
+  {
+    "id": "lead-flow",
+    "name": "Lead Flow Automation",
+    "type": "core",
+    "icon": "💼",
+    "accentColor": "#ff6b6b",
+    "painLine": "Leads come in. Nobody logs them. They disappear.",
+    "description": "Automatically captures every incoming lead, organizes them by source and priority, and notifies the right person to follow up — before the lead goes cold.",
+    "solvesText": "Leads arrive from multiple channels — email, social, referrals — but nobody logs them consistently. They get lost before anyone follows up.",
+    "doesText": "Automatically captures every incoming lead, organizes them by source and priority, and notifies the right person to follow up — before the lead goes cold.",
+    "fitsYouText": "You said leads and contacts are slipping through. This service catches them all, so your pipeline never leaks again.",
+    "bestFor": [
+      "Teams getting leads from 2+ channels",
+      "Businesses without a CRM",
+      "Anyone losing more than 3 leads per week"
+    ],
+    "mappedProblems": ["losing-leads"],
+    "scenarios": [
+      "Leads come in, but nobody logs them in time",
+      "Following up with prospects is slow and inconsistent"
+    ]
+  },
+  {
+    "id": "task-ops",
+    "name": "Task & Operations Automation",
+    "type": "core",
+    "icon": "⚙️",
+    "accentColor": "#818cf8",
+    "painLine": "Your team repeats the same tasks every day. Hours vanish.",
+    "description": "Connects your tools and automates the repetitive steps between them. What used to take 30 minutes happens in seconds, with no manual input.",
+    "solvesText": "Your team spends hours every day on tasks that could be done in minutes — copying data, sending updates, moving information between tools.",
+    "doesText": "Connects your tools and automates the repetitive steps between them. What used to take 30 minutes happens in seconds, with no manual input.",
+    "fitsYouText": "You said manual tasks are eating your time. This service gives those hours back — automatically.",
+    "bestFor": [
+      "Teams managing tasks in spreadsheets",
+      "Businesses with 2+ people doing repetitive data entry",
+      "Anyone spending 5+ hours/week on copy-paste operations"
+    ],
+    "mappedProblems": ["manual-tasks"],
+    "scenarios": [
+      "My team repeats the same tasks every single day",
+      "I spend hours moving data between apps manually"
+    ]
+  },
+  {
+    "id": "billing",
+    "name": "Billing & Payment Automation",
+    "type": "core",
+    "icon": "💳",
+    "accentColor": "#4ade80",
+    "painLine": "Invoices go out late — or not at all. Cash flow suffers.",
+    "description": "Generates invoices automatically when a sale is made, sends payment reminders on schedule, and tracks who has paid and who hasn't — without spreadsheets.",
+    "solvesText": "Invoices go out late or get forgotten entirely. Payments arrive but nobody reconciles them. Cash flow suffers because the process is manual.",
+    "doesText": "Generates invoices automatically when a sale is made, sends payment reminders on schedule, and tracks who has paid and who hasn't — without spreadsheets.",
+    "fitsYouText": "You said invoices and payments are a mess. This service brings order to your billing so you get paid on time, every time.",
+    "bestFor": [
+      "Businesses that invoice regularly",
+      "Freelancers and agencies tracking multiple clients",
+      "Anyone who has lost revenue to forgotten invoices"
+    ],
+    "mappedProblems": ["late-payments"],
+    "scenarios": [
+      "Invoices go out late — or not at all",
+      "I don't know who has paid and who hasn't"
+    ]
+  },
+  {
+    "id": "support",
+    "name": "Support Workflow Automation",
+    "type": "core",
+    "icon": "💬",
+    "accentColor": "#fbbf24",
+    "painLine": "Customers wait days for a reply. Your inbox is chaos.",
+    "description": "Routes incoming support requests to the right person, sends instant acknowledgments, and automates responses to common questions — so your team handles only what matters.",
+    "solvesText": "Customer messages pile up. Response times stretch from hours to days. Your team wastes time figuring out who should answer what.",
+    "doesText": "Routes incoming support requests to the right person, sends instant acknowledgments, and automates responses to common questions — so your team handles only what matters.",
+    "fitsYouText": "You said customer support is too slow. This service speeds it up by removing the bottlenecks between the question and the answer.",
+    "bestFor": [
+      "Businesses getting 10+ support requests per week",
+      "Teams where support is a shared responsibility",
+      "Anyone whose customers complain about response times"
+    ],
+    "mappedProblems": ["slow-support"],
+    "scenarios": [
+      "Customers wait days for a response from us"
+    ]
+  },
+  {
+    "id": "ecom-orders",
+    "name": "Ecommerce Order Flow",
+    "type": "industry",
+    "industry": "Ecommerce",
+    "icon": "📦",
+    "accentColor": "#38bdf8",
+    "painLine": "Orders come in. The rest is chaos.",
+    "description": "Connects your store's order flow into one automated pipeline: order received → inventory updated → fulfillment triggered → customer notified. No gaps.",
+    "solvesText": "Orders come in from your store but the rest of the process — inventory updates, shipping labels, customer notifications — is disconnected and chaotic.",
+    "doesText": "Connects your store's order flow into one automated pipeline: order received → inventory updated → fulfillment triggered → customer notified. No gaps, no manual steps.",
+    "fitsYouText": "You said order management is chaotic. This service turns your store's backend into a system that runs itself.",
+    "bestFor": [
+      "Online stores processing 20+ orders/week",
+      "Ecommerce businesses selling on multiple platforms",
+      "Stores where fulfillment errors are costing money"
+    ],
+    "mappedProblems": ["chaotic-orders"],
+    "scenarios": [
+      "Orders get mixed up and fulfillment is chaotic"
+    ]
+  },
+  {
+    "id": "ecom-recovery",
+    "name": "Ecommerce Customer Recovery",
+    "type": "industry",
+    "industry": "Ecommerce",
+    "icon": "🔄",
+    "accentColor": "#c084fc",
+    "painLine": "Customers leave. Revenue disappears. Nobody follows up.",
+    "description": "Automatically sends recovery emails to abandoned carts, re-engages inactive customers with personalized sequences, and brings revenue back — without you lifting a finger.",
+    "solvesText": "Customers add to cart and leave. Past buyers go silent. You know there's revenue sitting on the table, but you have no system to recover it.",
+    "doesText": "Automatically sends recovery emails to abandoned carts, re-engages inactive customers with personalized sequences, and brings revenue back — without you lifting a finger.",
+    "fitsYouText": "You said you're losing customers and revenue. This service brings them back with automated recovery flows that work 24/7.",
+    "bestFor": [
+      "Stores with a cart abandonment rate above 60%",
+      "Businesses with customers inactive for 30+ days",
+      "Anyone who knows they're leaving money on the table"
+    ],
+    "mappedProblems": ["losing-revenue"],
+    "scenarios": [
+      "Customers leave and nobody follows up"
+    ]
+  }
+]

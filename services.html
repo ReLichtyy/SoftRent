@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Automation Catalog | SoftRent</title>
+    <title>Services — Automation that fits your business | SoftRent</title>
+    <meta name="description" content="Explore SoftRent's automation services for small businesses. From lead capture to billing, find the right solution for your operational challenges.">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="gradient"></div>
     <canvas id="paper"></canvas>
+
+    <!-- ═══════════════════════════════════════ HEADER ═══════════════════════════════════════ -->
     <header class="site-header">
       <div class="header-left-capsule">
         <div class="header-brand">
@@ -16,14 +19,10 @@
             <img src="assets/images/softrent_logo_transparent.png" alt="SoftRent Logo" class="brand-img">
           </a>
         </div>
-        
         <span class="brand-divider" aria-hidden="true"></span>
-
         <nav class="main-nav" id="nav-links" aria-label="Main navigation">
           <a href="services.html" class="nav-link" aria-label="Services">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.8"
-                 stroke-linecap="round" stroke-linejoin="round">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <rect x="3" y="3" width="7" height="7" rx="1"/>
               <rect x="14" y="3" width="7" height="7" rx="1"/>
               <rect x="3" y="14" width="7" height="7" rx="1"/>
@@ -31,11 +30,8 @@
             </svg>
             <span class="nav-label">Services</span>
           </a>
-
           <a href="membership.html" class="nav-link" aria-label="Membership">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.8"
-                 stroke-linecap="round" stroke-linejoin="round">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
               <line x1="12" y1="18" x2="12" y2="12"/>
@@ -43,14 +39,9 @@
             </svg>
             <span class="nav-label">Membership</span>
           </a>
-
-          <!-- Separador vertical entre secciones -->
           <span class="nav-divider" aria-hidden="true"></span>
-
           <a href="index.html#security" class="nav-link" aria-label="Security">
-            <svg class="nav-icon" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="1.8"
-                 stroke-linecap="round" stroke-linejoin="round">
+            <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
               <polyline points="9 12 11 14 15 10"/>
             </svg>
@@ -58,81 +49,262 @@
           </a>
         </nav>
       </div>
-
       <div class="header-user-bubble">
         <button id="theme-toggle" class="btn-theme" aria-label="Toggle theme" style="background: none; border: 1px solid var(--color-border); border-radius: 50%; width: 36px; height: 36px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; color: #fff;">☀️</button>
-        
         <button class="profile-btn" type="button" aria-label="Profile">
           <span class="profile-avatar">S</span>
         </button>
-
         <div class="plan-chip-wrapper">
           <span id="plan-badge" class="plan-badge">No plan</span>
         </div>
-
-        <button id="change-plan-btn" class="change-plan-btn" type="button">
-          Change
-        </button>
-        
+        <button id="change-plan-btn" class="change-plan-btn" type="button">Change</button>
         <button class="btn-menu" id="btn-menu" aria-label="Open menu" style="background: none; border: none; font-size: 1.5rem; color: #fff;">☰</button>
       </div>
     </header>
 
-    <main>
-        <div class="container">
-            <div class="section-header" style="margin-top: 3rem;">
-                <h1>Automation Catalog</h1>
-                <p>Explore and select the tools that will transform your business.</p>
-            </div>
+    <main class="svc-page">
 
-            <div id="resumen-plan" class="resumen-panel">
-                <div class="resumen-stat">
-                    <h4>Active Plan</h4>
-                    <p id="resumen-plan-nombre">Loading...</p>
-                </div>
-                <div class="resumen-stat">
-                    <h4>Selections</h4>
-                    <p><span id="resumen-usadas">0</span> / <span id="resumen-max">0</span></p>
-                </div>
-                <div class="resumen-stat">
-                    <h4>Projected Savings</h4>
-                    <p><span id="resumen-ahorro">0</span>h/week</p>
+        <!-- ═══════════ S1 · HERO CONTEXTUAL ═══════════ -->
+        <section id="svc-hero" class="svc-hero reveal">
+            <div class="container">
+                <div class="svc-hero__content">
+                    <span class="svc-hero__label">Services</span>
+                    <h1>We automate the work<br>you repeat every day.</h1>
+                    <p>Stop wasting hours on manual tasks. SoftRent builds automated workflows that save time, reduce errors, and let your team focus on what actually grows your business.</p>
+                    <a href="#svc-problem" class="svc-hero__cta">
+                        See how it works
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+                    </a>
                 </div>
             </div>
+        </section>
 
-            <div class="catalogo-controls">
-                <input type="text" id="cat-search" class="search-input" placeholder="Search by name or description..." style="flex: 1; min-width: 250px;">
-                
-                <select id="cat-categoria" class="select-input">
-                    <option value="All">All categories</option>
-                    <option value="Sales">Sales</option>
-                    <option value="Support">Support</option>
-                    <option value="Finance">Finance</option>
-                    <option value="Inventory">Inventory</option>
-                    <option value="Operations">Operations</option>
-                </select>
-                
-                <select id="cat-estado" class="select-input">
-                    <option value="All">All states</option>
-                    <option value="Recommended">Recommended</option>
-                    <option value="Available">Available</option>
-                    <option value="Evaluating">Evaluating</option>
-                </select>
+        <!-- ═══════════ S2 · PROBLEM FRAMING ═══════════ -->
+        <section id="svc-problem" class="svc-problem reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Manual processes cost more than you think.</h2>
+                    <p class="svc-problem__sub">Every hour spent on repetitive work is an hour stolen from growth. Here's what it looks like inside a small business.</p>
+                </div>
+                <div class="svc-problem__grid">
+                    <div class="svc-problem__card">
+                        <div class="svc-problem__icon">⏳</div>
+                        <h3>Lost hours</h3>
+                        <p>Copying data, sending reminders, updating spreadsheets — your team spends more time managing than doing.</p>
+                    </div>
+                    <div class="svc-problem__card">
+                        <div class="svc-problem__icon">🚫</div>
+                        <h3>Missed revenue</h3>
+                        <p>Leads that vanish, invoices that never go out, customers who leave because nobody followed up.</p>
+                    </div>
+                    <div class="svc-problem__card">
+                        <div class="svc-problem__icon">🔀</div>
+                        <h3>Disconnected tools</h3>
+                        <p>Your CRM doesn't talk to your email. Your store doesn't sync with your inventory. Everything is manual glue.</p>
+                    </div>
+                    <div class="svc-problem__card">
+                        <div class="svc-problem__icon">😤</div>
+                        <h3>Team burnout</h3>
+                        <p>Repetitive work drains motivation. Your best people end up firefighting instead of building.</p>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="feed-meta">
-                <span id="catalogo-counter">Loading catalog...</span>
-            </div>
-            
-            <div id="catalogo-empty-state" class="empty-state" style="display: none;">
-                No automations found for this search.
-            </div>
+        <!-- ═══════════ S3 · TABS + S4/S5 SERVICE CARDS ═══════════ -->
+        <section id="svc-catalog" class="svc-catalog reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>What we automate for you.</h2>
+                    <p class="svc-catalog__sub">Two types of solutions — one for any business, one built for your industry.</p>
+                </div>
 
-            <div id="catalogo-grid" class="catalogo-grid">
+                <!-- Tabs -->
+                <div class="svc-tabs" role="tablist" aria-label="Service categories">
+                    <button class="svc-tab active" role="tab" aria-selected="true" data-tab="core" id="tab-core">
+                        <span class="svc-tab__icon">⚡</span>
+                        Core Automations
+                    </button>
+                    <button class="svc-tab" role="tab" aria-selected="false" data-tab="industry" id="tab-industry">
+                        <span class="svc-tab__icon">🏪</span>
+                        Industry Solutions
+                    </button>
+                    <div class="svc-tab__indicator" aria-hidden="true"></div>
+                </div>
+
+                <!-- Tab Panels -->
+                <div class="svc-tab-panels">
+                    <!-- CORE PANEL -->
+                    <div class="svc-panel active" role="tabpanel" aria-labelledby="tab-core" id="panel-core">
+                        <p class="svc-panel__intro">Automation services that apply to any growing business — no matter your industry.</p>
+                        <div class="svc-cards" id="core-cards">
+                            <!-- Rendered by JS -->
+                        </div>
+                    </div>
+
+                    <!-- INDUSTRY PANEL -->
+                    <div class="svc-panel" role="tabpanel" aria-labelledby="tab-industry" id="panel-industry">
+                        <div class="svc-industry-badge">
+                            <span class="svc-industry-badge__tag">Industry: Ecommerce</span>
+                        </div>
+                        <p class="svc-panel__intro">If you sell online, these are built specifically for your workflow.</p>
+                        <div class="svc-cards" id="industry-cards">
+                            <!-- Rendered by JS -->
+                        </div>
+                        <p class="svc-panel__note">More industry solutions coming soon.</p>
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- ═══════════ S6 · USE-CASE RECOGNITION ═══════════ -->
+        <section id="svc-recognition" class="svc-recognition reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Does any of this sound familiar?</h2>
+                    <p class="svc-recognition__sub">If you recognize your business in any of these, you're in the right place.</p>
+                </div>
+                <div class="svc-scenarios" id="svc-scenarios">
+                    <button class="svc-scenario" data-problem="losing-leads">
+                        <span class="svc-scenario__icon">📥</span>
+                        <span class="svc-scenario__text">"Leads come in, but nobody logs them in time"</span>
+                    </button>
+                    <button class="svc-scenario" data-problem="losing-leads">
+                        <span class="svc-scenario__icon">🐌</span>
+                        <span class="svc-scenario__text">"Following up with prospects is slow and inconsistent"</span>
+                    </button>
+                    <button class="svc-scenario" data-problem="manual-tasks">
+                        <span class="svc-scenario__icon">🔁</span>
+                        <span class="svc-scenario__text">"My team repeats the same tasks every single day"</span>
+                    </button>
+                    <button class="svc-scenario" data-problem="manual-tasks">
+                        <span class="svc-scenario__icon">📋</span>
+                        <span class="svc-scenario__text">"I spend hours moving data between apps manually"</span>
+                    </button>
+                    <button class="svc-scenario" data-problem="late-payments">
+                        <span class="svc-scenario__icon">📄</span>
+                        <span class="svc-scenario__text">"Invoices go out late — or not at all"</span>
+                    </button>
+                    <button class="svc-scenario" data-problem="late-payments">
+                        <span class="svc-scenario__icon">❓</span>
+                        <span class="svc-scenario__text">"I don't know who has paid and who hasn't"</span>
+                    </button>
+                    <button class="svc-scenario" data-problem="slow-support">
+                        <span class="svc-scenario__icon">⏰</span>
+                        <span class="svc-scenario__text">"Customers wait days for a response from us"</span>
+                    </button>
+                    <button class="svc-scenario" data-problem="chaotic-orders">
+                        <span class="svc-scenario__icon">📦</span>
+                        <span class="svc-scenario__text">"Orders get mixed up and fulfillment is chaotic"</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ S7 · SERVICE RECOMMENDER ═══════════ -->
+        <section id="svc-recommender" class="svc-recommender reveal">
+            <div class="container">
+                <div class="section-header">
+                    <h2>Find the right service for you.</h2>
+                    <p class="svc-recommender__sub">Select the challenge that feels closest to your situation.</p>
+                </div>
+                <div class="svc-options" id="svc-options">
+                    <button class="svc-option" data-recommend="lead-flow">
+                        <span class="svc-option__icon">💼</span>
+                        <span class="svc-option__label">Losing leads & contacts</span>
+                    </button>
+                    <button class="svc-option" data-recommend="task-ops">
+                        <span class="svc-option__icon">⚙️</span>
+                        <span class="svc-option__label">Too many manual tasks</span>
+                    </button>
+                    <button class="svc-option" data-recommend="billing">
+                        <span class="svc-option__icon">💳</span>
+                        <span class="svc-option__label">Late invoices & payments</span>
+                    </button>
+                    <button class="svc-option" data-recommend="support">
+                        <span class="svc-option__icon">💬</span>
+                        <span class="svc-option__label">Slow customer support</span>
+                    </button>
+                    <button class="svc-option" data-recommend="ecom-orders">
+                        <span class="svc-option__icon">📦</span>
+                        <span class="svc-option__label">Chaotic order management</span>
+                    </button>
+                    <button class="svc-option" data-recommend="ecom-recovery">
+                        <span class="svc-option__icon">🔄</span>
+                        <span class="svc-option__label">Losing customers & revenue</span>
+                    </button>
+                </div>
+
+                <!-- S7b · RECOMMENDED STATE (hidden until selection) -->
+                <div class="svc-result" id="svc-result" aria-live="polite">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ S7c · MINI INTAKE BRIDGE ═══════════ -->
+        <section id="svc-bridge" class="svc-bridge reveal">
+            <div class="container">
+                <div class="svc-bridge__card">
+                    <h2>Ready to take the next step?</h2>
+                    <p class="svc-bridge__sub">You don't need to have all the answers.<br>Just tell us what's slowing your business down, and we'll help you figure out the rest.</p>
+
+                    <div class="svc-bridge__chip" id="bridge-chip" style="display: none;">
+                        <span class="svc-bridge__chip-icon" id="bridge-chip-icon"></span>
+                        <span class="svc-bridge__chip-text" id="bridge-chip-text"></span>
+                        <button class="svc-bridge__chip-remove" id="bridge-chip-remove" aria-label="Remove selection">&times;</button>
+                    </div>
+
+                    <form class="svc-bridge__form" id="bridge-form">
+                        <div class="svc-bridge__fields">
+                            <div class="svc-bridge__field">
+                                <label for="bridge-email">Your email</label>
+                                <input type="email" id="bridge-email" name="email" required placeholder="you@business.com" autocomplete="email">
+                            </div>
+                            <div class="svc-bridge__field svc-bridge__field--full">
+                                <label for="bridge-message">Anything else you'd like us to know? <span class="svc-bridge__optional">(optional)</span></label>
+                                <textarea id="bridge-message" name="message" rows="3" placeholder="Tell us briefly about your business or challenge..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="svc-bridge__submit" id="bridge-submit">
+                            Send my request
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        </button>
+                    </form>
+
+                    <p class="svc-bridge__reassure">We'll reply within 24 hours. No spam, no pressure.</p>
+
+                    <!-- Success state -->
+                    <div class="svc-bridge__success" id="bridge-success" style="display: none;">
+                        <div class="svc-bridge__success-icon">✓</div>
+                        <h3>Message sent!</h3>
+                        <p>We'll get back to you within 24 hours. In the meantime, feel free to explore our <a href="membership.html">membership plans</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
+    <!-- ═══════════ S8 · CONTACT DRAWER ═══════════ -->
+    <div class="svc-drawer" id="svc-drawer" aria-hidden="true">
+        <div class="svc-drawer__inner">
+            <button class="svc-drawer__close" id="drawer-close" aria-label="Close contact panel">&times;</button>
+            <h3>Still thinking it through?</h3>
+            <p>That's completely fine. Tell us a bit about what your business needs, and we'll point you in the right direction — no pressure.</p>
+            <form class="svc-drawer__form" id="drawer-form">
+                <input type="email" id="drawer-email" placeholder="Your email" required autocomplete="email">
+                <input type="text" id="drawer-message" placeholder="What do you need help with? (optional)">
+                <button type="submit" class="svc-drawer__submit">
+                    Send message
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </button>
+            </form>
+            <a href="mailto:hello@softrent.io" class="svc-drawer__fallback">Or email us directly: hello@softrent.io</a>
+        </div>
+    </div>
+
+    <!-- ═══════════ FOOTER ═══════════ -->
     <footer class="site-footer">
         <div class="container footer-grid">
             <div class="footer-brand">
@@ -162,7 +334,7 @@
 
     <!-- Scripts -->
     <script src="js/planes.js" defer></script>
-    <script src="js/catalogo.js" defer></script>
+    <script src="js/services.js" defer></script>
     <script src="js/main.js" defer></script>
     <script src="js/background.js" defer></script>
 </body>
