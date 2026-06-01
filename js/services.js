@@ -1,13 +1,13 @@
 /**
  * js/services.js
- * Services page — Tabs, Recommender, Drawer, and Bridge logic.
+ * Services page — Visual Accordion Cards, Tabs, Recommender, Drawer, Bridge.
  */
 
 let servicesData = [];
 
 const pageState = {
-  selectedProblem: null,
   recommendedService: null,
+  expandedCard: null,
   interactedWithRecommender: false,
   bridgeMessageSent: false,
   drawerDismissed: false,
@@ -17,7 +17,6 @@ const pageState = {
 document.addEventListener('DOMContentLoaded', () => {
   loadServices();
   initTabs();
-  initScenarios();
   initRecommender();
   initBridgeForm();
   initDrawer();
@@ -36,11 +35,16 @@ async function loadServices() {
     renderServiceCards();
   } catch (err) {
     console.error('Error loading services:', err);
+    // Show error in card containers
+    ['core-cards', 'industry-cards'].forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.innerHTML = '<p style="color: rgba(255,255,255,0.4); text-align: center; padding: 2rem;">Unable to load services. Please refresh.</p>';
+    });
   }
 }
 
 /* ═══════════════════════════════════════
-   SERVICE CARDS RENDERING
+   VISUAL ACCORDION CARDS
    ═══════════════════════════════════════ */
 
 function renderServiceCards() {
@@ -51,13 +55,27 @@ function renderServiceCards() {
   const core = servicesData.filter(s => s.type === 'core');
   const industry = servicesData.filter(s => s.type === 'industry');
 
-  coreCards.innerHTML = core.map(s => buildServiceCard(s)).join('');
-  industryCards.innerHTML = industry.map(s => buildServiceCard(s)).join('');
+  coreCards.innerHTML = core.map(s => buildVisualCard(s)).join('');
+  industryCards.innerHTML = industry.map(s => buildVisualCard(s)).join('');
 
-  // Attach CTA listeners
-  document.querySelectorAll('.svc-card__cta--primary').forEach(btn => {
+  // Attach accordion click listeners
+  document.querySelectorAll('.svc-vcard').forEach(card => {
+    const header = card.querySelector('.svc-vcard__header');
+    if (header) {
+      header.addEventListener('click', () => toggleCard(card));
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleCard(card);
+        }
+      });
+    }
+  });
+
+  // Attach detail CTA listeners
+  document.querySelectorAll('.svc-vcard__cta').forEach(btn => {
     btn.addEventListener('click', (e) => {
-      e.preventDefault();
+      e.stopPropagation();
       const serviceId = btn.dataset.service;
       selectRecommendation(serviceId);
       scrollToSection('svc-bridge');
@@ -65,28 +83,112 @@ function renderServiceCards() {
   });
 }
 
-function buildServiceCard(service) {
+function buildVisualCard(service) {
   const bestForItems = service.bestFor.map(b => `<li>${b}</li>`).join('');
+  const imgSrc = service.previewImage || '';
 
   return `
-    <article class="svc-card" style="--accent: ${service.accentColor}">
-      <div class="svc-card__header">
-        <div class="svc-card__icon">${service.icon}</div>
-        <h3 class="svc-card__name">${service.name}</h3>
+    <article class="svc-vcard" data-service-id="${service.id}" style="--accent: ${service.accentColor}">
+      <!-- COLLAPSED HEADER (always visible) -->
+      <div class="svc-vcard__header" role="button" tabindex="0" aria-expanded="false" aria-controls="detail-${service.id}">
+        <div class="svc-vcard__img-wrap">
+          ${imgSrc ? `<img src="${imgSrc}" alt="${service.name}" class="svc-vcard__img" loading="lazy">` : ''}
+          <div class="svc-vcard__overlay"></div>
+          <div class="svc-vcard__accent-bar"></div>
+        </div>
+        <div class="svc-vcard__info">
+          <div class="svc-vcard__meta">
+            <span class="svc-vcard__icon">${service.icon}</span>
+            <h3 class="svc-vcard__name">${service.name}</h3>
+          </div>
+          <p class="svc-vcard__pain">${service.painLine}</p>
+        </div>
+        <div class="svc-vcard__toggle" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"/>
+            <line x1="5" y1="12" x2="19" y2="12"/>
+          </svg>
+        </div>
       </div>
-      <p class="svc-card__pain">${service.painLine}</p>
-      <p class="svc-card__desc">${service.description}</p>
-      <div class="svc-card__bestfor">
-        <div class="svc-card__bestfor-title">Best for</div>
-        <ul class="svc-card__bestfor-list">${bestForItems}</ul>
-      </div>
-      <div class="svc-card__actions">
-        <button class="svc-card__cta svc-card__cta--primary" data-service="${service.id}">
-          Get started →
-        </button>
+
+      <!-- EXPANDED DETAIL (hidden by default) -->
+      <div class="svc-vcard__detail" id="detail-${service.id}" aria-hidden="true">
+        <div class="svc-vcard__detail-inner">
+          <div class="svc-vcard__detail-grid">
+            <div class="svc-vcard__block">
+              <div class="svc-vcard__label">What it solves</div>
+              <p>${service.solvesText}</p>
+            </div>
+            <div class="svc-vcard__block">
+              <div class="svc-vcard__label">What it does</div>
+              <p>${service.doesText}</p>
+            </div>
+          </div>
+
+          <div class="svc-vcard__fits">
+            <div class="svc-vcard__label">Why it fits you</div>
+            <p>${service.fitsYouText}</p>
+          </div>
+
+          <div class="svc-vcard__bestfor">
+            <div class="svc-vcard__label">Best for</div>
+            <ul>${bestForItems}</ul>
+          </div>
+
+          <button class="svc-vcard__cta" data-service="${service.id}">
+            Talk to us about ${service.name}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </button>
+        </div>
       </div>
     </article>
   `;
+}
+
+/* ═══════════════════════════════════════
+   ACCORDION TOGGLE
+   ═══════════════════════════════════════ */
+
+function toggleCard(card) {
+  const isExpanded = card.classList.contains('expanded');
+  const panel = card.dataset.tab || card.closest('.svc-panel')?.id;
+
+  if (isExpanded) {
+    collapseCard(card);
+    pageState.expandedCard = null;
+  } else {
+    // Collapse any currently open card in the same panel
+    const parent = card.closest('.svc-cards');
+    if (parent) {
+      parent.querySelectorAll('.svc-vcard.expanded').forEach(c => collapseCard(c));
+    }
+
+    expandCard(card);
+    pageState.expandedCard = card.dataset.serviceId;
+
+    // Smooth scroll to the card
+    setTimeout(() => {
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 100);
+  }
+}
+
+function expandCard(card) {
+  const header = card.querySelector('.svc-vcard__header');
+  const detail = card.querySelector('.svc-vcard__detail');
+
+  card.classList.add('expanded');
+  if (header) header.setAttribute('aria-expanded', 'true');
+  if (detail) detail.setAttribute('aria-hidden', 'false');
+}
+
+function collapseCard(card) {
+  const header = card.querySelector('.svc-vcard__header');
+  const detail = card.querySelector('.svc-vcard__detail');
+
+  card.classList.remove('expanded');
+  if (header) header.setAttribute('aria-expanded', 'false');
+  if (detail) detail.setAttribute('aria-hidden', 'true');
 }
 
 /* ═══════════════════════════════════════
@@ -112,37 +214,9 @@ function initTabs() {
 
       const targetPanel = document.getElementById(`panel-${target}`);
       if (targetPanel) {
-        // Small delay for transition effect
         requestAnimationFrame(() => {
           targetPanel.classList.add('active');
         });
-      }
-    });
-  });
-}
-
-/* ═══════════════════════════════════════
-   USE-CASE RECOGNITION (S6)
-   ═══════════════════════════════════════ */
-
-function initScenarios() {
-  const scenarios = document.querySelectorAll('.svc-scenario');
-
-  scenarios.forEach(scenario => {
-    scenario.addEventListener('click', () => {
-      const problem = scenario.dataset.problem;
-
-      // Clear previous selections
-      scenarios.forEach(s => s.classList.remove('selected'));
-      scenario.classList.add('selected');
-
-      pageState.selectedProblem = problem;
-
-      // Find the mapped service
-      const service = servicesData.find(s => s.mappedProblems.includes(problem));
-      if (service) {
-        selectRecommendation(service.id);
-        scrollToSection('svc-recommender');
       }
     });
   });
@@ -181,10 +255,7 @@ function selectRecommendation(serviceId) {
     }
   });
 
-  // Render the recommendation panel
   renderRecommendation(service);
-
-  // Update bridge chip
   updateBridgeChip(service);
 }
 
@@ -234,7 +305,6 @@ function renderRecommendation(service) {
     </div>
   `;
 
-  // CTA in the result panel → scroll to bridge
   const resultCta = container.querySelector('.svc-result__cta');
   if (resultCta) {
     resultCta.addEventListener('click', () => {
@@ -259,7 +329,6 @@ function updateBridgeChip(service) {
   chipText.textContent = service.name;
   chip.style.display = 'inline-flex';
 
-  // Remove handler
   if (chipRemove) {
     chipRemove.onclick = () => {
       chip.style.display = 'none';
@@ -280,26 +349,24 @@ function initBridgeForm() {
 
     if (!email) return;
 
-    // Gather data
     const submission = {
       email,
       message,
       recommendedService: pageState.recommendedService,
-      selectedProblem: pageState.selectedProblem,
       timestamp: new Date().toISOString()
     };
 
-    // Store in localStorage for demo
     const existing = JSON.parse(localStorage.getItem('softrent_contacts') || '[]');
     existing.push(submission);
     localStorage.setItem('softrent_contacts', JSON.stringify(existing));
 
-    // Show success state
     pageState.bridgeMessageSent = true;
 
     form.style.display = 'none';
-    document.querySelector('.svc-bridge__sub').style.display = 'none';
-    document.querySelector('.svc-bridge__reassure').style.display = 'none';
+    const sub = document.querySelector('.svc-bridge__sub');
+    const reassure = document.querySelector('.svc-bridge__reassure');
+    if (sub) sub.style.display = 'none';
+    if (reassure) reassure.style.display = 'none';
 
     const chip = document.getElementById('bridge-chip');
     if (chip) chip.style.display = 'none';
@@ -307,7 +374,6 @@ function initBridgeForm() {
     const success = document.getElementById('bridge-success');
     if (success) success.style.display = 'block';
 
-    // Hide drawer if visible (already contacted)
     const drawer = document.getElementById('svc-drawer');
     if (drawer) drawer.classList.remove('visible');
 
@@ -326,16 +392,12 @@ function initDrawer() {
 
   if (!drawer) return;
 
-  // Check if already dismissed this session
   if (sessionStorage.getItem('softrent_drawer_dismissed')) {
     pageState.drawerDismissed = true;
   }
 
-  // Scroll trigger
   window.addEventListener('scroll', () => {
     if (pageState.drawerDismissed || pageState.bridgeMessageSent) return;
-
-    // Don't show in the first 5 seconds
     if (Date.now() - pageState.pageLoadTime < 5000) return;
 
     const scrollPercent = (window.scrollY + window.innerHeight) / document.documentElement.scrollHeight;
@@ -350,7 +412,6 @@ function initDrawer() {
     }
   }, { passive: true });
 
-  // Close button
   if (closeBtn) {
     closeBtn.addEventListener('click', () => {
       drawer.classList.remove('visible');
@@ -360,7 +421,6 @@ function initDrawer() {
     });
   }
 
-  // Drawer form submit
   if (drawerForm) {
     drawerForm.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -382,7 +442,6 @@ function initDrawer() {
       existing.push(submission);
       localStorage.setItem('softrent_contacts', JSON.stringify(existing));
 
-      // Replace form with confirmation
       drawer.querySelector('.svc-drawer__inner').innerHTML = `
         <div style="text-align: center; padding: 1rem 0;">
           <div style="font-size: 2rem; margin-bottom: 0.75rem;">✓</div>
@@ -393,7 +452,6 @@ function initDrawer() {
 
       pageState.bridgeMessageSent = true;
 
-      // Auto-hide after 3 seconds
       setTimeout(() => {
         drawer.classList.remove('visible');
         pageState.drawerDismissed = true;
@@ -409,7 +467,6 @@ function initDrawer() {
    ═══════════════════════════════════════ */
 
 function initSmoothScroll() {
-  // Handle anchor links with smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const target = document.querySelector(link.getAttribute('href'));
