@@ -287,7 +287,9 @@ function inicializarModalPerfil() {
   
   profileBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      overlay.classList.add('active');
+      // Temporarily redirect to the new auth flow page
+      window.location.href = 'auth.html';
+      // overlay.classList.add('active'); // Original code for modal
     });
   });
   
