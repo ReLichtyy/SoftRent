@@ -4188,3 +4188,60 @@ body.light-theme .auth-tabs {
     margin: 0 auto;
   }
 }
+
+/* =========================================
+   ADVANCED MOBILE SCALING & CAROUSELS
+========================================= */
+
+@media (max-width: 768px) {
+  /* 1. Scale down the header logo */
+  .brand-img {
+    height: 26px !important;
+  }
+  
+  /* 2. Scale down overall spacing and fonts */
+  .section-header h2, .glass-title {
+    font-size: 1.7rem !important;
+  }
+  
+  /* 3. Horizontal Scroll Snap Carousels */
+  .benefits-grid,
+  .membership-grid,
+  .planes-grid,
+  .catalogo-grid,
+  .svc-problem__grid,
+  .shortcuts-grid,
+  .security-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 24px;
+    gap: 16px !important;
+    /* Hide scrollbar */
+    -ms-overflow-style: none; 
+    scrollbar-width: none; 
+  }
+  
+  .benefits-grid::-webkit-scrollbar,
+  .membership-grid::-webkit-scrollbar,
+  .planes-grid::-webkit-scrollbar,
+  .catalogo-grid::-webkit-scrollbar,
+  .svc-problem__grid::-webkit-scrollbar,
+  .shortcuts-grid::-webkit-scrollbar,
+  .security-grid::-webkit-scrollbar {
+    display: none; 
+  }
+  
+  .benefit-card,
+  .plan-card,
+  .svc-card,
+  .shortcut-card,
+  .security-card,
+  .svc-problem__card {
+    flex: 0 0 85% !important;
+    scroll-snap-align: center;
+    width: auto !important;
+    max-width: none !important;
+  }
+}
