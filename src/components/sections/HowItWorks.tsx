@@ -1,3 +1,6 @@
+import { Container } from '../layout/Container'
+import { Section } from '../layout/Section'
+
 const steps = [
   {
     n: '1',
@@ -23,16 +26,21 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <section id="como-funciona" className="border-t border-line">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-28">
+    <Section id="como-funciona" className="border-t border-line">
+      <Container className="py-20 sm:py-28">
         <h2 className="font-display text-3xl leading-tight text-ink sm:text-4xl">
           Cómo pasamos de conversación a sistema
         </h2>
 
         <ol className="mt-12 divide-y divide-line border-t border-line">
           {steps.map((step) => (
-            <li key={step.n} className="grid gap-4 py-7 sm:grid-cols-[3.5rem_1fr] sm:gap-8">
-              <span className="font-display text-3xl text-ink-faint">{step.n}</span>
+            <li
+              key={step.n}
+              className="grid gap-4 py-7 sm:grid-cols-[3.5rem_1fr] sm:gap-8"
+            >
+              <span className="font-display text-3xl text-ink-soft/60">
+                {step.n}
+              </span>
               <div className="max-w-xl">
                 <h3 className="font-display text-xl text-ink">{step.title}</h3>
                 <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
@@ -42,7 +50,7 @@ export default function HowItWorks() {
             </li>
           ))}
         </ol>
-      </div>
-    </section>
+      </Container>
+    </Section>
   )
 }

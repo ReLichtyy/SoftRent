@@ -1,0 +1,108 @@
+/*
+ * Tokens SoftRent — fuente única de diseño.
+ * Valores y reglas: Notion "Lógica de negocio", secciones 2.3 y 2.4.
+ * Tema claro por defecto; [data-theme="dark"] define el tema oscuro.
+ */
+
+/* Mapa de variables semánticas a utilidades de Tailwind.
+ * `inline` hace que las utilidades usen var(--…) en vivo,
+ * para que el cambio de tema no requiera regenerar CSS. */
+@theme inline {
+  /* Tipografía: Inter para toda la interfaz,
+   * Play solo para logotipo y titulares grandes. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Play", "Inter", ui-sans-serif, sans-serif;
+
+  /* Escala: 12 · 14 · 16 (base) · 20 · 24 · 32 · 48.
+   * Interlineado 1,5 en texto, 1,15 en titulares. */
+  --text-xs: 0.75rem;
+  --text-xs--line-height: 1.5;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.5;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5;
+  --text-lg: 1.25rem;
+  --text-lg--line-height: 1.15;
+  --text-xl: 1.5rem;
+  --text-xl--line-height: 1.15;
+  --text-2xl: 2rem;
+  --text-2xl--line-height: 1.15;
+  --text-3xl: 3rem;
+  --text-3xl--line-height: 1.15;
+
+  /* Radios: 8 px (inputs, botones), 12 px (tarjetas), 16 px (modales). */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+
+  /* Color (sección 2.3). */
+  --color-brand: var(--brand);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-deep: var(--brand-deep);
+  --color-on-brand: var(--on-brand);
+  --color-on-deep: var(--on-deep);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-ink: var(--text);
+  --color-ink-soft: var(--text-muted);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
+  --color-info: var(--info);
+
+  /* Colores de plan (heredados y ajustados, sección 2.3). */
+  --color-plan-arranque: var(--plan-arranque);
+  --color-plan-crecimiento: var(--plan-crecimiento);
+  --color-plan-pro: var(--plan-pro);
+  --color-plan-medida: var(--plan-medida);
+}
+
+/* Tema claro */
+:root {
+  --brand: #d8182a;
+  --brand-hover: #b31222;
+  --brand-deep: #400517;
+  --on-brand: #ffffff;
+  --on-deep: #faf8f8;
+  --bg: #faf8f8;
+  --surface: #ffffff;
+  --surface-2: #f3eeee;
+  --border: #e5dedf;
+  --text: #161214;
+  --text-muted: #5f585b;
+  --success: #2e8b57;
+  --warning: #b7791f;
+  --danger: #c2410c;
+  --info: #1f6fa8;
+  --plan-arranque: #437a22;
+  --plan-crecimiento: #006494;
+  --plan-pro: #a8841c;
+  --plan-medida: #400517;
+
+  color-scheme: light;
+}
+
+/* Tema oscuro.
+ * Nota de contraste (WCAG AA): sobre --brand #f0374a el texto
+ * debe ser tinta oscura (5.03:1); el blanco queda en 3.92:1. */
+[data-theme="dark"] {
+  --brand: #f0374a;
+  --brand-hover: #ff5566;
+  --brand-deep: #400517;
+  --on-brand: #0c0a0b;
+  --on-deep: #faf8f8;
+  --bg: #0c0a0b;
+  --surface: #171314;
+  --surface-2: #221b1c;
+  --border: #3a2c2e;
+  --text: #eeeaea;
+  --text-muted: #a0979a;
+  --success: #4cc38a;
+  --warning: #e0a93b;
+  --danger: #f07a45;
+  --info: #5aa9e6;
+
+  color-scheme: dark;
+}
