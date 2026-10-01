@@ -8,9 +8,12 @@ import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
 import { Checkbox } from '../../components/ui/Checkbox'
+import { DragAndDrop, type ArchivoContexto } from '../../components/ui/DragAndDrop'
 import { Input } from '../../components/ui/Input'
+import { LinkButton } from '../../components/ui/LinkButton'
 import { Select } from '../../components/ui/Select'
 import { demoIcon } from '../../lib/demo-icons'
+import { bytes } from '../../lib/format'
 import { cn } from '../../lib/cn'
 import { track } from '../../lib/analytics'
 import { demoPorId, demos } from '../../content/demos'
@@ -61,6 +64,7 @@ export function Comenzar() {
   const [dolores, setDolores] = useState<string[]>([])
   const [datos, setDatos] = useState<Datos>(datosIniciales)
   const [consentimiento, setConsentimiento] = useState(false)
+  const [archivos, setArchivos] = useState<ArchivoContexto[]>([])
   const [errores, setErrores] = useState<Record<string, string>>({})
   const [enviado, setEnviado] = useState(false)
 
@@ -94,6 +98,16 @@ export function Comenzar() {
       prev.includes(id) ? prev.filter((d) => d !== id) : [...prev, id],
     )
     setErrores((prev) => ({ ...prev, dolores: '' }))
+  }
+
+  /* Archivos de contexto: opcionales, nunca bloquean el envío. */
+  function agregarArchivos(nuevos: ArchivoContexto[]) {
+    setArchivos((prev) => [...prev, ...nuevos].slice(0, 5))
+    track('comenzar_archivo', { total: nuevos.length })
+  }
+
+  function quitarArchivo(id: string) {
+    setArchivos((prev) => prev.filter((a) => a.id !== id))
   }
 
   function validarCampo(campo: keyof Datos, valor: string): string {
@@ -160,6 +174,9 @@ export function Comenzar() {
     `Tamaño del equipo: ${datos.tamano}`,
     `Qué quiere resolver:`,
     ...doloresElegidos.map((d) => `- ${d.dolor}`),
+    ...(archivos.length > 0
+      ? ['Contexto compartido:', ...archivos.map((a) => `- ${a.nombre} (${bytes(a.tamano)})`)]
+      : []),
     plan ? `Plan de interés: ${plan.nombre}` : '',
     'Origen: sitio web, flujo Comenzar',
   ].filter((linea) => linea !== '')
@@ -173,6 +190,7 @@ export function Comenzar() {
       industria: industriaNombre,
       dolores: dolores.length,
       plan: plan?.nombre ?? null,
+      archivos: archivos.length,
     })
     setEnviado(true)
   }
@@ -231,6 +249,10 @@ export function Comenzar() {
                 <legend className="font-display text-xl text-ink">
                   ¿A qué se dedica su negocio?
                 </legend>
+                <p className="mt-1 text-sm text-ink-soft">
+                  Toque la tarjeta que más se parezca a su negocio. Puede
+                  cambiarla después, nada queda fijo todavía.
+                </p>
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   {demos.map((demo) => {
                     const Icono = demoIcon(demo.id)
@@ -285,6 +307,12 @@ export function Comenzar() {
                     </span>
                   </button>
                 </div>
+                <p className="mt-4 text-sm text-ink-soft">
+                  ¿Prefiere ver ejemplos funcionando primero?{' '}
+                  <LinkButton to="/demos" variant="link" size="sm">
+                    Vea las demos
+                  </LinkButton>
+                </p>
               </fieldset>
             )}
 
@@ -422,6 +450,22 @@ export function Comenzar() {
                   error={errores.consentimiento || undefined}
                 />
 
+                <div className="rounded-md border border-line bg-surface-2/50 p-4">
+                  <h3 className="font-display text-base text-ink">
+                    ¿Tiene a la mano su menú, catálogo o lista de precios?
+                  </h3>
+                  <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+                    No es obligatorio. Si los comparte, su propuesta llega más
+                    precisa y montamos su asistente más rápido.
+                  </p>
+                  <DragAndDrop
+                    className="mt-3"
+                    archivos={archivos}
+                    onAgregar={agregarArchivos}
+                    onQuitar={quitarArchivo}
+                  />
+                </div>
+
                 <div className="mt-2 flex flex-wrap items-center gap-3">
                   <Button type="button" onClick={continuar}>
                     Continuar
@@ -467,6 +511,15 @@ export function Comenzar() {
                         <div className="flex justify-between gap-4">
                           <dt className="text-ink-soft">Plan de interés</dt>
                           <dd className="text-right text-ink">{plan.nombre}</dd>
+                        </div>
+                      )}
+                      {archivos.length > 0 && (
+                        <div className="flex justify-between gap-4">
+                          <dt className="text-ink-soft">Contexto compartido</dt>
+                          <dd className="text-right text-ink">
+                            {archivos.length}{' '}
+                            {archivos.length === 1 ? 'archivo' : 'archivos'}
+                          </dd>
                         </div>
                       )}
                       <div className="flex justify-between gap-4">

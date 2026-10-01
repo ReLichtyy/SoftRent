@@ -1,5 +1,5 @@
 /*
- * Tokens SoftRent — fuente única de diseño.
+ * Tokens SoftRent: fuente única de diseño.
  * Valores y reglas: Notion "Lógica de negocio", secciones 2.3 y 2.4.
  * Tema claro por defecto; [data-theme="dark"] define el tema oscuro.
  */
@@ -102,7 +102,7 @@
   --success: #4cc38a;
   --warning: #e0a93b;
   --danger: #f07a45;
-  --info: #5aa9e6;
+  --info: #5aa9e6;
 
   /* Colores de plan en oscuro: versiones claras para contraste AA.
    * El carmesi de "A la medida" pasa al rojo de marca (fondo oscuro). */

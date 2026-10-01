@@ -5,38 +5,57 @@ export type Theme = 'light' | 'dark'
 const STORAGE_KEY = 'softrent-theme'
 
 function readInitialTheme(): Theme {
-  if (typeof window === 'undefined') return 'light'
+  if (typeof window === 'undefined') return 'dark'
   try {
     const stored = localStorage.getItem(STORAGE_KEY)
     if (stored === 'light' || stored === 'dark') return stored
   } catch {
-    /* sin localStorage se respeta la preferencia del sistema */
+    /* sin localStorage se queda en el tema oscuro */
   }
-  return window.matchMedia('(prefers-color-scheme: dark)').matches
-    ? 'dark'
-    : 'light'
+  return 'dark'
 }
 
-/** Tema del sitio. Persiste la elección del usuario y, si no
- * hay elección, sigue la preferencia del sistema. */
+/* Store mínimo del tema: el navbar y el footer pueden cambiarlo a
+ * la vez y todas las instancias de useTheme se sincronizan. */
+let temaActual: Theme = readInitialTheme()
+const suscriptores = new Set<(tema: Theme) => void>()
+
+function aplicar(tema: Theme) {
+  temaActual = tema
+  if (tema === 'dark') {
+    document.documentElement.dataset.theme = 'dark'
+  } else {
+    delete document.documentElement.dataset.theme
+  }
+  try {
+    localStorage.setItem(STORAGE_KEY, tema)
+  } catch {
+    /* modo privado: el tema solo vive en memoria */
+  }
+  suscriptores.forEach((avisar) => avisar(tema))
+}
+
+function cambiarTema(tema: Theme) {
+  if (tema !== temaActual) aplicar(tema)
+}
+
+/** Tema del sitio. El tema por defecto es el oscuro; persiste la
+ * elección del usuario y respeta el claro solo si la pidió.
+ * Todas las instancias comparten el mismo estado. */
 export function useTheme() {
-  const [theme, setTheme] = useState<Theme>(readInitialTheme)
+  const [theme, setLocal] = useState<Theme>(temaActual)
 
   useEffect(() => {
-    if (theme === 'dark') {
-      document.documentElement.dataset.theme = 'dark'
-    } else {
-      delete document.documentElement.dataset.theme
+    const avisar = (tema: Theme) => setLocal(tema)
+    suscriptores.add(avisar)
+    return () => {
+      suscriptores.delete(avisar)
     }
-    try {
-      localStorage.setItem(STORAGE_KEY, theme)
-    } catch {
-      /* modo privado: el tema solo vive en memoria */
-    }
-  }, [theme])
+  }, [])
 
   return {
     theme,
-    toggle: () => setTheme((t) => (t === 'dark' ? 'light' : 'dark')),
+    setTheme: cambiarTema,
+    toggle: () => cambiarTema(temaActual === 'dark' ? 'light' : 'dark'),
   }
 }

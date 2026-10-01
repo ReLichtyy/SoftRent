@@ -6,11 +6,12 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 
 ## Temas
 
-- Tema claro por defecto; el oscuro se activa con `data-theme="dark"` en `<html>`.
+- Tema **oscuro por defecto**; el claro se activa con la elección del
+  usuario (`data-theme` en `<html>`).
 - La utilidades de Tailwind resuelven variables en vivo (`bg-brand` →
   `var(--brand)`), así que cambiar de tema no regenera CSS.
 - La elección del usuario persiste en `localStorage` (`softrent-theme`);
-  sin elección, sigue la preferencia del sistema.
+  sin elección, el sitio queda en oscuro.
 
 ## Índice
 
@@ -30,6 +31,7 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 | [Select](ui/select.md) | Selector nativo con etiqueta y error |
 | [Textarea](ui/textarea.md) | Área de texto multilínea |
 | [Checkbox](ui/checkbox.md) | Casilla de verificación con etiqueta |
+| [DragAndDrop](ui/draganddrop.md) | Zona de arrastre para archivos de contexto |
 | [Toggle](ui/toggle.md) | Interruptor tipo switch |
 
 ### Layout (`components/layout/`)
@@ -45,7 +47,7 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 | Utilidad | Qué es |
 | --- | --- |
 | [cn](lib/cn.md) | Combinación de clases con resolución de conflictos |
-| [useTheme](lib/use-theme.md) | Tema claro/oscuro persistente |
+| [useTheme](lib/use-theme.md) | Tema oscuro por defecto, persistente |
 
 ## Tokens
 
@@ -87,7 +89,7 @@ Radios: 8 px (inputs, botones) · 12 px (tarjetas) · 16 px (modales) · pill
 | Texto secundario / fondo (ambos) | 6.54 / 6.94 | AA |
 | Blanco sobre `--brand` claro | 5.14 | AA |
 | Tinta oscura sobre `--brand` oscuro | 5.03 | AA (por eso `--on-brand` oscuro no es blanco) |
-| Blanco sobre `--brand` oscuro | 3.92 | Solo texto grande — **no usar** |
+| Blanco sobre `--brand` oscuro | 3.92 | Solo texto grande: **no usar** |
 | `--success` sobre fondo claro | 4.01 | Solo texto grande; acompañar con ícono |
 | `--warning` sobre fondo claro | 3.44 | Solo texto grande; acompañar con ícono |
 | `--danger` / `--info` sobre fondo claro | 4.89 / 5.09 | AA |

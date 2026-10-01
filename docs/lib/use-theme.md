@@ -12,32 +12,32 @@ import { useTheme } from '../lib/useTheme'
 | Valor | Tipo | Descripción |
 | --- | --- | --- |
 | `theme` | `'light' \| 'dark'` | Tema actual |
+| `setTheme` | `(t: 'light' \| 'dark') => void` | Fija un tema explícito |
 | `toggle` | `() => void` | Alterna entre claro y oscuro |
 
 ```tsx
-const { theme, toggle } = useTheme()
+const { theme, setTheme } = useTheme()
 
-<button onClick={toggle} aria-pressed={theme === 'dark'}>
-  Cambiar tema
+<button onClick={() => setTheme('dark')} aria-pressed={theme === 'dark'}>
+  Oscuro
 </button>
 ```
 
 ## Comportamiento
 
-1. Al montar, lee `localStorage['softrent-theme']` si existe.
-2. Sin valor guardado, sigue `prefers-color-scheme` del sistema.
-3. En cada cambio escribe `data-theme="dark"` en `<html>` (o lo elimina
+1. El tema por defecto es **oscuro**. Solo cambia a claro si el usuario
+   lo elige y queda guardado en `localStorage['softrent-theme']`.
+2. En cada cambio escribe `data-theme="dark"` en `<html>` (o lo elimina
    para volver a claro) y persiste la elección.
-4. `localStorage` inaccesible (modo privado) no rompe nada: el tema vive en
-   memoria esa sesión.
+3. Estado compartido: `useTheme` lee un store módulo-level con
+   suscriptores, así que varios consumidores (`ThemeToggle`, el selector
+   del footer) se mantienen sincronizados.
+4. `localStorage` inaccesible (modo privado) no rompe nada: el tema vive
+   en memoria esa sesión.
 
 ## Notas de integración
 
 - `index.html` incluye un script pre-render que aplica el tema guardado
-  antes del primer render para evitar destello. Si cambias la clave de
-  almacenamiento (`softrent-theme`), actualiza ese script también.
-- Un solo consumidor por página (`ThemeToggle`). No lo llames en varios
-  componentes: cada instancia tendría su propio estado y se desincroniza.
-  Si necesitas más consumidores, migra el estado a un contexto.
-- El toggle de accesibilidad (`ThemeToggle`) usa `aria-pressed` y
-  `aria-label` con el estado.
+  antes del primer render para evitar destello: si no hay elección
+  guardada, deja el oscuro. Si cambias la clave de almacenamiento
+  (`softrent-theme`), actualiza ese script también.

@@ -8,20 +8,20 @@
       name="description"
       content="SoftRent construye sistemas de reservas, comunicación y facturación a la medida de su negocio de servicios."
     />
+    <meta name="theme-color" content="#0c0a0b" />
     <title>SoftRent - Software a la medida para su negocio</title>
     <script>
-      // Aplica el tema guardado antes del primer render para evitar destello.
+      // Tema oscuro por defecto; solo respeta el claro si el usuario
+      // lo eligió y quedó guardado (evita el destello al primer render).
       ;(function () {
+        var t = null
         try {
-          var t = localStorage.getItem('softrent-theme')
-          if (
-            t === 'dark' ||
-            (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)
-          ) {
-            document.documentElement.dataset.theme = 'dark'
-          }
+          t = localStorage.getItem('softrent-theme')
         } catch (e) {
-          /* sin localStorage se queda en el tema claro */
+          /* sin localStorage se queda en el tema oscuro */
+        }
+        if (t !== 'light') {
+          document.documentElement.dataset.theme = 'dark'
         }
       })()
     </script>

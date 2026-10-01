@@ -25,7 +25,9 @@ import { Home } from './pages/public/Home'
 import { Industrias } from './pages/public/Industrias'
 import { Nosotros } from './pages/public/Nosotros'
 import { Precios } from './pages/public/Precios'
+import { Privacidad } from './pages/public/Privacidad'
 import { Soluciones } from './pages/public/Soluciones'
+import { Terminos } from './pages/public/Terminos'
 
 /* Mapa de pantallas (sección 2.6): 23 páginas en tres superficies. */
 export const router = createBrowserRouter([
@@ -41,6 +43,8 @@ export const router = createBrowserRouter([
       { path: 'casos', element: <Casos /> },
       { path: 'nosotros', element: <Nosotros /> },
       { path: 'demos', element: <Demos /> },
+      { path: 'privacidad', element: <Privacidad /> },
+      { path: 'terminos', element: <Terminos /> },
       { path: '*', element: <NotFound /> },
     ],
   },
