@@ -4,6 +4,7 @@ tasks:
   - id: agregar-demo
     description: "Agregue una cuarta demo al catalogo, con id 'gimnasios'. Nombre: 'SoftRent Gimnasios', industria: 'Gimnasios y estudios de fitness', estado: 'proximamente', demoUrl: null. Siga la regla de arquitectura del proyecto (README, seccion Estructura): 1) nueva entrada en src/content/demos.ts con resumen de una linea, dos dolores en 'resuelve' (en lenguaje del cliente, sin jerga tecnica), tres funciones, dos capacidades en iaIncluida, planRecomendado 'crecimiento' y cta '/comenzar?demo=gimnasios'; 2) agregue 'gimnasios' al tipo DemoId en src/content/types.ts; 3) nuevo submodulo src/knowledge/demos/gimnasios.ts con descripcion, tres preguntas frecuentes con respuesta y dos limites en noHace (vea src/knowledge/demos/pedidos.ts como referencia); 4) registrelo en src/knowledge/index.ts. NO modifique archivos bajo src/pages ni src/components: la demo debe aparecer sola en la pagina /demos y en la seccion Industrias del landing. Todo el texto visible en espanol de Costa Rica, trato de usted, sin em-dashes. El proyecto debe compilar (npm run build) y pasar npm run lint."
     repo: "."
+    ref: "80f9d66373b9"
     test_cmd: "node tasks/judge.mjs agregar-demo"
     timeout_seconds: 1800
     tags: [contenido, arquitectura, tipos]
@@ -11,6 +12,7 @@ tasks:
   - id: primitiva-progress
     description: "Cree la primitiva Progress en src/components/ui/Progress.tsx: barra de progreso accesible para metricas (0 a 100), con role='progressbar' y aria-valuenow/aria-valuemin/aria-valuemax, usando solo tokens del sistema de diseno (pista con bg-surface-2, avance con bg-brand, radio de 8px como los inputs) y un proposito documentado en JSDoc. Documentela en docs/ui/progress.md siguiendo el formato de docs/ui/skeleton.md (Cuando usarlo, Ejemplos, API, Notas) y agregue la fila correspondiente en la tabla de primitivas de docs/index.md. No modifique otras primitivas ni paginas. Texto en espanol, trato de usted, sin em-dashes. El proyecto debe compilar (npm run build) y pasar npm run lint."
     repo: "."
+    ref: "80f9d66373b9"
     test_cmd: "node tasks/judge.mjs primitiva-progress"
     timeout_seconds: 1800
     tags: [ui, design-system, accesibilidad]
@@ -18,6 +20,7 @@ tasks:
   - id: pantalla-reportes
     description: "Agregue la pantalla 'Reportes' a la app del cliente. Cree src/pages/app/Reportes.tsx siguiendo el patron de las pantallas existentes (vea src/pages/app/Cobros.tsx): PageIntro con titulo y una linea de descripcion, dos KpiTile con cifras de ejemplo y una StatusList con al menos tres filas de datos de ejemplo creibles (negocio de servicios de Costa Rica, espanol, trato de usted, sin em-dashes). Conectela: 1) ruta '/app/reportes' con su pagina en src/router.tsx, dentro del AppLayout igual que las demas pantallas de la app; 2) entrada en la navegacion: en src/pages/_layouts/AppLayout.tsx agreguela a la lista moreNav con un icono de @phosphor-icons/react (el paquete ya esta instalado). El proyecto debe compilar (npm run build) y pasar npm run lint."
     repo: "."
+    ref: "80f9d66373b9"
     test_cmd: "node tasks/judge.mjs pantalla-reportes"
     timeout_seconds: 1800
     tags: [app, rutas, ux]
@@ -25,6 +28,7 @@ tasks:
   - id: faq-fuente-unica
     description: "Agregue dos preguntas nuevas a src/content/faq.ts (unicamente ese archivo de la capa de contenido): 1) si puede subir de plan a mitad de mes y que pasa con la diferencia del cobro; 2) como obtiene sus datos exportados si decide cancelar. Respuestas cortas, trato de usted, sin em-dashes. NO modifique src/components/sections/Faq.tsx ni ninguna otra pagina o componente: la seccion FAQ del landing y el chatbot leen de content/faq y deben mostrar las preguntas nuevas sin cambios de codigo. El proyecto debe compilar (npm run build) y pasar npm run lint."
     repo: "."
+    ref: "80f9d66373b9"
     test_cmd: "node tasks/judge.mjs faq-fuente-unica"
     timeout_seconds: 1800
     tags: [contenido, fuente-unica]
