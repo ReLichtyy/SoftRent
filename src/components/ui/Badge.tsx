@@ -19,7 +19,9 @@ export type BadgeProps = {
 } & Omit<HTMLAttributes<HTMLSpanElement>, 'children'>
 
 const toneStyles: Record<BadgeTone, string> = {
-  brand: 'bg-brand/10 text-brand',
+  /* brand usa --brand-text: el rojo puro no llega a AA en 12px
+   * sobre el fondo tenue del badge (4.37 claro / 4.29 oscuro). */
+  brand: 'bg-brand/10 text-brand-text',
   neutral: 'bg-surface-2 text-ink-soft',
   success: 'bg-success/10 text-success',
   warning: 'bg-warning/10 text-warning',
@@ -37,8 +39,8 @@ const dotStyles: Record<BadgeTone, string> = {
 }
 
 /** Distintivo compacto (pill) para estados y categorías.
- * Contraste: los tonos success/warning/danger cumplen AA en texto
- * pequeño en ambos temas (tokens ajustados, iteración de diseño 1). */
+ * Contraste: todos los tonos cumplen AA en texto pequeño en ambos
+ * temas (tokens ajustados, auditoría de la iteración 3). */
 export function Badge({
   tone = 'neutral',
   dot = false,

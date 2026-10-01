@@ -39,6 +39,7 @@
   --color-brand: var(--brand);
   --color-brand-hover: var(--brand-hover);
   --color-brand-deep: var(--brand-deep);
+  --color-brand-text: var(--brand-text);
   --color-on-brand: var(--on-brand);
   --color-on-deep: var(--on-deep);
   --color-bg: var(--bg);
@@ -63,6 +64,8 @@
 :root {
   --brand: #d8182a;
   --brand-hover: #b31222;
+  /* Texto de marca sobre fondos tenues (badge brand): AA en 12px. */
+  --brand-text: #b31222;
   --brand-deep: #400517;
   --on-brand: #ffffff;
   --on-deep: #faf8f8;
@@ -90,6 +93,8 @@
 [data-theme="dark"] {
   --brand: #f0374a;
   --brand-hover: #ff5566;
+  /* Texto de marca sobre fondos tenues: 6.73:1 en badge oscuro. */
+  --brand-text: #ff7a8a;
   --brand-deep: #400517;
   --on-brand: #0c0a0b;
   --on-deep: #faf8f8;

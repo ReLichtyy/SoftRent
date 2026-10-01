@@ -137,7 +137,10 @@ export function DragAndDrop({
         )}
       >
         <UploadSimple
-          className="mx-auto h-6 w-6 text-ink-soft"
+          className={cn(
+            'mx-auto h-6 w-6 text-ink-soft transition-[color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)]',
+            arrastrando && 'scale-110 text-brand',
+          )}
           aria-hidden="true"
           weight="bold"
         />

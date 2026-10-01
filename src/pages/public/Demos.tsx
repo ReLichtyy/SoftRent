@@ -11,6 +11,7 @@ import { demoIcon } from '../../lib/demo-icons'
 import { planPorId } from '../../content/planes'
 import { demos } from '../../content/demos'
 import type { Demo } from '../../content/types'
+import { useScrollReveal } from '../../lib/useScrollReveal'
 import { PageIntro } from '../shared'
 
 /* Vista rápida: qué hace el sistema y qué incluye, sin salir de la página. */
@@ -70,6 +71,11 @@ function VistaRapida({ demo, onClose }: { demo: Demo; onClose: () => void }) {
 
 export function Demos() {
   const [vista, setVista] = useState<Demo | null>(null)
+  const gridRef = useScrollReveal<HTMLDivElement>({
+    selector: '[data-reveal]',
+    stagger: 0.08,
+    y: 18,
+  })
 
   return (
     <Section className="py-16 sm:py-24">
@@ -79,12 +85,12 @@ export function Demos() {
           description="Pruebe el sistema antes de hablar con nosotros. Sin registros ni pruebas gratuitas: la demo es la prueba."
         />
 
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div ref={gridRef} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {demos.map((demo) => {
             const Icono = demoIcon(demo.id)
             const publicada = demo.estado === 'publicada' && demo.demoUrl !== null
             return (
-              <Card key={demo.id} className="flex flex-col gap-2 p-4">
+              <Card key={demo.id} data-reveal className="flex flex-col gap-2 p-4">
                 <div className="flex items-center justify-between gap-3">
                   <span className="text-brand">
                     <Icono className="h-5 w-5" aria-hidden="true" />
