@@ -1,111 +1,88 @@
-import { Badge } from '../ui/Badge'
-import { Button } from '../ui/Button'
-import { Card } from '../ui/Card'
+import {
+  MapPin,
+  Receipt,
+  WhatsappLogo,
+  CreditCard,
+} from '@phosphor-icons/react'
+import { LinkButton } from '../ui/LinkButton'
 import { Container } from '../layout/Container'
+import { ChatMockup } from './ChatMockup'
+import { useScrollReveal } from '../../lib/useScrollReveal'
 
-type Appointment = {
-  time: string
-  client: string
-  service: string
-  status: 'Confirmada' | 'Pendiente' | 'Facturada'
-  tone: 'success' | 'warning' | 'neutral'
-}
-
-const appointments: Appointment[] = [
-  {
-    time: '09:00',
-    client: 'Carla M.',
-    service: 'Corte + barba',
-    status: 'Confirmada',
-    tone: 'success',
-  },
-  {
-    time: '11:30',
-    client: 'Veterinaria Rex',
-    service: 'Consulta',
-    status: 'Pendiente',
-    tone: 'warning',
-  },
-  {
-    time: '15:00',
-    client: 'Taller Luna',
-    service: 'Mantenimiento',
-    status: 'Facturada',
-    tone: 'neutral',
-  },
+/* Franja de confianza (sección 3.4.2): señalales locales
+ * debajo del hero, sin logos de terceros. */
+const confianzaItems = [
+  { icono: MapPin, texto: 'Hecho en Costa Rica' },
+  { icono: CreditCard, texto: 'Cobros por SINPE' },
+  { icono: Receipt, texto: 'Facturación electrónica' },
+  { icono: WhatsappLogo, texto: 'WhatsApp Business' },
 ]
 
-function DaySheet() {
-  return (
-    <Card className="w-full max-w-sm">
-      <div className="mb-4 flex items-baseline justify-between">
-        <p className="font-display text-base">Agenda de hoy</p>
-        <p className="text-xs text-ink-soft">Mié 30 set</p>
-      </div>
-
-      <ul className="space-y-3">
-        {appointments.map((a) => (
-          <li
-            key={a.time}
-            className="grid grid-cols-[3.5rem_1fr_auto] items-center gap-3 border-t border-line pt-3 first:border-t-0 first:pt-0"
-          >
-            <span className="text-sm tabular-nums text-ink-soft">{a.time}</span>
-            <span className="min-w-0">
-              <span className="block truncate text-sm text-ink">
-                {a.client}
-              </span>
-              <span className="block truncate text-xs text-ink-soft">
-                {a.service}
-              </span>
-            </span>
-            <Badge tone={a.tone} dot>
-              {a.status}
-            </Badge>
-          </li>
-        ))}
-      </ul>
-
-      <div className="mt-4 flex items-center gap-2 rounded-sm bg-surface-2 px-3 py-2.5 text-xs text-ink-soft">
-        <span
-          aria-hidden="true"
-          className="h-1.5 w-1.5 shrink-0 rounded-full bg-success"
-        />
-        Recordatorio enviado a 3 clientes por WhatsApp
-      </div>
-    </Card>
-  )
-}
-
+/** Hero según el wireframe 2.7: fondo brand-deep, propuesta
+ * de valor en una línea, dos CTA y mockup vivo del chatbot. */
 export default function Hero() {
-  return (
-    <section id="top" className="pt-16 pb-20 sm:pt-20 sm:pb-28">
-      <Container>
-        <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-10">
-          <div>
-            <h1 className="font-display text-4xl leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.25rem]">
-              Tu negocio ya sabe cómo trabaja. Tu software todavía no.
-            </h1>
-            <p className="mt-6 max-w-md text-lg leading-relaxed text-ink-soft">
-              SoftRent diseña el sistema de reservas, mensajes y facturación de
-              tu negocio, hecho para cómo trabajas tú, no para una plantilla
-              genérica.
-            </p>
+  const scope = useScrollReveal<HTMLElement>({
+    selector: '[data-hero]',
+    stagger: 0.09,
+    y: 22,
+    immediate: true,
+  })
 
-            <div className="mt-9 flex flex-wrap items-center gap-4">
-              <Button href="#contacto" size="lg">
-                Comenzar
-              </Button>
-              <Button href="#como-funciona" variant="link" size="lg">
-                Ver cómo funciona
-              </Button>
+  return (
+    <section ref={scope} className="bg-brand-deep text-on-deep">
+      <div className="pt-16 pb-0 sm:pt-20">
+        <Container>
+          <div className="grid items-center gap-14 pb-14 lg:grid-cols-[1.05fr_0.95fr] lg:gap-12 lg:pb-20">
+            <div>
+              <h1
+                data-hero
+                className="font-display text-4xl leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.15rem]"
+              >
+                Su negocio responde, agenda y cobra solo.
+              </h1>
+              <p
+                data-hero
+                className="mt-6 max-w-md text-lg leading-relaxed text-on-deep/75"
+              >
+                Reservas, mensajes y cobros por WhatsApp. Lo implementamos
+                en días, no en meses.
+              </p>
+
+              <div data-hero className="mt-9 flex flex-wrap items-center gap-4">
+                <LinkButton to="/comenzar" size="lg">
+                  Comenzar
+                </LinkButton>
+                <LinkButton to="/demos" variant="secondary" size="lg">
+                  Ver demos
+                </LinkButton>
+              </div>
+            </div>
+
+            <div data-hero className="flex justify-center lg:justify-end">
+              <ChatMockup />
             </div>
           </div>
+        </Container>
+      </div>
 
-          <div className="flex justify-center lg:justify-end">
-            <DaySheet />
-          </div>
-        </div>
-      </Container>
+      <div className="border-t border-on-deep/15">
+        <Container>
+          <ul
+            data-hero
+            className="grid grid-cols-2 gap-x-6 gap-y-3 py-5 sm:grid-cols-4"
+          >
+            {confianzaItems.map((item) => (
+              <li
+                key={item.texto}
+                className="flex items-center gap-2 text-sm text-on-deep/70"
+              >
+                <item.icono className="h-4 w-4 shrink-0" aria-hidden="true" />
+                {item.texto}
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </div>
     </section>
   )
 }

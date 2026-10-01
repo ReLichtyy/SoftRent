@@ -72,9 +72,9 @@
   --border: #e5dedf;
   --text: #161214;
   --text-muted: #5f585b;
-  --success: #2e8b57;
-  --warning: #b7791f;
-  --danger: #c2410c;
+  --success: #22754a;
+  --warning: #96630d;
+  --danger: #b23a08;
   --info: #1f6fa8;
   --plan-arranque: #437a22;
   --plan-crecimiento: #006494;
@@ -102,7 +102,14 @@
   --success: #4cc38a;
   --warning: #e0a93b;
   --danger: #f07a45;
-  --info: #5aa9e6;
+  --info: #5aa9e6;
+
+  /* Colores de plan en oscuro: versiones claras para contraste AA.
+   * El carmesi de "A la medida" pasa al rojo de marca (fondo oscuro). */
+  --plan-arranque: #8ec556;
+  --plan-crecimiento: #56b0e0;
+  --plan-pro: #d8bb6e;
+  --plan-medida: #f0374a;
 
   color-scheme: dark;
 }

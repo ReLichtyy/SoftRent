@@ -20,6 +20,10 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 | --- | --- |
 | [Button](ui/button.md) | Acción o enlace con forma de botón |
 | [Link](ui/link.md) | Enlace de texto |
+| [LinkButton](ui/linkbutton.md) | Enlace interno con forma de botón |
+| [KpiTile](ui/kpi-tile.md) | Cifra destacada con su etiqueta |
+| [CardImage](ui/card-image.md) | Tarjeta con portada, distintivo y acción |
+| [Skeleton](ui/skeleton.md) | Marcador de carga sin saltos de diseño |
 | [Badge](ui/badge.md) | Distintivo pill para estados y categorías |
 | [Card](ui/card.md) | Contenedor con borde y superficie |
 | [Input](ui/input.md) | Campo de texto con etiqueta y error |

@@ -10,9 +10,7 @@ export type BadgeTone =
   | 'info'
 
 export type BadgeProps = {
-  /** Tono semántico del distintivo.
-   * Nota de contraste: en tema claro, "success" y "warning"
-   * solo cumplen AA en texto grande; acompáñalos con ícono. */
+  /** Tono semántico del distintivo. */
   tone?: BadgeTone
   /** Punto de color a la izquierda (para estados). */
   dot?: boolean
@@ -38,7 +36,9 @@ const dotStyles: Record<BadgeTone, string> = {
   info: 'bg-info',
 }
 
-/** Distintivo compacto (pill) para estados y categorías. */
+/** Distintivo compacto (pill) para estados y categorías.
+ * Contraste: los tonos success/warning/danger cumplen AA en texto
+ * pequeño en ambos temas (tokens ajustados, iteración de diseño 1). */
 export function Badge({
   tone = 'neutral',
   dot = false,

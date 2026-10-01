@@ -1,11 +1,15 @@
+import { Link, NavLink } from 'react-router-dom'
 import { ThemeToggle } from '../ThemeToggle'
-import { Button } from '../ui/Button'
 import { Container } from '../layout/Container'
+import { DemoHoverCard } from '../nav/DemoHoverCard'
+import { cn } from '../../lib/cn'
+import { LinkButton } from '../ui/LinkButton'
 
 const links = [
-  { href: '#pilares', label: 'Qué hacemos' },
-  { href: '#negocio', label: 'Para tu negocio' },
-  { href: '#como-funciona', label: 'Cómo funciona' },
+  { to: '/soluciones', label: 'Soluciones' },
+  { to: '/demos', label: 'Demos' },
+  { to: '/precios', label: 'Precios' },
+  { to: '/nosotros', label: 'Nosotros' },
 ]
 
 function Logomark() {
@@ -31,33 +35,42 @@ export default function NavBar() {
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
       <Container className="flex h-16 items-center justify-between">
-        <a href="#top" className="flex items-center gap-2.5">
+        <Link to="/" className="flex items-center gap-2.5">
           <Logomark />
           <span className="font-display text-lg font-bold tracking-tight">
             SoftRent
           </span>
-        </a>
+        </Link>
 
         <div className="flex items-center gap-2">
           <nav
             aria-label="Principal"
-            className="hidden items-center gap-8 text-sm text-ink-soft md:flex"
+            className="hidden items-center gap-8 text-sm md:flex"
           >
-            {links.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                className="transition-colors hover:text-ink"
-              >
-                {link.label}
-              </a>
-            ))}
+            {links.map((link) =>
+              link.to === '/demos' ? (
+                <DemoHoverCard key={link.to} />
+              ) : (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  className={({ isActive }) =>
+                    cn(
+                      'transition-colors hover:text-ink',
+                      isActive ? 'font-medium text-ink' : 'text-ink-soft',
+                    )
+                  }
+                >
+                  {link.label}
+                </NavLink>
+              ),
+            )}
           </nav>
 
           <ThemeToggle />
-          <Button href="#contacto" size="sm">
+          <LinkButton to="/comenzar" size="sm">
             Comenzar
-          </Button>
+          </LinkButton>
         </div>
       </Container>
     </header>
