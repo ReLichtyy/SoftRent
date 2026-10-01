@@ -15,6 +15,7 @@ export const demos: Demo[] = [
     demoUrl: 'https://mivps-217-77-11-250.sslip.io/',
     resumen:
       'Sus clientes agendan solos, según los cupos reales, y reciben el recordatorio automático.',
+    impacto: 'Agenda llena sin perder la mañana contestando mensajes de uno en uno.',
     resuelve: [
       'Pierdo citas por no contestar a tiempo',
       'La agenda vive en un cuaderno o en la cabeza de alguien',
@@ -39,6 +40,7 @@ export const demos: Demo[] = [
     demoUrl: null,
     resumen:
       'Cada pedido que llega por WhatsApp queda registrado, confirmado y cobrado sin anotar a mano.',
+    impacto: 'Cero pedidos perdidos entre los chats y menos cobros olvidados.',
     resuelve: [
       'Los pedidos se pierden entre chats de WhatsApp',
       'Olvida cobrar o anotar lo que ya entregó',
@@ -63,6 +65,7 @@ export const demos: Demo[] = [
     demoUrl: null,
     resumen:
       'Cada visita queda con su fecha, su técnico y su comprobante, del registro al cierre.',
+    impacto: 'Cada visita se cobra y se cierra el mismo día, sin perseguir papeles.',
     resuelve: [
       'Las facturas salen tarde o no salen',
       'Nadie sabe qué visita queda pendiente',

@@ -1,21 +1,75 @@
+import { useState } from 'react'
+import { ArrowRight, Eye } from '@phosphor-icons/react'
 import { Container } from '../../components/layout/Container'
 import { Section } from '../../components/layout/Section'
 import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
-import { CardImage } from '../../components/ui/CardImage'
 import { LinkButton } from '../../components/ui/LinkButton'
+import { Modal } from '../../components/ui/Modal'
 import { demoIcon } from '../../lib/demo-icons'
-import { demoPorId, demos } from '../../content/demos'
+import { planPorId } from '../../content/planes'
+import { demos } from '../../content/demos'
+import type { Demo } from '../../content/types'
 import { PageIntro } from '../shared'
 
+/* Vista rápida: qué hace el sistema y qué incluye, sin salir de la página. */
+function VistaRapida({ demo, onClose }: { demo: Demo; onClose: () => void }) {
+  const plan = planPorId(demo.planRecomendado)
+
+  return (
+    <Modal open onClose={onClose} title={demo.nombre}>
+      <div className="flex flex-col gap-4 text-sm">
+        <p className="text-xs text-ink-soft">{demo.industria}</p>
+
+        <div>
+          <h3 className="font-medium text-ink">Qué hace</h3>
+          <ul className="mt-2 space-y-1.5 text-ink-soft">
+            {demo.funciones.map((f) => (
+              <li key={f} className="flex gap-2">
+                <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand" />
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h3 className="font-medium text-ink">La inteligencia que lleva dentro</h3>
+          <ul className="mt-2 space-y-1.5 text-ink-soft">
+            {demo.iaIncluida.map((f) => (
+              <li key={f} className="flex gap-2">
+                <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-info" />
+                {f}
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {plan && <Badge tone="neutral">Plan recomendado: {plan.nombre}</Badge>}
+
+        <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
+          {demo.estado === 'publicada' && demo.demoUrl && (
+            <Button
+              href={demo.demoUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              size="sm"
+            >
+              Abrir demo en vivo
+            </Button>
+          )}
+          <LinkButton to={demo.cta} variant="secondary" size="sm">
+            Seleccionar
+          </LinkButton>
+        </div>
+      </div>
+    </Modal>
+  )
+}
+
 export function Demos() {
-  const destacada = demoPorId('citas')
-  const publicada =
-    destacada &&
-    destacada.estado === 'publicada' &&
-    destacada.demoUrl !== null
-  const resto = demos.filter((d) => d.id !== destacada?.id)
+  const [vista, setVista] = useState<Demo | null>(null)
 
   return (
     <Section className="py-16 sm:py-24">
@@ -25,58 +79,44 @@ export function Demos() {
           description="Pruebe el sistema antes de hablar con nosotros. Sin registros ni pruebas gratuitas: la demo es la prueba."
         />
 
-        {publicada && destacada?.demoUrl && (
-          <CardImage
-            imageSrc="https://picsum.photos/seed/softrent-demo-citas/960/600"
-            imageAlt="Vista previa del sistema de reservas en línea"
-            badge={{ label: 'Demo en vivo', tone: 'success', dot: true }}
-            title="Sistema de Reservas y Citas 24/7"
-            description="Vea cómo sus clientes eligen horario, confirman y reciben recordatorios automáticos por WhatsApp sin que usted intervenga."
-            href={destacada.demoUrl}
-            ctaLabel="Ver demo en vivo"
-            external
-            className="mx-auto max-w-xl lg:max-w-none"
-          />
-        )}
-
-        <div className="grid gap-5 md:grid-cols-2">
-          {resto.map((demo) => {
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {demos.map((demo) => {
             const Icono = demoIcon(demo.id)
+            const publicada = demo.estado === 'publicada' && demo.demoUrl !== null
             return (
-              <Card key={demo.id} className="flex flex-col gap-3">
-                <div className="flex items-start justify-between gap-3">
+              <Card key={demo.id} className="flex flex-col gap-2 p-4">
+                <div className="flex items-center justify-between gap-3">
                   <span className="text-brand">
-                    <Icono className="h-6 w-6" aria-hidden="true" />
+                    <Icono className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <Badge
-                    tone={demo.estado === 'publicada' ? 'success' : 'neutral'}
+                    tone={publicada ? 'success' : 'neutral'}
                     dot
+                    className="text-[10px]"
                   >
-                    {demo.estado === 'publicada'
-                      ? 'Publicada'
-                      : 'Próximamente'}
+                    {publicada ? 'En vivo' : 'Próximamente'}
                   </Badge>
                 </div>
-                <h2 className="font-display text-xl text-ink">{demo.nombre}</h2>
+                <h2 className="font-display text-lg text-ink">{demo.nombre}</h2>
                 <p className="text-xs text-ink-soft">{demo.industria}</p>
                 <p className="flex-1 text-sm leading-relaxed text-ink-soft">
-                  {demo.resumen}
+                  {demo.impacto}
                 </p>
-                {demo.estado === 'publicada' && demo.demoUrl ? (
+                <div className="mt-2 flex items-center gap-2">
                   <Button
-                    href={demo.demoUrl}
+                    type="button"
+                    variant="secondary"
                     size="sm"
-                    className="w-full"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    onClick={() => setVista(demo)}
                   >
-                    Ver demo
+                    <Eye className="h-4 w-4" aria-hidden="true" />
+                    Vista rápida
                   </Button>
-                ) : (
-                  <p className="text-xs text-ink-soft">
-                    Le avisamos cuando abra al público.
-                  </p>
-                )}
+                  <LinkButton to={demo.cta} variant="ghost" size="sm">
+                    Seleccionar
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
+                  </LinkButton>
+                </div>
               </Card>
             )
           })}
@@ -97,6 +137,8 @@ export function Demos() {
           </LinkButton>
         </Card>
       </Container>
+
+      {vista && <VistaRapida demo={vista} onClose={() => setVista(null)} />}
     </Section>
   )
 }

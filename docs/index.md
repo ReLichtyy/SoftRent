@@ -32,6 +32,7 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 | [Textarea](ui/textarea.md) | Área de texto multilínea |
 | [Checkbox](ui/checkbox.md) | Casilla de verificación con etiqueta |
 | [DragAndDrop](ui/draganddrop.md) | Zona de arrastre para archivos de contexto |
+| [Modal](ui/modal.md) | Diálogo accesible con vista rápida |
 | [Toggle](ui/toggle.md) | Interruptor tipo switch |
 
 ### Layout (`components/layout/`)

@@ -22,6 +22,8 @@ export type Demo = {
   demoUrl: string | null
   /** Resumen de una línea para tarjetas y galerías. */
   resumen: string
+  /** Micro-descripción de impacto: el beneficio medible, en una línea. */
+  impacto: string
   /** Dolores del cliente, en su propio lenguaje (patrón painLine). */
   resuelve: string[]
   /** Funciones del sistema (3 a 5, sin jerga técnica). */
