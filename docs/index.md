@@ -38,6 +38,7 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 | --- | --- |
 | [Container](layout/container.md) | Ancho máximo de página |
 | [Section](layout/section.md) | Sección de página con tonos de fondo |
+| [PageTransition](layout/page-transition.md) | Transición de página en cada cambio de ruta |
 
 ### Utilidades (`lib/`)
 
