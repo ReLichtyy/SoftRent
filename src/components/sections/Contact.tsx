@@ -3,7 +3,7 @@ import { Container } from '../layout/Container'
 import { Section } from '../layout/Section'
 import { useScrollReveal } from '../../lib/useScrollReveal'
 
-/** CTA final sobre bloque de marca (brand-deep). */
+/** CTA final sobre bloque de marca (surface-inverse). */
 export default function Contact() {
   const scope = useScrollReveal<HTMLDivElement>({
     selector: '[data-reveal]',
@@ -16,12 +16,12 @@ export default function Contact() {
         <div ref={scope} className="max-w-xl">
           <h2
             data-reveal
-            className="font-display text-3xl leading-tight sm:text-4xl"
+            className="font-display text-display-sm sm:text-display-md"
           >
             No tenemos una prueba gratis. Tenemos algo mejor: su sistema, de
             una vez.
           </h2>
-          <p data-reveal className="mt-5 text-on-deep/75">
+          <p data-reveal className="mt-5 text-ink-inverse/75">
             No armamos un producto genérico para que lo pruebe y vea si le
             sirve. Conversamos con usted, entendemos su negocio y construimos
             directo lo que necesita.
@@ -31,7 +31,7 @@ export default function Contact() {
             <Button href="mailto:hola@softrent.com" size="lg">
               Comenzar
             </Button>
-            <span className="text-sm text-on-deep/60">hola@softrent.com</span>
+            <span className="text-sm text-ink-inverse/60">hola@softrent.com</span>
           </div>
         </div>
       </Container>

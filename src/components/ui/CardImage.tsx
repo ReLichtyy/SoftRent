@@ -7,7 +7,7 @@ export type CardImageProps = {
   /** Imagen de portada (siempre con texto alternativo real). */
   imageSrc: string
   imageAlt: string
-  /** Velo suave sobre la imagen, degradado desde brand-deep.
+  /** Velo suave sobre la imagen, velo plano en surface-inverse.
    * @default false */
   overlay?: boolean
   /** Distintivo del contenido; va en el cuerpo, nunca sobre la imagen. */
@@ -70,7 +70,7 @@ export function CardImage({
           height="600"
           loading="lazy"
           className={cn(
-            'object-cover grayscale transition-transform duration-700 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-[1.03]',
+            'object-cover grayscale transition-transform duration-700 ease-[var(--ease-out)] hover:scale-[1.03]',
             horizontal
               ? 'h-full w-full'
               : cn(
@@ -82,7 +82,7 @@ export function CardImage({
         {overlay && (
           <div
             aria-hidden="true"
-            className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-deep/45 via-brand-deep/10 to-transparent"
+            className="pointer-events-none absolute inset-0 bg-surface-inverse/25"
           />
         )}
       </div>
@@ -102,15 +102,15 @@ export function CardImage({
         )}
         <h3
           className={cn(
-            'font-display text-ink',
-            compact ? 'line-clamp-2 text-lg' : 'text-xl',
+            'text-ink',
+            compact ? 'line-clamp-2 text-heading-md' : 'text-heading-lg',
           )}
         >
           {title}
         </h3>
         <p
           className={cn(
-            'flex-1 text-sm leading-relaxed text-ink-soft',
+            'flex-1 text-sm leading-relaxed text-ink-muted',
             compact && 'line-clamp-3',
           )}
         >

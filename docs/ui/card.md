@@ -58,7 +58,7 @@ componente.
 - `<div>` genérico. Si la tarjeta completa es interactiva, no metas un
   `onClick` en la Card: usa un enlace o botón dentro, o convierte la Card
   en enlace con semántica explícita.
-- Contraste de fondo `--surface` con texto `--text` cumple AA en ambos
+- Contraste de fondo `--surface` con texto `--ink` cumple AA en ambos
   temas (18.57:1 claro, 15.44:1 oscuro).
 
 ## Tokens usados

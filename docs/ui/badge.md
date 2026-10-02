@@ -36,7 +36,7 @@ Categoría simple:
 
 | Prop | Tipo | Por defecto | Descripción |
 | --- | --- | --- | --- |
-| `tone` | `'brand' \| 'neutral' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'neutral'` | Tono semántico |
+| `tone` | `'accent' | 'brand' (alias) | 'neutral| 'neutral' \| 'success' \| 'warning' \| 'danger' \| 'info'` | `'neutral'` | Tono semántico |
 | `dot` | `boolean` | `false` | Punto de color a la izquierda |
 | `children` | `ReactNode` | — | Contenido (texto corto) |
 | `className` | `string` | — | Clases extra (se fusiona con `cn`) |
@@ -57,5 +57,5 @@ a ambos temas vía `color-mix`.
 
 ## Tokens usados
 
-`--success`, `--warning`, `--danger`, `--info`, `--brand`, `--surface-2`,
-`--ink-soft`. Forma pill (radio completo) según los tokens.
+`--success`, `--warning`, `--danger`, `--info`, `--accent-soft`, `--accent-text`, `--surface-sunken`,
+`--ink-muted`. Forma pill (radio completo) según los tokens.

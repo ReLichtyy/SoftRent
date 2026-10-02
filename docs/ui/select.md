@@ -45,5 +45,5 @@ Con estado de error:
 
 ## Tokens usados
 
-`--surface-2` · `--border` · `--brand` (foco) · `--danger` (error) ·
+`--surface-sunken` · `--border` · `--focus-ring` (foco) · `--danger` (error) ·
 radio 8px. El chevron usa `--text-muted` y es fijo entre temas.

@@ -56,10 +56,10 @@ export function AppCobros() {
             onClick={() => setFiltro(f.id)}
             aria-pressed={filtro === f.id}
             className={cn(
-              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand',
+              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
               filtro === f.id
-                ? 'border-brand bg-brand/10 text-brand'
-                : 'border-line text-ink-soft hover:border-ink-soft/40 hover:text-ink',
+                ? 'border-accent bg-accent-soft text-accent-text'
+                : 'border-border text-ink-muted hover:border-ink-muted/40 hover:text-ink',
             )}
           >
             {f.label}
@@ -69,14 +69,14 @@ export function AppCobros() {
 
       {visibles.length === 0 ? (
         <Card className="flex flex-col items-center gap-2 py-10 text-center">
-          <p className="font-display text-lg text-ink">Nada por cobrar</p>
-          <p className="max-w-sm text-sm text-ink-soft">
+          <p className="text-heading-md text-ink">Nada por cobrar</p>
+          <p className="max-w-sm text-sm text-ink-muted">
             No hay cobros en este filtro.
           </p>
         </Card>
       ) : (
         <Card padded={false} className="overflow-hidden">
-          <ul className="divide-y divide-line">
+          <ul className="divide-y divide-border">
             {visibles.map((c) => {
               const tono = tonoEstado[c.estado]
               return (
@@ -84,11 +84,11 @@ export function AppCobros() {
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-ink">
                       {c.concepto}
-                      <span className="ms-2 font-display text-base">
+                      <span className="ms-2 text-heading-sm">
                         {colones(c.monto)}
                       </span>
                     </p>
-                    <p className="mt-0.5 text-xs text-ink-soft">
+                    <p className="mt-0.5 text-xs text-ink-muted">
                       {c.cliente} · {c.vencimiento}
                     </p>
                   </div>

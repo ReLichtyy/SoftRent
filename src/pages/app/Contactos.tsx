@@ -57,10 +57,10 @@ export function AppContactos() {
             onClick={() => setFiltro(e.id)}
             aria-pressed={filtro === e.id}
             className={cn(
-              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand',
+              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
               filtro === e.id
-                ? 'border-brand bg-brand/10 text-brand'
-                : 'border-line text-ink-soft hover:border-ink-soft/40 hover:text-ink',
+                ? 'border-accent bg-accent-soft text-accent-text'
+                : 'border-border text-ink-muted hover:border-ink-muted/40 hover:text-ink',
             )}
           >
             {e.label}
@@ -70,21 +70,21 @@ export function AppContactos() {
 
       {visibles.length === 0 ? (
         <Card className="flex flex-col items-center gap-2 py-10 text-center">
-          <p className="font-display text-lg text-ink">Nadie por aquí</p>
-          <p className="max-w-sm text-sm text-ink-soft">
+          <p className="text-heading-md text-ink">Nadie por aquí</p>
+          <p className="max-w-sm text-sm text-ink-muted">
             No hay contactos en esta etapa todavía.
           </p>
         </Card>
       ) : (
         <Card padded={false} className="overflow-hidden">
-          <ul className="divide-y divide-line">
+          <ul className="divide-y divide-border">
             {visibles.map((c) => {
               const tono = tonoEtapa[c.etapa]
               return (
                 <li key={c.id} className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
                   <div className="min-w-0">
                     <p className="text-sm font-medium text-ink">{c.nombre}</p>
-                    <p className="mt-0.5 text-xs text-ink-soft">
+                    <p className="mt-0.5 text-xs text-ink-muted">
                       {c.telefono}
                       {c.nota && ` · ${c.nota}`}
                     </p>

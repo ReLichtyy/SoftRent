@@ -19,20 +19,21 @@ export type LinkButtonProps = {
 /* Clases espejo de Button: el enlace interno necesita la misma
  * apariencia sin que la primitiva ui/Button dependa del router. */
 const baseStyles =
-  'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-sm font-medium outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]'
+  'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-sm font-medium tracking-[-0.005em] outline-none transition-[color,background-color,border-color,transform] duration-[var(--duration-fast)] ease-[var(--ease-out)] active:translate-y-px focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]'
 
 const variantStyles: Record<LinkButtonVariant, string> = {
-  primary: 'bg-brand text-on-brand hover:bg-brand-hover',
+  primary:
+    'bg-accent text-on-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.14),var(--elev-xs)] hover:bg-accent-hover active:bg-accent-active',
   secondary:
-    'border border-line bg-surface text-ink hover:bg-surface-2 hover:border-ink-soft/40',
-  ghost: 'text-ink hover:bg-surface-2',
-  link: 'text-brand underline-offset-4 hover:underline',
+    'border border-border bg-surface text-ink shadow-xs hover:border-border-strong hover:bg-surface-sunken',
+  ghost: 'text-ink hover:bg-surface-sunken active:bg-border',
+  link: 'text-accent-text underline-offset-4 hover:underline',
 }
 
 const sizeStyles: Record<LinkButtonSize, string> = {
   sm: 'h-8 px-3 text-sm',
   md: 'h-10 px-4 text-sm',
-  lg: 'h-12 px-6 text-base',
+  lg: 'h-12 px-5 text-base',
 }
 
 /** Enlace interno de react-router con apariencia de botón.

@@ -12,9 +12,9 @@ export function Privacidad() {
           description="Cómo tratamos los datos de su negocio y de sus clientes. En lenguaje claro, sin letra chica."
         />
 
-        <div className="space-y-6 text-sm leading-relaxed text-ink-soft">
+        <div className="space-y-6 text-sm leading-relaxed text-ink-muted">
           <div>
-            <h2 className="font-display text-lg text-ink">Qué datos tratamos</h2>
+            <h2 className="text-heading-md text-ink">Qué datos tratamos</h2>
             <p className="mt-2">
               Los datos que usted nos entrega para construir su sistema:
               servicios, precios, horarios y la información de sus clientes
@@ -24,7 +24,7 @@ export function Privacidad() {
           </div>
 
           <div id="ley-8968">
-            <h2 className="font-display text-lg text-ink">
+            <h2 className="text-heading-md text-ink">
               Ley 8968 de protección de datos personales
             </h2>
             <p className="mt-2">
@@ -37,7 +37,7 @@ export function Privacidad() {
           </div>
 
           <div>
-            <h2 className="font-display text-lg text-ink">Quién puede verlos</h2>
+            <h2 className="text-heading-md text-ink">Quién puede verlos</h2>
             <p className="mt-2">
               Solo el equipo que atiende su negocio, con accesos por rol:
               dueño, agente o solo lectura. Las conversaciones quedan
@@ -47,7 +47,7 @@ export function Privacidad() {
           </div>
 
           <div>
-            <h2 className="font-display text-lg text-ink">Sus derechos</h2>
+            <h2 className="text-heading-md text-ink">Sus derechos</h2>
             <p className="mt-2">
               Puede pedirnos acceder, corregir, exportar o eliminar sus
               datos escribiendo a hola@softrent.com. Al cancelar su

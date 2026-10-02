@@ -65,15 +65,15 @@ las clases pasadas ganan en conflictos (ver [cn](../lib/cn.md)).
 
 - Elemento nativo: foco, activación por teclado y anuncio por rol heredados
   del navegador. No uses `div` con `onClick` donde esto aplica.
-- Foco visible: anillo de 2px en `--brand` con offset del fondo de página.
+- Foco visible: anillo de 2px en `--focus-ring` con offset del fondo de página.
 - `disabled` además aplica `pointer-events: none` y opacidad 50%.
 - Con `size="icon"` el contenido visible debe ser un ícono y la prop
   `aria-label` es obligatoria.
 
 ## Tokens usados
 
-`--brand` / `--brand-hover` (primario), `--surface` / `--surface-2` /
-`--line` (secundario), `--on-brand` para el texto sobre la marca
+`--accent` / `--accent-hover` (primario), `--surface` / `--surface-sunken` /
+`--border` (secundario), `--on-accent` para el texto sobre la marca
 (blanco en claro, tinta oscura en oscuro — ver
 [contraste](index.md#contraste-aa-verificado-wcag-21)). Radio de 8px
 (`rounded-sm` de los tokens).

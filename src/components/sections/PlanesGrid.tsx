@@ -15,20 +15,14 @@ import type { PlanId } from '../../content/types'
 import { colones } from '../../lib/format'
 import { cn } from '../../lib/cn'
 
-/* Presentación de cada plan: ícono y color son decisión visual;
- * los datos vienen de content/planes. */
+/* Presentación de cada plan: el ícono es decisión visual; los datos
+ * vienen de content/planes. Los planes se distinguen por posición y
+ * palabras, no por color; el recomendado es la única tarjeta inversa. */
 const iconos: Record<PlanId, Icon> = {
   arranque: Rocket,
   crecimiento: Sparkle,
   pro: CrownSimple,
   medida: SquaresFour,
-}
-
-const colores: Record<PlanId, string> = {
-  arranque: 'text-plan-arranque',
-  crecimiento: 'text-plan-crecimiento',
-  pro: 'text-plan-pro',
-  medida: 'text-plan-medida',
 }
 
 /** Grilla de planes con toggle mensual/anual (sección 3.4.6).
@@ -52,7 +46,7 @@ export function PlanesGrid() {
           checked={anual}
           onCheckedChange={setAnual}
         />
-        <span className="text-sm text-ink-soft">
+        <span className="text-sm text-ink-muted">
           Pago anual{' '}
           <span className="font-medium text-ink">2 meses gratis</span>
         </span>
@@ -66,11 +60,12 @@ export function PlanesGrid() {
               key={plan.id}
               className={cn(
                 'flex flex-col gap-4',
-                plan.destacado && 'border-brand ring-1 ring-brand',
+                plan.destacado &&
+                  'border-surface-inverse bg-surface-inverse [--ink-muted:rgb(243_240_235/0.78)] [--ink:var(--ink-inverse)]',
               )}
             >
               <div className="flex items-start justify-between gap-3">
-                <span className={colores[plan.id]}>
+                <span className="text-ink-muted">
                   <Icono className="h-6 w-6" aria-hidden="true" />
                 </span>
                 {plan.destacado && (
@@ -80,25 +75,25 @@ export function PlanesGrid() {
                 )}
               </div>
               <div>
-                <h3 className="font-display text-xl text-ink">{plan.nombre}</h3>
-                <p className="mt-2 font-display text-2xl text-ink">
+                <h3 className="text-heading-lg text-ink">{plan.nombre}</h3>
+                <p className="mt-2 font-display text-display-sm text-ink">
                   {precioTexto(plan)}
                   {plan.id !== 'medida' && (
-                    <span className="ms-1 text-sm font-normal text-ink-soft">
+                    <span className="ms-1 text-sm font-normal text-ink-muted">
                       por mes
                     </span>
                   )}
                 </p>
-                <p className="mt-2 text-sm leading-relaxed text-ink-soft">
+                <p className="mt-2 text-sm leading-relaxed text-ink-muted">
                   {plan.paraQuien}
                 </p>
               </div>
-              <ul className="flex-1 space-y-2 text-sm text-ink-soft">
+              <ul className="flex-1 space-y-2 text-sm text-ink-muted">
                 {plan.incluye.map((line) => (
                   <li key={line} className="flex items-start gap-2">
                     <span
                       aria-hidden="true"
-                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
+                      className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
                     />
                     {line}
                   </li>
@@ -121,7 +116,7 @@ export function PlanesGrid() {
         <p className="text-sm font-medium text-ink">
           {reglas.iva} {reglas.implementacionUnica}
         </p>
-        <p className="text-sm text-ink-soft">
+        <p className="text-sm text-ink-muted">
           {reglas.anual} {reglas.cancelacion}
         </p>
       </Card>

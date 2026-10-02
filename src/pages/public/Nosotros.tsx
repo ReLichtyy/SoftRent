@@ -67,11 +67,11 @@ export function Nosotros() {
         <div className="grid gap-5 md:grid-cols-2">
           {blocks.map((block) => (
             <Card key={block.title} className="flex flex-col gap-3">
-              <span className="text-brand">
+              <span className="text-accent-text">
                 <block.icon className="h-6 w-6" aria-hidden="true" />
               </span>
-              <h2 className="font-display text-xl text-ink">{block.title}</h2>
-              <p className="text-sm leading-relaxed text-ink-soft">
+              <h2 className="text-heading-lg text-ink">{block.title}</h2>
+              <p className="text-sm leading-relaxed text-ink-muted">
                 {block.text}
               </p>
             </Card>
@@ -79,15 +79,15 @@ export function Nosotros() {
         </div>
 
         <div>
-          <h2 className="font-display text-2xl text-ink">Cómo trabajamos</h2>
+          <h2 className="font-display text-display-sm text-ink">Cómo trabajamos</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((step) => (
               <Card key={step.title} className="flex flex-col gap-2">
-                <span className="text-brand">
+                <span className="text-accent-text">
                   <step.icon className="h-6 w-6" aria-hidden="true" />
                 </span>
-                <h3 className="font-display text-lg text-ink">{step.title}</h3>
-                <p className="text-sm leading-relaxed text-ink-soft">
+                <h3 className="text-heading-md text-ink">{step.title}</h3>
+                <p className="text-sm leading-relaxed text-ink-muted">
                   {step.text}
                 </p>
               </Card>
@@ -96,7 +96,7 @@ export function Nosotros() {
         </div>
 
         <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-xl text-sm leading-relaxed text-ink-soft">
+          <p className="max-w-xl text-sm leading-relaxed text-ink-muted">
             Le gustaría conocer el detalle de los planes antes de escribirnos,
             revíselos con calma.
           </p>

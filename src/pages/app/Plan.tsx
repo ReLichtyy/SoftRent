@@ -28,39 +28,39 @@ export function AppPlan() {
 
       <Card className="flex flex-col gap-4">
         <div className="flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-display text-xl text-ink">Plan {plan.nombre}</h2>
+          <h2 className="text-heading-lg text-ink">Plan {plan.nombre}</h2>
           <Badge tone="brand" dot>
             Su plan
           </Badge>
         </div>
-        <p className="font-display text-2xl text-ink">
+        <p className="font-display text-display-sm text-ink">
           {plan.precioMensual !== null ? colones(plan.precioMensual) : 'A cotizar'}
-          <span className="ms-1 text-sm font-normal text-ink-soft">
+          <span className="ms-1 text-sm font-normal text-ink-muted">
             por mes, {reglas.iva.toLowerCase()}
           </span>
         </p>
-        <ul className="space-y-2 text-sm text-ink-soft">
+        <ul className="space-y-2 text-sm text-ink-muted">
           {plan.incluye.map((line) => (
             <li key={line} className="flex items-start gap-2">
               <span
                 aria-hidden="true"
-                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-brand"
+                className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent"
               />
               {line}
             </li>
           ))}
         </ul>
-        <p className="border-t border-line pt-4 text-xs leading-relaxed text-ink-soft">
+        <p className="border-t border-border pt-4 text-xs leading-relaxed text-ink-muted">
           Uso de este mes (ejemplo de demo): {uso.join('. ')}.
         </p>
       </Card>
 
       <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="font-display text-lg text-ink">
+          <h2 className="text-heading-md text-ink">
             ¿Necesita más espacio?
           </h2>
-          <p className="mt-1 text-sm leading-relaxed text-ink-soft">
+          <p className="mt-1 text-sm leading-relaxed text-ink-muted">
             Cambie a Pro cuando quiera. El cambio se refleja desde el
             siguiente mes.
           </p>

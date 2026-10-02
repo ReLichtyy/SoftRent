@@ -7,18 +7,26 @@
 
   body {
     background-color: var(--bg);
-    color: var(--text);
+    color: var(--ink);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
   }
 
-  ::selection {
-    background-color: var(--brand);
-    color: var(--on-brand);
+  /* Titulares editoriales: un solo peso, tamaño óptico automático y
+   * saltos de línea equilibrados. */
+  .font-display {
+    font-optical-sizing: auto;
+    text-wrap: balance;
   }
 
+  ::selection {
+    background-color: var(--accent);
+    color: var(--on-accent);
+  }
+
+  /* Un solo anillo de foco: 2px, separado 2px, solo con teclado. */
   :focus-visible {
-    outline: 2px solid var(--brand);
+    outline: 2px solid var(--focus-ring);
     outline-offset: 2px;
   }
 
@@ -41,5 +49,64 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* Marquesina infinita: el track lleva el contenido duplicado y se
+ * desplaza exactamente un ciclo (50%), por eso el loop no salta.
+ * Se pausa al pasar el mouse; con movimiento reducido queda
+ * estática por el bloque global de arriba. */
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee {
+  overflow: hidden;
+  /* Desvanecido en los bordes para que el loop no tenga borde duro. */
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 10%,
+    black 90%,
+    transparent
+  );
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee-scroll 40s linear infinite;
+}
+
+.marquee:hover .marquee-track {
+  animation-play-state: paused;
+}
+
+.marquee-reverse .marquee-track {
+  animation-direction: reverse;
+}
+
+/* Marca de la casilla (Checkbox): check blanco sobre el relleno accent. */
+.sr-check:checked {
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m3.5 8.5 3 3 6-7'/%3E%3C/svg%3E");
+}
+
+/* Colores forzados (Windows alto contraste): controles nativos usan el
+ * color del sistema. */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
   }
 }

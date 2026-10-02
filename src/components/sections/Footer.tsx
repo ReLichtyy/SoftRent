@@ -9,6 +9,7 @@ import {
   WhatsappLogo,
   EnvelopeSimple,
 } from '@phosphor-icons/react'
+import { LogoWordmark } from '../brand/Logo'
 import { Container } from '../layout/Container'
 import { Select } from '../ui/Select'
 import { useTheme } from '../../lib/useTheme'
@@ -82,7 +83,7 @@ function SelectorTema() {
     <div
       role="group"
       aria-label="Tema del sitio"
-      className="inline-flex overflow-hidden rounded-sm border border-on-deep/20"
+      className="inline-flex overflow-hidden rounded-sm border border-ink-inverse/20"
     >
       {opciones.map(({ id, texto, Icono }) => (
         <button
@@ -91,10 +92,10 @@ function SelectorTema() {
           onClick={() => setTheme(id)}
           aria-pressed={theme === id}
           className={cn(
-            'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand',
+            'inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus',
             theme === id
-              ? 'bg-on-deep/15 text-on-deep'
-              : 'text-on-deep/60 hover:text-on-deep',
+              ? 'bg-ink-inverse/15 text-ink-inverse'
+              : 'text-ink-inverse/60 hover:text-ink-inverse',
           )}
         >
           <Icono className="h-3.5 w-3.5" aria-hidden="true" />
@@ -126,12 +127,12 @@ function SelectorIdioma() {
 
 export default function Footer() {
   return (
-    <footer className="bg-brand-deep text-on-deep/60">
+    <footer className="bg-surface-inverse text-ink-inverse/60">
       <Container className="py-12">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
           {/* Marca y contacto directo */}
           <div>
-            <p className="font-display text-lg text-on-deep">SoftRent</p>
+            <LogoWordmark width={152} />
             <p className="mt-3 max-w-xs text-sm leading-relaxed">
               Sistemas de reservas, mensajes y cobros para negocios de
               servicios en Costa Rica. Lo implementamos en días.
@@ -142,7 +143,7 @@ export default function Footer() {
                   href={`https://wa.me/${contacto.whatsapp}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 text-on-deep/70 underline-offset-4 transition-colors hover:text-on-deep hover:underline"
+                  className="inline-flex items-center gap-2 text-ink-inverse/70 underline-offset-4 transition-colors hover:text-ink-inverse hover:underline"
                 >
                   <WhatsappLogo className="h-4 w-4 shrink-0" aria-hidden="true" />
                   WhatsApp directo
@@ -151,7 +152,7 @@ export default function Footer() {
               <li>
                 <a
                   href={`mailto:${contacto.correoSoporte}`}
-                  className="inline-flex items-center gap-2 text-on-deep/70 underline-offset-4 transition-colors hover:text-on-deep hover:underline"
+                  className="inline-flex items-center gap-2 text-ink-inverse/70 underline-offset-4 transition-colors hover:text-ink-inverse hover:underline"
                 >
                   <EnvelopeSimple className="h-4 w-4 shrink-0" aria-hidden="true" />
                   {contacto.correoSoporte}
@@ -162,7 +163,7 @@ export default function Footer() {
 
           {columnas.map((col) => (
             <nav key={col.titulo} aria-label={col.titulo}>
-              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-on-deep/50">
+              <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-inverse/50">
                 {col.titulo}
               </p>
               <ul className="mt-4 space-y-2.5 text-sm">
@@ -170,7 +171,7 @@ export default function Footer() {
                   <li key={enlace.texto}>
                     <Link
                       to={enlace.href}
-                      className="text-on-deep/70 underline-offset-4 transition-colors hover:text-on-deep hover:underline"
+                      className="text-ink-inverse/70 underline-offset-4 transition-colors hover:text-ink-inverse hover:underline"
                     >
                       {enlace.texto}
                     </Link>
@@ -183,13 +184,13 @@ export default function Footer() {
       </Container>
 
       {/* Franja de confianza local */}
-      <div className="border-t border-on-deep/15">
+      <div className="border-t border-ink-inverse/15">
         <Container>
           <ul className="grid grid-cols-1 gap-3 py-5 sm:grid-cols-3">
             {confianza.map((item) => (
               <li
                 key={item.texto}
-                className="flex items-center gap-2.5 text-sm text-on-deep/70"
+                className="flex items-center gap-2.5 text-sm text-ink-inverse/70"
               >
                 <item.icono className="h-4 w-4 shrink-0" aria-hidden="true" />
                 {item.texto}
@@ -200,9 +201,9 @@ export default function Footer() {
       </div>
 
       {/* Barra inferior: derechos y selectores */}
-      <div className="border-t border-on-deep/15">
+      <div className="border-t border-ink-inverse/15">
         <Container className="flex flex-col gap-4 py-5 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-on-deep/50">
+          <p className="text-xs text-ink-inverse/50">
             © {year} SoftRent. Sistemas a la medida para pymes de servicio.
           </p>
           <div className="flex flex-wrap items-center gap-4">

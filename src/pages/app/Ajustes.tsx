@@ -31,15 +31,15 @@ export function AppAjustes() {
       />
 
       <Card padded={false} className="overflow-hidden">
-        <p className="border-b border-line px-4 py-3 text-sm font-medium text-ink">
+        <p className="border-b border-border px-4 py-3 text-sm font-medium text-ink">
           Equipo
         </p>
-        <ul className="divide-y divide-line">
+        <ul className="divide-y divide-border">
           {equipo.map((u) => (
             <li key={u.id} className="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-ink">{u.nombre}</p>
-                <p className="mt-0.5 text-xs text-ink-soft">
+                <p className="mt-0.5 text-xs text-ink-muted">
                   Recibe avisos por {u.canal}
                 </p>
               </div>
@@ -63,10 +63,10 @@ export function AppAjustes() {
 
       <Card className="space-y-3">
         <div className="flex items-center justify-between gap-3">
-          <h2 className="font-display text-lg text-ink">Negocio</h2>
+          <h2 className="text-heading-md text-ink">Negocio</h2>
           <Badge tone="brand">{negocioDemo.nombre}</Badge>
         </div>
-        <p className="text-sm leading-relaxed text-ink-soft">
+        <p className="text-sm leading-relaxed text-ink-muted">
           Horario, servicios, precios y base de conocimiento se ajustan desde
           la pantalla del Asistente y la Agenda. Para cambios del negocio
           (nombre, cédula, datos fiscales), escríbanos y lo actualizamos por

@@ -1,5 +1,11 @@
 import { useId, type SelectHTMLAttributes } from 'react'
 import { cn } from '../../lib/cn'
+import {
+  FieldError,
+  FieldHint,
+  controlStyles,
+  labelStyles,
+} from './FieldMessage'
 
 export type SelectProps = {
   /** Etiqueta visible; siempre requerida para accesibilidad. */
@@ -12,12 +18,13 @@ export type SelectProps = {
   children: React.ReactNode
 } & Omit<SelectHTMLAttributes<HTMLSelectElement>, 'className' | 'children'>
 
-const fieldStyles =
-  'w-full appearance-none rounded-sm border border-line bg-surface-2 bg-[url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'none\' stroke=\'%235F585B\' stroke-width=\'2\' stroke-linecap=\'round\'%3E%3Cpath d=\'m6 9 6 6 6-6\'/%3E%3C/svg%3E")] bg-[length:16px] bg-[right_0.75rem_center] bg-no-repeat py-2.5 pl-3 pr-10 text-sm text-ink outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30 aria-invalid:border-danger'
+/* El chevron es una imagen de fondo en gris medio (3:1 sobre papel y
+ * sobre superficie oscura); el control sigue siendo un <select> nativo
+ * accesible por teclado. */
+const chevron =
+  "bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns=%27http://www.w3.org/2000/svg%27%20viewBox=%270%200%2024%2024%27%20fill=%27none%27%20stroke=%27%23948d84%27%20stroke-width=%272%27%20stroke-linecap=%27round%27%20stroke-linejoin=%27round%27%3E%3Cpath%20d=%27m6%209%206%206%206-6%27/%3E%3C/svg%3E')] bg-[length:16px] bg-[right_0.75rem_center] bg-no-repeat"
 
-/** Selector nativo con etiqueta, ayuda y error asociados por id.
- * El chevron es una imagen de fondo; el control sigue siendo un
- * <select> accesible por teclado. */
+/** Selector nativo con etiqueta, ayuda y error asociados por id. */
 export function Select({
   label,
   hint,
@@ -31,34 +38,26 @@ export function Select({
   const id = idProp ?? autoId
   const hintId = `${id}-hint`
   const errorId = `${id}-error`
-  const describedBy = [hint && hintId, error && errorId]
+  const describedBy = [error && errorId, hint && hintId]
     .filter(Boolean)
     .join(' ')
 
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      <label htmlFor={id} className="text-sm font-medium text-ink">
+      <label htmlFor={id} className={labelStyles}>
         {label}
       </label>
       <select
         id={id}
-        className={fieldStyles}
+        className={cn(controlStyles, 'cursor-pointer appearance-none pr-10', chevron)}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy || undefined}
         {...props}
       >
         {children}
       </select>
-      {hint && (
-        <p id={hintId} className="text-xs text-ink-soft">
-          {hint}
-        </p>
-      )}
-      {error && (
-        <p id={errorId} className="text-xs text-danger">
-          {error}
-        </p>
-      )}
+      <FieldError id={errorId} error={error} />
+      {hint && !error && <FieldHint id={hintId}>{hint}</FieldHint>}
     </div>
   )
 }

@@ -1,10 +1,4 @@
-/* Fuentes autoalojadas (Inter + Play), sin petición externa. */
-@import "@fontsource/inter/400.css";
-@import "@fontsource/inter/500.css";
-@import "@fontsource/inter/600.css";
-@import "@fontsource/inter/700.css";
-@import "@fontsource/play/400.css";
-@import "@fontsource/play/700.css";
+/* Fuentes Figtree + Newsreader: se declaran (autoalojadas) en styles/tokens.css. */
 @import "tailwindcss";
 @import "./styles/tokens.css";
 @import "./styles/base.css";

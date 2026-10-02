@@ -176,7 +176,7 @@ export function DemoHoverCard() {
         className={({ isActive }) =>
           cn(
             'transition-colors hover:text-ink',
-            isActive ? 'font-medium text-ink' : 'text-ink-soft',
+            isActive ? 'font-medium text-ink' : 'text-ink-muted',
             open && 'text-ink',
           )
         }
@@ -191,13 +191,13 @@ export function DemoHoverCard() {
         className={cn(
           'absolute left-1/2 top-full z-50 -translate-x-1/2 pt-3',
           tarjetas.length > 1 ? 'w-[48rem]' : 'w-[17rem]',
-          'transition-[opacity,translate] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)]',
+          'transition-[opacity,translate] duration-200 ease-[var(--ease-out)]',
           open
             ? 'pointer-events-auto translate-y-0 opacity-100'
             : 'pointer-events-none -translate-y-1 opacity-0',
         )}
       >
-        <div className="rounded-md border border-line bg-surface p-3 shadow-[0_16px_48px_rgb(64_5_23/0.22)]">
+        <div className="rounded-md border border-border bg-surface p-3 shadow-[0_16px_48px_rgb(64_5_23/0.22)]">
           <div
             className={cn(
               'grid grid-cols-1 gap-3 overflow-y-auto overscroll-contain',
@@ -228,10 +228,10 @@ export function DemoHoverCard() {
             ))}
           </div>
 
-          <div className="mt-3 border-t border-line pt-2.5">
+          <div className="mt-3 border-t border-border pt-2.5">
             <Link
               to="/demos"
-              className="inline-flex items-center gap-1 text-sm text-ink-soft transition-colors hover:text-ink"
+              className="inline-flex items-center gap-1 text-sm text-ink-muted transition-colors hover:text-ink"
             >
               Ver todas las demos
               <ArrowRight className="h-3.5 w-3.5" aria-hidden="true" />

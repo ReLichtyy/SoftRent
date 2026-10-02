@@ -43,9 +43,9 @@ Soporta controlado (`checked` + `onChange`) y no controlado
 - `<input type="checkbox">` nativo: Espacio para alternar, estado anunciado
   por lectores de pantalla, sin ARIA extra necesario.
 - Etiqueta clicable asociada por `htmlFor`/`id` (área de toque ampliada).
-- El color del check usa `accent-color` (`--brand`), que respeta el tema.
+- El color del check usa `accent-color` (`--accent`), que respeta el tema.
 - `error` se anuncia vía `aria-describedby` y `aria-invalid`.
 
 ## Tokens usados
 
-`--brand` (check) · `--danger` (error) · `--ink` / `--ink-soft` (textos).
+`--accent` (check) · `--danger` (error) · `--ink` / `--ink-muted` (textos).

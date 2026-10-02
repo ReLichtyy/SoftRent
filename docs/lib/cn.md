@@ -12,14 +12,14 @@ import { cn } from '../lib/cn'
 Une `clsx` (condicionales) con `tailwind-merge` (resolución de conflictos):
 
 ```tsx
-cn('rounded-md border border-line bg-surface', isOpen && 'bg-surface-2', className)
-// 'rounded-md border border-line bg-surface-2' si isOpen
+cn('rounded-md border border-border bg-surface', isOpen && 'bg-surface-sunken', className)
+// 'rounded-md border border-border bg-surface-sunken' si isOpen
 ```
 
 Si dos clases compiten por la misma propiedad, gana la última:
 
 ```tsx
-cn('bg-surface', 'bg-brand')  // → 'bg-brand'
+cn('bg-surface', 'bg-accent')  // → 'bg-accent'
 ```
 
 Esto es lo que permite que `className` de un componente sobrescriba sus

@@ -11,7 +11,7 @@ import { cn } from '../../lib/cn'
 /** Chip del submódulo activo (regla 2): "Hablando de: Citas". */
 function ModuleChip({ modulo }: { modulo: string }) {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-info/10 px-2.5 py-0.5 text-xs font-medium text-info">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-info-soft px-2.5 py-0.5 text-xs font-medium text-info">
       Hablando de: {modulo}
     </span>
   )
@@ -53,7 +53,7 @@ function LeadCapture({
   }
 
   return (
-    <div className="space-y-2.5 border-t border-line bg-surface p-3">
+    <div className="space-y-2.5 border-t border-border bg-surface p-3">
       <p className="text-xs font-medium text-ink">Para que le escribamos:</p>
       <div className="grid grid-cols-2 gap-2.5">
         <Input
@@ -138,7 +138,7 @@ export default function Chat() {
           type="button"
           onClick={chat.abrir}
           aria-label="Abrir el asistente de SoftRent"
-          className="fixed bottom-5 right-5 z-50 flex h-12 items-center gap-2 rounded-full bg-brand px-4 text-sm font-medium text-on-brand shadow-lg shadow-brand/25 outline-none transition-transform duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:scale-[1.03] active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+          className="fixed bottom-5 right-5 z-50 flex h-12 items-center gap-2 rounded-full bg-accent px-4 text-sm font-medium text-on-accent shadow-md outline-none transition-transform duration-200 ease-[var(--ease-out)] hover:scale-[1.03] active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
         >
           <ChatsCircle className="h-5 w-5" aria-hidden="true" />
           Hable con el asistente
@@ -150,12 +150,12 @@ export default function Chat() {
           role="dialog"
           aria-label="Asistente de SoftRent"
           className={cn(
-            'fixed z-50 flex flex-col overflow-hidden rounded-md border border-line bg-surface text-ink shadow-xl',
+            'fixed z-50 flex flex-col overflow-hidden rounded-md border border-border bg-surface text-ink shadow-lg',
             'inset-x-3 bottom-3 top-14',
             'sm:inset-x-auto sm:bottom-5 sm:right-5 sm:top-auto sm:h-[560px] sm:max-h-[calc(100dvh-2.5rem)] sm:w-[380px]',
           )}
         >
-          <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+          <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
             <div className="min-w-0">
               <p className="text-sm font-medium">Asistente SoftRent</p>
               {chat.moduloActivo && (
@@ -166,7 +166,7 @@ export default function Chat() {
               type="button"
               onClick={chat.cerrar}
               aria-label="Cerrar el chat"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm text-ink-soft outline-none transition-colors hover:bg-surface-2 hover:text-ink focus-visible:ring-2 focus-visible:ring-brand"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm text-ink-muted outline-none transition-colors hover:bg-surface-sunken hover:text-ink focus-visible:ring-2 focus-visible:ring-focus"
             >
               <X className="h-5 w-5" aria-hidden="true" />
             </button>
@@ -183,30 +183,30 @@ export default function Chat() {
                 className={cn(
                   'max-w-[85%] rounded-md px-3 py-2 text-sm leading-relaxed',
                   m.autor === 'bot'
-                    ? 'bg-surface-2 text-ink'
-                    : 'ms-auto bg-brand text-on-brand',
+                    ? 'bg-surface-sunken text-ink'
+                    : 'ms-auto bg-accent text-on-accent',
                 )}
               >
                 {m.texto}
               </div>
             ))}
             {chat.estado === 'escribiendo' && (
-              <div className="flex w-fit items-center gap-1 rounded-md bg-surface-2 px-3 py-2.5">
-                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-soft" />
-                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-soft [animation-delay:150ms]" />
-                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-soft [animation-delay:300ms]" />
+              <div className="flex w-fit items-center gap-1 rounded-md bg-surface-sunken px-3 py-2.5">
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-muted" />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-muted [animation-delay:150ms]" />
+                <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-muted [animation-delay:300ms]" />
               </div>
             )}
           </div>
 
           {chat.quickReplies.length > 0 && chat.estado !== 'enviado' && (
-            <div className="flex flex-wrap gap-2 border-t border-line px-4 py-2.5">
+            <div className="flex flex-wrap gap-2 border-t border-border px-4 py-2.5">
               {chat.quickReplies.map((opcion) => (
                 <button
                   key={opcion}
                   type="button"
                   onClick={() => chat.enviar(opcion)}
-                  className="rounded-full border border-line px-3.5 py-1.5 text-xs text-ink-soft outline-none transition-colors hover:border-brand hover:text-brand focus-visible:ring-2 focus-visible:ring-brand"
+                  className="rounded-full border border-border px-3.5 py-1.5 text-xs text-ink-muted outline-none transition-colors hover:border-accent hover:text-accent-text focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   {opcion}
                 </button>
@@ -219,21 +219,21 @@ export default function Chat() {
           )}
 
           {chat.estado === 'enviado' && (
-            <p className="border-t border-line px-4 py-3 text-xs text-ink-soft">
+            <p className="border-t border-border px-4 py-3 text-xs text-ink-muted">
               Solicitud enviada. Le respondemos en menos de un día hábil.
             </p>
           )}
 
           {mostrarPrivacidad && (
-            <div className="flex items-start justify-between gap-2 border-t border-line bg-surface-2 px-4 py-2.5">
-              <p className="text-xs leading-relaxed text-ink-soft">
+            <div className="flex items-start justify-between gap-2 border-t border-border bg-surface-sunken px-4 py-2.5">
+              <p className="text-xs leading-relaxed text-ink-muted">
                 {avisoPrivacidad}
               </p>
               <button
                 type="button"
                 onClick={() => setMostrarPrivacidad(false)}
                 aria-label="Cerrar el aviso de privacidad"
-                className="shrink-0 text-ink-soft outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-brand"
+                className="shrink-0 text-ink-muted outline-none transition-colors hover:text-ink focus-visible:ring-2 focus-visible:ring-focus"
               >
                 <X className="h-4 w-4" aria-hidden="true" />
               </button>
@@ -242,7 +242,7 @@ export default function Chat() {
 
           {chat.estado !== 'lead' && chat.estado !== 'enviado' && (
             <form
-              className="flex items-center gap-2 border-t border-line p-3"
+              className="flex items-center gap-2 border-t border-border p-3"
               onSubmit={(e) => {
                 e.preventDefault()
                 chat.enviar(texto)
@@ -255,7 +255,7 @@ export default function Chat() {
                 onChange={(e) => setTexto(e.target.value)}
                 placeholder="Escriba su pregunta"
                 aria-label="Escriba su pregunta"
-                className="w-full rounded-sm border border-line bg-surface-2 px-3 py-2 text-sm text-ink placeholder:text-ink-soft/70 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30"
+                className="w-full rounded-sm border border-border-strong bg-surface px-3 py-2 text-base text-ink placeholder:text-ink-subtle outline-none transition-colors hover:border-ink-muted focus:border-focus focus:shadow-[0_0_0_1px_var(--focus-ring)]"
               />
               <Button type="submit" size="sm" className="shrink-0">
                 Enviar

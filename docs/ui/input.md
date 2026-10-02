@@ -46,11 +46,11 @@ Nota: `className` aplica al contenedor (label + campo + mensajes), no al
 - `label` asociada por `htmlFor`/`id` (id autogenerado con `useId`).
 - `aria-describedby` apunta a `hint` y `error` cuando existen.
 - `aria-invalid` se activa al pasar `error`.
-- Foco: borde en `--brand` + anillo tenue; el borde de error usa `--danger`.
-- Fondo `--surface-2` con texto de 16px para evitar el zoom automático en
+- Foco: borde de 2px en `--focus-ring`; reposo con `--border-strong`; el borde de error usa `--danger`.
+- Fondo `--surface-sunken` con texto de 16px para evitar el zoom automático en
   iOS.
 
 ## Tokens usados
 
-`--surface-2` (fondo) · `--border` · `--brand` (foco) · `--danger` (error) ·
+`--surface-sunken` (fondo) · `--border` · `--focus-ring` (foco) · `--danger` (error) ·
 radio 8px (`rounded-sm`).

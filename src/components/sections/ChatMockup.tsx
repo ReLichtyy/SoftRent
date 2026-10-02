@@ -74,16 +74,16 @@ export function ChatMockup() {
       className="w-full max-w-sm rounded-lg bg-white/5 p-1.5 ring-1 ring-white/10"
     >
       <div className="overflow-hidden rounded-md bg-surface text-ink">
-        <div className="flex items-center gap-3 border-b border-line px-4 py-3">
+        <div className="flex items-center gap-3 border-b border-border px-4 py-3">
           <span
             aria-hidden="true"
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-brand-deep font-display text-xs text-on-deep"
+            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-surface-inverse text-xs text-ink-inverse"
           >
             BD
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-sm font-medium">Barbería Don Luis</p>
-            <p className="text-xs text-ink-soft">WhatsApp</p>
+            <p className="text-xs text-ink-muted">WhatsApp</p>
           </div>
           <Badge tone="info" dot>
             Asistente activo
@@ -97,14 +97,14 @@ export function ChatMockup() {
               data-msg={m.autor}
               className={`max-w-[85%] rounded-md px-3 py-2 text-sm leading-relaxed ${
                 m.autor === 'bot'
-                  ? 'bg-surface-2 text-ink'
-                  : 'ms-auto bg-brand text-on-brand'
+                  ? 'bg-surface-sunken text-ink'
+                  : 'ms-auto bg-accent text-on-accent'
               }`}
             >
               {m.texto}
               <span
                 className={`ms-2 align-baseline text-[10px] ${
-                  m.autor === 'bot' ? 'text-ink-soft' : 'text-on-brand/70'
+                  m.autor === 'bot' ? 'text-ink-muted' : 'text-on-accent/70'
                 }`}
               >
                 {m.hora}
@@ -114,15 +114,15 @@ export function ChatMockup() {
           <li
             data-typing
             aria-hidden="true"
-            className="flex w-fit items-center gap-1 rounded-md bg-surface-2 px-3 py-2.5 opacity-0"
+            className="flex w-fit items-center gap-1 rounded-md bg-surface-sunken px-3 py-2.5 opacity-0"
           >
-            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-soft [animation-delay:0ms]" />
-            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-soft [animation-delay:150ms]" />
-            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-soft [animation-delay:300ms]" />
+            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-muted [animation-delay:0ms]" />
+            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-muted [animation-delay:150ms]" />
+            <span className="h-1.5 w-1.5 animate-bounce rounded-full bg-ink-muted [animation-delay:300ms]" />
           </li>
         </ul>
 
-        <p className="border-t border-line px-4 py-2.5 text-xs text-ink-soft">
+        <p className="border-t border-border px-4 py-2.5 text-xs text-ink-muted">
           Cita agendada y recordatorio programado, sin intervenir.
         </p>
       </div>

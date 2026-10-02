@@ -33,23 +33,23 @@ const adminNav: NavItem[] = [
 export function AdminLayout() {
   return (
     <div className="flex min-h-[100dvh] flex-col bg-bg text-ink">
-      <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border bg-bg">
         <Container className="flex h-16 items-center justify-between gap-3">
           <Link to="/admin/clientes" className="flex min-w-0 items-center gap-2.5">
             <span
               aria-hidden="true"
-              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-brand-deep text-on-deep"
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm bg-surface-inverse text-ink-inverse"
             >
               <Gauge className="h-5 w-5" />
             </span>
-            <span className="truncate font-display text-lg font-bold tracking-tight">
+            <span className="truncate text-heading-md font-bold tracking-tight">
               Admin SoftRent
             </span>
           </Link>
           <div className="flex shrink-0 items-center gap-3">
             <Link
               to="/"
-              className="text-sm text-ink-soft transition-colors hover:text-ink"
+              className="text-sm text-ink-muted transition-colors hover:text-ink"
             >
               Ir al sitio
             </Link>
@@ -60,7 +60,7 @@ export function AdminLayout() {
 
       <nav
         aria-label="Menú de administración"
-        className="border-b border-line bg-bg/90 backdrop-blur md:hidden"
+        className="border-b border-border bg-bg md:hidden"
       >
         <ul className="flex gap-1 overflow-x-auto px-3 py-2">
           {adminNav.map((item) => (
@@ -71,8 +71,8 @@ export function AdminLayout() {
                   cn(
                     'flex items-center gap-2 rounded-sm px-3 py-2 text-sm font-medium transition-colors',
                     isActive
-                      ? 'bg-brand/10 text-brand'
-                      : 'text-ink-soft hover:bg-surface-2 hover:text-ink',
+                      ? 'bg-accent-soft text-accent-text'
+                      : 'text-ink-muted hover:bg-surface-sunken hover:text-ink',
                   )
                 }
               >
@@ -87,7 +87,7 @@ export function AdminLayout() {
       <div className="flex flex-1">
         <nav
           aria-label="Menú de administración, escritorio"
-          className="hidden w-60 shrink-0 flex-col gap-1 border-e border-line bg-surface p-4 md:flex"
+          className="hidden w-60 shrink-0 flex-col gap-1 border-e border-border bg-surface p-4 md:flex"
         >
           {adminNav.map((item) => (
             <NavLink
@@ -97,8 +97,8 @@ export function AdminLayout() {
                 cn(
                   'flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-medium transition-colors',
                   isActive
-                    ? 'bg-brand/10 text-brand'
-                    : 'text-ink-soft hover:bg-surface-2 hover:text-ink',
+                    ? 'bg-accent-soft text-accent-text'
+                    : 'text-ink-muted hover:bg-surface-sunken hover:text-ink',
                 )
               }
             >

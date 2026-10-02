@@ -14,9 +14,9 @@ export type KpiTileProps = {
 export function KpiTile({ value, label, icon }: KpiTileProps) {
   return (
     <Card className="flex flex-col gap-2">
-      {icon && <span className="text-brand">{icon}</span>}
-      <p className="font-display text-2xl leading-tight text-ink">{value}</p>
-      <p className="text-sm leading-relaxed text-ink-soft">{label}</p>
+      {icon && <span className="text-ink-muted">{icon}</span>}
+      <p className="font-display text-display-sm text-ink">{value}</p>
+      <p className="text-sm leading-relaxed text-ink-muted">{label}</p>
     </Card>
   )
 }

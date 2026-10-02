@@ -40,7 +40,7 @@ export default function Resultados() {
     <section ref={scope} className="py-20 sm:py-28">
       <Container>
         <div data-reveal className="flex flex-wrap items-center gap-3">
-          <h2 className="font-display text-3xl leading-tight text-ink sm:text-4xl">
+          <h2 className="font-display text-display-sm text-ink sm:text-display-md">
             El valor, en números
           </h2>
           <Badge tone="neutral">Ejemplo de demo</Badge>

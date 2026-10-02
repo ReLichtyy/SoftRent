@@ -36,7 +36,7 @@ export function AppAutomatizaciones() {
       </div>
 
       <Card padded={false} className="overflow-hidden">
-        <ul className="divide-y divide-line">
+        <ul className="divide-y divide-border">
           {lista.map((auto) => (
             <li
               key={auto.id}
@@ -44,11 +44,11 @@ export function AppAutomatizaciones() {
             >
               <div className="min-w-0">
                 <p className="text-sm font-medium text-ink">{auto.nombre}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-ink-soft">
+                <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
                   {auto.descripcion}
                 </p>
                 {auto.activa && auto.ejecucionesMes > 0 && (
-                  <p className="mt-1 text-xs text-ink-soft">
+                  <p className="mt-1 text-xs text-ink-muted">
                     {auto.ejecucionesMes} veces este mes ·{' '}
                     {auto.horasAhorradas.toLocaleString('es-CR', {
                       minimumFractionDigits: 1,

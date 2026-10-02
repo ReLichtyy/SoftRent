@@ -129,17 +129,17 @@ export function DragAndDrop({
         onDragLeave={() => setArrastrando(false)}
         onDrop={alSoltar}
         className={cn(
-          'rounded-md border border-dashed p-4 text-center transition-[color,background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)]',
+          'rounded-md border border-dashed p-4 text-center transition-[color,background-color,border-color,transform] duration-200 ease-[var(--ease-out)]',
           arrastrando
-            ? 'scale-[1.01] border-brand bg-brand/5'
-            : 'border-line bg-surface hover:border-ink-soft/40',
+            ? 'scale-[1.01] border-accent bg-accent-soft'
+            : 'border-border bg-surface hover:border-ink-muted/40',
           restantes <= 0 && 'opacity-60',
         )}
       >
         <UploadSimple
           className={cn(
-            'mx-auto h-6 w-6 text-ink-soft transition-[color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)]',
-            arrastrando && 'scale-110 text-brand',
+            'mx-auto h-6 w-6 text-ink-muted transition-[color,transform] duration-200 ease-[var(--ease-out)]',
+            arrastrando && 'scale-110 text-accent-text',
           )}
           aria-hidden="true"
           weight="bold"
@@ -147,7 +147,7 @@ export function DragAndDrop({
         <p className="mt-2 text-sm text-ink">
           Arrastre aquí su menú, catálogo o lista de precios
         </p>
-        <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+        <p className="mt-1 text-xs leading-relaxed text-ink-muted">
           PDF, imagen u hoja de cálculo. Hasta {maxArchivos} archivos de{' '}
           {bytes(maxBytes)} cada uno.
         </p>
@@ -155,7 +155,7 @@ export function DragAndDrop({
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={restantes <= 0}
-          className="mt-3 inline-flex h-9 items-center rounded-sm border border-line bg-surface px-4 text-sm font-medium text-ink outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] hover:bg-surface-2 active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] disabled:pointer-events-none disabled:opacity-50"
+          className="mt-3 inline-flex h-9 items-center rounded-sm border border-border bg-surface px-4 text-sm font-medium text-ink outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[var(--ease-out)] hover:bg-surface-sunken active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] disabled:pointer-events-none disabled:opacity-45"
         >
           Elegir archivo
         </button>
@@ -184,14 +184,14 @@ export function DragAndDrop({
             return (
               <li
                 key={archivo.id}
-                className="flex items-center gap-3 rounded-md border border-line bg-surface p-3"
+                className="flex items-center gap-3 rounded-md border border-border bg-surface p-3"
               >
-                <Icono className="h-5 w-5 shrink-0 text-brand" aria-hidden="true" />
+                <Icono className="h-5 w-5 shrink-0 text-accent-text" aria-hidden="true" />
                 <span className="min-w-0 flex-1">
                   <span className="block truncate text-sm text-ink">
                     {archivo.nombre}
                   </span>
-                  <span className="block text-xs text-ink-soft">
+                  <span className="block text-xs text-ink-muted">
                     {bytes(archivo.tamano)}
                   </span>
                 </span>
@@ -199,7 +199,7 @@ export function DragAndDrop({
                   type="button"
                   onClick={() => onQuitar(archivo.id)}
                   aria-label={`Eliminar ${archivo.nombre}`}
-                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm text-ink-soft outline-none transition-colors hover:bg-danger/10 hover:text-danger focus-visible:ring-2 focus-visible:ring-brand"
+                  className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm text-ink-muted outline-none transition-colors hover:bg-danger-soft hover:text-danger focus-visible:ring-2 focus-visible:ring-focus"
                 >
                   <TrashSimple className="h-4 w-4" aria-hidden="true" />
                 </button>

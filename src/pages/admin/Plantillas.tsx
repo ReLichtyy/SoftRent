@@ -13,12 +13,12 @@ export function AdminPlantillas() {
       />
 
       <Card padded={false} className="overflow-hidden">
-        <ul className="divide-y divide-line">
+        <ul className="divide-y divide-border">
           {plantillas.map((t) => (
             <li key={t.id} className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-ink">{t.nombre}</p>
-                <p className="mt-0.5 text-xs text-ink-soft">
+                <p className="mt-0.5 text-xs text-ink-muted">
                   Aplicada en {t.aplicadaEn}{' '}
                   {t.aplicadaEn === 1 ? 'negocio' : 'negocios'}
                 </p>

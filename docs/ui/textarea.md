@@ -40,9 +40,9 @@ habilitado (`resize-y`).
 
 - Mismo cableado que Input: `htmlFor`/`id` autogenerado,
   `aria-describedby` para ayuda y error, `aria-invalid` con error.
-- Fondo `--surface-2`, texto de 16px (evita zoom en iOS).
+- Fondo `--surface-sunken`, texto de 16px (evita zoom en iOS).
 
 ## Tokens usados
 
-`--surface-2` · `--border` · `--brand` (foco) · `--danger` (error) ·
+`--surface-sunken` · `--border` · `--focus-ring` (foco) · `--danger` (error) ·
 radio 8px.

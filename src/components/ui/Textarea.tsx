@@ -1,5 +1,11 @@
 import { useId, type TextareaHTMLAttributes } from 'react'
 import { cn } from '../../lib/cn'
+import {
+  FieldError,
+  FieldHint,
+  controlStyles,
+  labelStyles,
+} from './FieldMessage'
 
 export type TextareaProps = {
   /** Etiqueta visible; siempre requerida para accesibilidad. */
@@ -10,9 +16,6 @@ export type TextareaProps = {
   error?: string
   className?: string
 } & Omit<TextareaHTMLAttributes<HTMLTextAreaElement>, 'className'>
-
-const fieldStyles =
-  'w-full rounded-sm border border-line bg-surface-2 px-3 py-2.5 text-sm text-ink placeholder:text-ink-soft/70 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30 aria-invalid:border-danger'
 
 /** Área de texto multilínea con etiqueta, ayuda y error. */
 export function Textarea({
@@ -27,32 +30,24 @@ export function Textarea({
   const id = idProp ?? autoId
   const hintId = `${id}-hint`
   const errorId = `${id}-error`
-  const describedBy = [hint && hintId, error && errorId]
+  const describedBy = [error && errorId, hint && hintId]
     .filter(Boolean)
     .join(' ')
 
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      <label htmlFor={id} className="text-sm font-medium text-ink">
+      <label htmlFor={id} className={labelStyles}>
         {label}
       </label>
       <textarea
         id={id}
-        className={cn(fieldStyles, 'min-h-24 resize-y')}
+        className={cn(controlStyles, 'h-auto min-h-24 resize-y py-2.5 leading-6')}
         aria-invalid={error ? true : undefined}
         aria-describedby={describedBy || undefined}
         {...props}
       />
-      {hint && (
-        <p id={hintId} className="text-xs text-ink-soft">
-          {hint}
-        </p>
-      )}
-      {error && (
-        <p id={errorId} className="text-xs text-danger">
-          {error}
-        </p>
-      )}
+      <FieldError id={errorId} error={error} />
+      {hint && !error && <FieldHint id={hintId}>{hint}</FieldHint>}
     </div>
   )
 }

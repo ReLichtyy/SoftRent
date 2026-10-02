@@ -43,15 +43,18 @@ export function Toggle({
       disabled={disabled}
       onClick={handleClick}
       className={cn(
-        'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] disabled:opacity-50',
-        isChecked ? 'bg-brand' : 'bg-surface-2 ring-1 ring-inset ring-line',
+        'relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] disabled:opacity-45',
+        isChecked
+          ? 'bg-accent'
+          : 'bg-surface-sunken ring-1 ring-inset ring-border-strong',
         className,
       )}
     >
       <span
         aria-hidden="true"
         className={cn(
-          'pointer-events-none block size-4.5 rounded-full bg-surface shadow transition-transform',
+          'pointer-events-none block size-4.5 rounded-full shadow-xs transition-transform duration-[var(--duration-base)] ease-[var(--ease-out)]',
+          isChecked ? 'bg-on-accent' : 'bg-ink-muted',
           isChecked ? 'translate-x-6' : 'translate-x-1',
         )}
       />

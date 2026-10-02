@@ -2,6 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../lib/cn'
 
 export type BadgeTone =
+  | 'accent'
   | 'brand'
   | 'neutral'
   | 'success'
@@ -18,20 +19,25 @@ export type BadgeProps = {
   className?: string
 } & Omit<HTMLAttributes<HTMLSpanElement>, 'children'>
 
+/* Cada tono usa su relleno -soft con el texto del mismo estado
+ * (AA en 12px, ambos temas). "brand" es alias de "accent". */
+const accentTone = 'bg-accent-soft text-accent-text'
+
 const toneStyles: Record<BadgeTone, string> = {
-  /* brand usa --brand-text: el rojo puro no llega a AA en 12px
-   * sobre el fondo tenue del badge (4.37 claro / 4.29 oscuro). */
-  brand: 'bg-brand/10 text-brand-text',
-  neutral: 'bg-surface-2 text-ink-soft',
-  success: 'bg-success/10 text-success',
-  warning: 'bg-warning/10 text-warning',
-  danger: 'bg-danger/10 text-danger',
-  info: 'bg-info/10 text-info',
+  accent: accentTone,
+  brand: accentTone,
+  neutral: 'bg-surface-sunken text-ink-muted',
+  success: 'bg-success-soft text-success',
+  warning: 'bg-warning-soft text-warning',
+  danger: 'bg-danger-soft text-danger',
+  info: 'bg-info-soft text-info',
 }
 
+/* El punto del badge accent usa el rojo exacto del logo (brand). */
 const dotStyles: Record<BadgeTone, string> = {
+  accent: 'bg-brand',
   brand: 'bg-brand',
-  neutral: 'bg-ink-soft',
+  neutral: 'bg-ink-muted',
   success: 'bg-success',
   warning: 'bg-warning',
   danger: 'bg-danger',

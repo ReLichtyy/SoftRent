@@ -22,7 +22,7 @@ export default function Problemas() {
     <section ref={scope} className="py-20 sm:py-28">
       <Container>
         <WordScrub
-          className="max-w-lg font-display text-2xl leading-snug text-ink sm:text-3xl"
+          className="max-w-lg font-display text-display-sm text-ink sm:text-display-md"
           text="Si su negocio se parece a esto, no es un problema de esfuerzo. Es un problema de herramientas."
         />
 
@@ -31,19 +31,19 @@ export default function Problemas() {
             <Link
               key={item.id}
               to="/soluciones"
-              className="group block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+              className="group block rounded-md outline-none focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
             >
-              <Card className="flex h-full flex-col gap-3 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:-translate-y-1">
+              <Card className="flex h-full flex-col gap-3 transition-transform duration-500 ease-[var(--ease-out)] group-hover:-translate-y-1">
                 <div className="flex items-start justify-between gap-3">
-                  <h3 className="font-display text-xl text-ink">{item.dolor}</h3>
+                  <h3 className="text-heading-lg text-ink">{item.dolor}</h3>
                   <Badge tone="success" className="shrink-0">
                     {item.beneficio}
                   </Badge>
                 </div>
-                <p className="flex-1 text-sm leading-relaxed text-ink-soft">
+                <p className="flex-1 text-sm leading-relaxed text-ink-muted">
                   {item.respuesta}
                 </p>
-                <p className="text-sm text-brand underline-offset-4 group-hover:underline">
+                <p className="text-sm text-accent-text underline-offset-4 group-hover:underline">
                   Ver la solución
                 </p>
               </Card>

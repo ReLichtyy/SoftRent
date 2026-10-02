@@ -59,5 +59,5 @@ gestiona el consumidor (patrón estándar de React, ver la referencia
 
 ## Tokens usados
 
-`--brand` (encendido) · `--surface-2` + `--border` (apagado) · `--surface`
+`--accent` (encendido) · `--surface-sunken` + `--border` (apagado) · `--surface`
 (pulgar).

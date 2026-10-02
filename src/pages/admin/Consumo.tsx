@@ -18,31 +18,31 @@ export function AdminConsumo() {
 
       <Card padded={false} className="overflow-x-auto">
         <table className="w-full min-w-[560px] text-sm">
-          <caption className="border-b border-line px-4 py-3 text-left text-xs text-ink-soft">
+          <caption className="border-b border-border px-4 py-3 text-left text-xs text-ink-muted">
             Resumen del mes: {totalIA} conversaciones con IA · {totalWA}{' '}
             mensajes de WhatsApp · costo variable estimado {colones(totalCosto)}
           </caption>
           <thead>
-            <tr className="border-b border-line text-left text-xs text-ink-soft">
+            <tr className="border-b border-border text-left text-xs text-ink-muted">
               <th scope="col" className="px-4 py-2.5 font-medium">Negocio</th>
               <th scope="col" className="px-4 py-2.5 text-right font-medium">Conversaciones IA</th>
               <th scope="col" className="px-4 py-2.5 text-right font-medium">Mensajes WhatsApp</th>
               <th scope="col" className="px-4 py-2.5 text-right font-medium">Costo estimado</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-line">
+          <tbody className="divide-y divide-border">
             {consumo.map((c) => (
               <tr key={c.id}>
                 <th scope="row" className="px-4 py-3 text-left font-medium text-ink">
                   {c.negocio}
                 </th>
-                <td className="px-4 py-3 text-right tabular-nums text-ink-soft">
+                <td className="px-4 py-3 text-right tabular-nums text-ink-muted">
                   {c.conversacionesIA}
                 </td>
-                <td className="px-4 py-3 text-right tabular-nums text-ink-soft">
+                <td className="px-4 py-3 text-right tabular-nums text-ink-muted">
                   {c.mensajesWhatsApp}
                 </td>
-                <td className="px-4 py-3 text-right tabular-nums text-ink-soft">
+                <td className="px-4 py-3 text-right tabular-nums text-ink-muted">
                   {colones(c.costoEstimado)}
                 </td>
               </tr>

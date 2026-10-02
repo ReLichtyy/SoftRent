@@ -8,8 +8,8 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 
 - Tema **oscuro por defecto**; el claro se activa con la elección del
   usuario (`data-theme` en `<html>`).
-- La utilidades de Tailwind resuelven variables en vivo (`bg-brand` →
-  `var(--brand)`), así que cambiar de tema no regenera CSS.
+- La utilidades de Tailwind resuelven variables en vivo (`bg-accent` →
+  `var(--accent)`), así que cambiar de tema no regenera CSS.
 - La elección del usuario persiste en `localStorage` (`softrent-theme`);
   sin elección, el sitio queda en oscuro.
 
@@ -34,6 +34,7 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 | [DragAndDrop](ui/draganddrop.md) | Zona de arrastre para archivos de contexto |
 | [Modal](ui/modal.md) | Diálogo accesible con vista rápida |
 | [Toggle](ui/toggle.md) | Interruptor tipo switch |
+| [PhoneMockup](ui/phone-mockup.md) | Marco de teléfono con pantalla de app |
 
 ### Layout (`components/layout/`)
 
@@ -52,45 +53,58 @@ Documentación de los componentes del sitio principal. Fuente única de diseño:
 
 ## Tokens
 
+Fuente: sistema de diseño SoftRent v2 ("papel tibio, una señal roja"). El
+rojo del logo aparece pocas veces: acción primaria, controles marcados y el
+punto de marca. Cada rol existe en claro y oscuro.
+
 Color (claro / oscuro):
 
-| Token | Claro | Oscuro | Uso |
+| Token (utilidad) | Claro | Oscuro | Uso |
 | --- | --- | --- | --- |
-| `--brand` | `#D8182A` | `#F0374A` | CTA principal, links, foco |
-| `--brand-hover` | `#B31222` | `#FF5566` | Hover / presionado |
-| `--brand-deep` | `#400517` | `#400517` | Hero y bloques de marca |
-| `--on-brand` | `#FFFFFF` | `#0C0A0B` | Texto sobre la marca |
-| `--on-deep` | `#FAF8F8` | `#FAF8F8` | Texto sobre brand-deep |
-| `--bg` | `#FAF8F8` | `#0C0A0B` | Fondo de página |
-| `--surface` | `#FFFFFF` | `#171314` | Tarjetas, paneles |
-| `--surface-2` | `#F3EEEE` | `#221B1C` | Inputs, filas alternas |
-| `--border` | `#E5DEDF` | `#3A2C2E` | Bordes y divisores |
-| `--text` | `#161214` | `#EEEAEA` | Texto principal |
-| `--text-muted` | `#5F585B` | `#A0979A` | Texto secundario |
-| `--success` | `#2E8B57` | `#4CC38A` | Pagado, confirmado |
-| `--warning` | `#B7791F` | `#E0A93B` | Por vencer, pendiente |
-| `--danger` | `#C2410C` | `#F07A45` | Error, moroso (≠ marca) |
-| `--info` | `#1F6FA8` | `#5AA9E6` | Bot / IA, avisos neutros |
+| `bg` | `#F8F6F3` | `#0F0E0D` | Fondo de página (papel) |
+| `surface` | `#FFFFFF` | `#181715` | Tarjetas, paneles, inputs, diálogos |
+| `surface-sunken` | `#F1EEE9` | `#1B1917` | Hover, relleno hundido, skeletons |
+| `surface-inverse` | `#171513` | `#2B2824` | Banda nocturna (hero, footer, CTA final); wordmark |
+| `border` | `#E5E0D9` | `#2E2B27` | Líneas finas decorativas |
+| `border-strong` | `#8C847B` | `#6F685F` | Contorno de controles (3:1) |
+| `ink` / `ink-muted` / `ink-subtle` | `#171513` / `#5F5952` / `#6E675F` | `#F3F0EB` / `#A8A198` / `#948D84` | Texto primario, secundario, terciario |
+| `ink-inverse` | `#F3F0EB` | `#F3F0EB` | Texto sobre `surface-inverse` |
+| `brand` | `#EA1B25` | `#EA1B25` | Rojo exacto del logo: marcas y puntos, no texto ni botones |
+| `accent` / `accent-hover` / `accent-active` | `#D9161F` / `#C0121B` / `#A80F17` | igual | Botón primario, controles marcados |
+| `on-accent` | `#FFFFFF` | `#FFFFFF` | Texto sobre `accent` |
+| `accent-text` / `accent-soft` | `#C8131C` / `#FDECEB` | `#FF6B70` / `#3A1416` | Palabras en rojo; fondo del badge accent |
+| `focus` (`--focus-ring`) | `#D9161F` | `#FF3B44` | Anillo de foco de 2 px |
+| `success` · `warning` · `danger` · `info` | `#1D7348` · `#8F5B00` · `#B2410C` · `#245F9E` | `#4CC38A` · `#E2A93F` · `#F2804F` · `#6AAEF0` | Estados; cada uno con su `-soft`. `danger` es naranja quemado a propósito: el error nunca se ve como CTA |
+| `scrim` | `rgba(23,21,19,.44)` | `rgba(0,0,0,.64)` | Fondo tras diálogos |
 
-Colores de plan: `--plan-arranque #437A22` · `--plan-crecimiento #006494` ·
-`--plan-pro #A8841C` · `--plan-medida #400517`.
+Los planes ya no tienen color propio: se distinguen por posición y palabras;
+el recomendado es la única tarjeta `Card tone="inverse"`.
 
-Tipografía: **Inter** para toda la interfaz, **Play** solo para logotipo y
-titulares (`font-display`). Escala: 12 · 14 · 16 (base) · 20 · 24 · 32 · 48;
-interlineado 1,5 en texto y 1,15 en titulares.
+Tipografía (autoalojada en `src/assets/fonts`): **Figtree** para la interfaz
+y **Newsreader** (un solo peso, `font-display`) para titulares editoriales,
+títulos de diálogo y cifras grandes. Utilidades: `text-display-xl|lg|md|sm`
+(72 · 56 · 40 · 28 px), `text-heading-lg|md|sm` (22 · 18 · 15 px, 600),
+`text-label`, `text-caption`, `text-eyebrow`; la escala `text-xs…5xl` coincide
+con ella (12 · 14 · 16 · 18 · 22 · 28 · 40 · 56 · 72). En la app del cliente y
+el admin, Newsreader solo va en títulos de página y cifras grandes.
 
-Radios: 8 px (inputs, botones) · 12 px (tarjetas) · 16 px (modales) · pill
-(distintivos).
+Radios: `rounded-xs` 6 (casillas) · `rounded-sm` 10 (controles) ·
+`rounded-md` 16 (tarjetas) · `rounded-lg` 24 (diálogos) · pill.
+Sombras: `shadow-xs|sm|md|lg` (planas por defecto; la sombra significa "flota").
+Alturas de control: 32 / 40 / 48 px (`h-8`, `h-10`, `h-12`). Valores de campos a 16 px.
+Movimiento: 120 / 200 / 320 ms, `ease-out` al entrar, `ease-in` al salir.
 
-## Contraste AA (verificado, WCAG 2.1)
+## Marca
 
-| Par | Ratio | Resultado |
-| --- | --- | --- |
-| Texto / fondo (claro y oscuro) | 17.55 / 16.54 | AA |
-| Texto secundario / fondo (ambos) | 6.54 / 6.94 | AA |
-| Blanco sobre `--brand` claro | 5.14 | AA |
-| Tinta oscura sobre `--brand` oscuro | 5.03 | AA (por eso `--on-brand` oscuro no es blanco) |
-| Blanco sobre `--brand` oscuro | 3.92 | Solo texto grande: **no usar** |
-| `--success` sobre fondo claro | 4.01 | Solo texto grande; acompañar con ícono |
-| `--warning` sobre fondo claro | 3.44 | Solo texto grande; acompañar con ícono |
-| `--danger` / `--info` sobre fondo claro | 4.89 / 5.09 | AA |
+- `src/assets/brand/softrent-symbol.png` — símbolo "S" (favicon, barra superior).
+  Componente `LogoSymbol`. Espacio libre: media anchura; mínimo 20 px.
+- `src/assets/brand/softrent-wordmark.png` — wordmark con "RENT · MANAGE · GROW".
+  Componente `LogoWordmark`. **Solo sobre `surface-inverse`**.
+- `Logo` = símbolo + "SoftRent" en Figtree 700, para fondo de papel.
+
+## Contraste AA
+
+Todos los pares de texto cumplen AA en ambos temas (tabla completa en el sistema
+de diseño, sección Accesibilidad). No usar `brand` como color de texto ni de
+relleno de botón (blanco sobre `brand` = 4,49:1): para eso existen `accent` y
+`accent-text`.

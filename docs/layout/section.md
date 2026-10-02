@@ -13,7 +13,7 @@ import { Section } from '../layout/Section'
 | --- | --- | --- |
 | `bg` (por defecto) | sin fondo extra | Secciones sobre el fondo de página |
 | `surface` | borde superior + `--surface` al 60% | Bandas alternas para agrupar contenido |
-| `deep` | fondo `--brand-deep`, texto claro fijo | Hero y CTA final (bloques de marca) |
+| `deep` | fondo `--surface-inverse`, texto claro fijo | Hero y CTA final (bloques de marca) |
 
 ## Ejemplos
 
@@ -30,7 +30,7 @@ import { Section } from '../layout/Section'
 ```
 
 ```tsx
-<Section id="como-funciona" className="border-t border-line">
+<Section id="como-funciona" className="border-t border-border">
 ```
 
 ## API
@@ -47,9 +47,9 @@ import { Section } from '../layout/Section'
   navegación y `aria-labelledby` cuando aplique).
 - El padding vertical lo aporta el `Container` interior, nunca la Section,
   para que las bandas `surface`/`deep` sangren a todo el ancho.
-- En `deep` el texto es `--on-deep` fijo (claro en ambos temas): no uses
+- En `deep` el texto es `--ink-inverse` fijo (claro en ambos temas): no uses
   tokens de texto normales dentro de bloques `deep`.
 
 ## Tokens usados
 
-`--surface`, `--border`, `--brand-deep`, `--on-deep`.
+`--surface`, `--border`, `--surface-inverse`, `--ink-inverse`.

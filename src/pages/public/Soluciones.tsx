@@ -43,17 +43,17 @@ export function Soluciones() {
             return (
               <Card key={item.id} className="flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-3">
-                  <span className="text-brand">
+                  <span className="text-accent-text">
                     <Icono className="h-6 w-6" aria-hidden="true" />
                   </span>
                   <Badge tone="success">{item.beneficio}</Badge>
                 </div>
-                <h2 className="font-display text-xl text-ink">{item.dolor}</h2>
-                <p className="text-sm leading-relaxed text-ink-soft">
+                <h2 className="text-heading-lg text-ink">{item.dolor}</h2>
+                <p className="text-sm leading-relaxed text-ink-muted">
                   {item.respuesta}
                 </p>
                 {demo && (
-                  <p className="text-xs text-ink-soft">
+                  <p className="text-xs text-ink-muted">
                     Incluido en {demo.nombre}.
                   </p>
                 )}
@@ -64,10 +64,10 @@ export function Soluciones() {
 
         <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-display text-xl text-ink">
+            <h2 className="text-heading-lg text-ink">
               ¿Le suena alguno de estos dolores?
             </h2>
-            <p className="mt-1 text-sm text-ink-soft">
+            <p className="mt-1 text-sm text-ink-muted">
               Cuéntenos cómo trabaja y le decimos qué se puede automatizar.
             </p>
           </div>

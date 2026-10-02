@@ -7,12 +7,12 @@ export default function Planes() {
   const scope = useScrollReveal<HTMLElement>()
 
   return (
-    <section ref={scope} className="border-t border-line py-20 sm:py-28">
+    <section ref={scope} className="border-t border-border py-20 sm:py-28">
       <Container>
-        <h2 className="max-w-md font-display text-3xl leading-tight text-ink sm:text-4xl">
+        <h2 className="max-w-md font-display text-display-sm text-ink sm:text-display-md">
           Precios que se entienden en un vistazo
         </h2>
-        <p className="mt-4 max-w-md text-ink-soft">
+        <p className="mt-4 max-w-md text-ink-muted">
           Una suscripción mensual y una implementación única. Sin letra chica
           ni cargos sorpresa.
         </p>

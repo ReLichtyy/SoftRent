@@ -63,11 +63,11 @@ export function AppLayout() {
 
   return (
     <div className="flex min-h-[100dvh] flex-col bg-bg text-ink">
-      <header className="sticky top-0 z-40 border-b border-line bg-bg/90 backdrop-blur">
+      <header className="sticky top-0 z-40 border-b border-border bg-bg">
         <Container className="flex h-16 items-center justify-between gap-3">
           <Link to="/app" className="flex min-w-0 items-center gap-2.5">
-            <Storefront className="h-6 w-6 shrink-0 text-brand" aria-hidden="true" />
-            <span className="truncate font-display text-lg font-bold tracking-tight">
+            <Storefront className="h-6 w-6 shrink-0 text-accent-text" aria-hidden="true" />
+            <span className="truncate text-heading-md font-bold tracking-tight">
               {business.name}
             </span>
           </Link>
@@ -83,7 +83,7 @@ export function AppLayout() {
       <div className="flex flex-1">
         <nav
           aria-label="Menú de la app"
-          className="hidden w-60 shrink-0 flex-col gap-1 border-e border-line bg-surface p-4 md:flex"
+          className="hidden w-60 shrink-0 flex-col gap-1 border-e border-border bg-surface p-4 md:flex"
         >
           {desktopNav.map((item) => (
             <NavLink
@@ -94,8 +94,8 @@ export function AppLayout() {
                 cn(
                   'flex items-center gap-3 rounded-sm px-3 py-2 text-sm font-medium transition-colors',
                   isActive
-                    ? 'bg-brand/10 text-brand'
-                    : 'text-ink-soft hover:bg-surface-2 hover:text-ink',
+                    ? 'bg-accent-soft text-accent-text'
+                    : 'text-ink-muted hover:bg-surface-sunken hover:text-ink',
                 )
               }
             >
@@ -118,7 +118,7 @@ export function AppLayout() {
           className="fixed inset-x-0 bottom-16 z-40 px-3 md:hidden"
         >
           <Card padded={false} className="overflow-hidden">
-            <p className="border-b border-line px-4 py-3 text-sm font-medium text-ink">
+            <p className="border-b border-border px-4 py-3 text-sm font-medium text-ink">
               Más secciones
             </p>
             <ul className="grid grid-cols-2 gap-1 p-2 sm:grid-cols-3">
@@ -131,8 +131,8 @@ export function AppLayout() {
                       cn(
                         'flex flex-col items-center gap-1.5 rounded-sm px-2 py-3 text-center text-xs',
                         isActive
-                          ? 'bg-brand/10 text-brand'
-                          : 'text-ink-soft hover:bg-surface-2 hover:text-ink',
+                          ? 'bg-accent-soft text-accent-text'
+                          : 'text-ink-muted hover:bg-surface-sunken hover:text-ink',
                       )
                     }
                   >
@@ -148,7 +148,7 @@ export function AppLayout() {
 
       <nav
         aria-label="Navegación móvil de la app"
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-bg/95 backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-border bg-bg md:hidden"
       >
         <ul className="grid grid-cols-4">
           {primaryNav.map((item) => (
@@ -161,8 +161,8 @@ export function AppLayout() {
                   cn(
                     'flex flex-col items-center gap-1 py-2.5 text-xs',
                     isActive
-                      ? 'text-brand'
-                      : 'text-ink-soft hover:text-ink',
+                      ? 'text-accent-text'
+                      : 'text-ink-muted hover:text-ink',
                   )
                 }
               >
@@ -180,8 +180,8 @@ export function AppLayout() {
               className={cn(
                 'flex w-full flex-col items-center gap-1 py-2.5 text-xs',
                 moreActive || moreOpen
-                  ? 'text-brand'
-                  : 'text-ink-soft hover:text-ink',
+                  ? 'text-accent-text'
+                  : 'text-ink-muted hover:text-ink',
               )}
             >
               <DotsThree className="h-6 w-6" aria-hidden="true" />

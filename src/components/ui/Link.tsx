@@ -13,8 +13,8 @@ export type LinkProps = {
 } & AnchorHTMLAttributes<HTMLAnchorElement>
 
 const variantStyles = {
-  brand: 'text-brand underline-offset-4 hover:underline',
-  muted: 'text-ink-soft transition-colors hover:text-ink',
+  brand: 'text-accent-text underline-offset-4 hover:underline',
+  muted: 'text-ink-muted transition-colors hover:text-ink',
   inherit: '',
 } as const
 

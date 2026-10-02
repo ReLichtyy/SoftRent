@@ -63,7 +63,7 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
       }}
     >
       <div
-        className="absolute inset-0 bg-bg/80 backdrop-blur-sm"
+        className="absolute inset-0 bg-scrim"
         aria-hidden="true"
       />
       <div
@@ -72,19 +72,19 @@ export function Modal({ open, onClose, title, children, className }: ModalProps)
         aria-modal="true"
         aria-labelledby={tituloId}
         className={cn(
-          'relative w-full max-w-lg rounded-lg border border-line bg-surface p-6 shadow-lg outline-none',
+          'relative w-full max-w-lg rounded-lg border border-border bg-surface p-6 shadow-lg outline-none sm:p-8',
           className,
         )}
       >
         <div className="flex items-start justify-between gap-4">
-          <h2 id={tituloId} className="font-display text-xl text-ink">
+          <h2 id={tituloId} className="font-display text-display-sm text-ink">
             {title}
           </h2>
           <button
             type="button"
             onClick={onClose}
             aria-label="Cerrar"
-            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm text-ink-soft outline-none transition-colors hover:bg-surface-2 hover:text-ink focus-visible:ring-2 focus-visible:ring-brand"
+            className="flex h-8 w-8 shrink-0 items-center justify-center rounded-sm text-ink-muted outline-none transition-colors hover:bg-surface-sunken hover:text-ink active:bg-border focus-visible:ring-2 focus-visible:ring-focus"
           >
             <X className="h-4 w-4" aria-hidden="true" />
           </button>

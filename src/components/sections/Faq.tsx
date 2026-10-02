@@ -11,21 +11,21 @@ export default function Faq() {
   return (
     <section ref={scope} className="py-20 sm:py-28">
       <Container>
-        <h2 className="max-w-md font-display text-3xl leading-tight text-ink sm:text-4xl">
+        <h2 className="max-w-md font-display text-display-sm text-ink sm:text-display-md">
           Preguntas frecuentes
         </h2>
 
-        <div className="mt-10 max-w-2xl divide-y divide-line border-y border-line">
+        <div className="mt-10 max-w-2xl divide-y divide-border border-y border-border">
           {faq.map((item) => (
             <details key={item.pregunta} className="group py-4">
-              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-sm font-medium text-ink outline-none transition-colors hover:text-brand focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] [&::-webkit-details-marker]:hidden">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 text-left text-sm font-medium text-ink outline-none transition-colors hover:text-accent-text focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] [&::-webkit-details-marker]:hidden">
                 {item.pregunta}
                 <CaretDown
-                  className="h-4 w-4 shrink-0 text-ink-soft transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] group-open:rotate-180"
+                  className="h-4 w-4 shrink-0 text-ink-muted transition-transform duration-300 ease-[var(--ease-out)] group-open:rotate-180"
                   aria-hidden="true"
                 />
               </summary>
-              <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+              <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                 {item.respuesta}
               </p>
             </details>

@@ -21,14 +21,14 @@ function VistaRapida({ demo, onClose }: { demo: Demo; onClose: () => void }) {
   return (
     <Modal open onClose={onClose} title={demo.nombre}>
       <div className="flex flex-col gap-4 text-sm">
-        <p className="text-xs text-ink-soft">{demo.industria}</p>
+        <p className="text-xs text-ink-muted">{demo.industria}</p>
 
         <div>
           <h3 className="font-medium text-ink">Qué hace</h3>
-          <ul className="mt-2 space-y-1.5 text-ink-soft">
+          <ul className="mt-2 space-y-1.5 text-ink-muted">
             {demo.funciones.map((f) => (
               <li key={f} className="flex gap-2">
-                <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-brand" />
+                <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" />
                 {f}
               </li>
             ))}
@@ -37,7 +37,7 @@ function VistaRapida({ demo, onClose }: { demo: Demo; onClose: () => void }) {
 
         <div>
           <h3 className="font-medium text-ink">La inteligencia que lleva dentro</h3>
-          <ul className="mt-2 space-y-1.5 text-ink-soft">
+          <ul className="mt-2 space-y-1.5 text-ink-muted">
             {demo.iaIncluida.map((f) => (
               <li key={f} className="flex gap-2">
                 <span aria-hidden="true" className="mt-2 h-1 w-1 shrink-0 rounded-full bg-info" />
@@ -49,7 +49,7 @@ function VistaRapida({ demo, onClose }: { demo: Demo; onClose: () => void }) {
 
         {plan && <Badge tone="neutral">Plan recomendado: {plan.nombre}</Badge>}
 
-        <div className="flex flex-wrap items-center gap-3 border-t border-line pt-4">
+        <div className="flex flex-wrap items-center gap-3 border-t border-border pt-4">
           {demo.estado === 'publicada' && demo.demoUrl && (
             <Button
               href={demo.demoUrl}
@@ -92,7 +92,7 @@ export function Demos() {
             return (
               <Card key={demo.id} data-reveal className="flex flex-col gap-2 p-4">
                 <div className="flex items-center justify-between gap-3">
-                  <span className="text-brand">
+                  <span className="text-accent-text">
                     <Icono className="h-5 w-5" aria-hidden="true" />
                   </span>
                   <Badge
@@ -103,9 +103,9 @@ export function Demos() {
                     {publicada ? 'En vivo' : 'Próximamente'}
                   </Badge>
                 </div>
-                <h2 className="font-display text-lg text-ink">{demo.nombre}</h2>
-                <p className="text-xs text-ink-soft">{demo.industria}</p>
-                <p className="flex-1 text-sm leading-relaxed text-ink-soft">
+                <h2 className="text-heading-md text-ink">{demo.nombre}</h2>
+                <p className="text-xs text-ink-muted">{demo.industria}</p>
+                <p className="flex-1 text-sm leading-relaxed text-ink-muted">
                   {demo.impacto}
                 </p>
                 <div className="mt-2 flex items-center gap-2">
@@ -130,10 +130,10 @@ export function Demos() {
 
         <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-display text-xl text-ink">
+            <h2 className="text-heading-lg text-ink">
               ¿Quiere ver la demo con sus servicios?
             </h2>
-            <p className="mt-1 text-sm text-ink-soft">
+            <p className="mt-1 text-sm text-ink-muted">
               Le preparamos una versión con su menú real de servicios y
               horario.
             </p>

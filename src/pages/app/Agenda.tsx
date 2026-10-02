@@ -55,10 +55,10 @@ export function AppAgenda() {
             onClick={() => setFiltro(f.id)}
             aria-pressed={filtro === f.id}
             className={cn(
-              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand',
+              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
               filtro === f.id
-                ? 'border-brand bg-brand/10 text-brand'
-                : 'border-line text-ink-soft hover:border-ink-soft/40 hover:text-ink',
+                ? 'border-accent bg-accent-soft text-accent-text'
+                : 'border-border text-ink-muted hover:border-ink-muted/40 hover:text-ink',
             )}
           >
             {f.label}
@@ -68,25 +68,25 @@ export function AppAgenda() {
 
       {visibles.length === 0 ? (
         <Card className="flex flex-col items-center gap-2 py-10 text-center">
-          <p className="font-display text-lg text-ink">Agenda despejada</p>
-          <p className="max-w-sm text-sm text-ink-soft">
+          <p className="text-heading-md text-ink">Agenda despejada</p>
+          <p className="max-w-sm text-sm text-ink-muted">
             No hay citas con este filtro. Comparta su página de reservas y
             empiezan a llegar solas.
           </p>
         </Card>
       ) : (
         <Card padded={false} className="overflow-hidden">
-          <ul className="divide-y divide-line">
+          <ul className="divide-y divide-border">
             {visibles.map((cita) => {
               const tono = tonoEstado[cita.estado]
               return (
                 <li key={cita.id} className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:gap-4">
-                  <span className="w-16 shrink-0 font-display text-lg tabular-nums text-ink">
+                  <span className="w-16 shrink-0 text-heading-md tabular-nums text-ink">
                     {cita.hora}
                   </span>
                   <div className="min-w-0 flex-1">
                     <p className="text-sm font-medium text-ink">{cita.cliente}</p>
-                    <p className="mt-0.5 text-xs text-ink-soft">
+                    <p className="mt-0.5 text-xs text-ink-muted">
                       {cita.servicio} · {cita.responsable}
                     </p>
                   </div>

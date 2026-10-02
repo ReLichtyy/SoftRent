@@ -78,10 +78,10 @@ export function Casos() {
           {cases.map((item) => (
             <Card key={item.title} className="flex flex-col gap-3">
               <div className="flex items-start justify-between gap-3">
-                <h2 className="font-display text-xl text-ink">{item.title}</h2>
+                <h2 className="text-heading-lg text-ink">{item.title}</h2>
                 <Badge tone="neutral">Ejemplo de demo</Badge>
               </div>
-              <p className="text-sm leading-relaxed text-ink-soft">
+              <p className="text-sm leading-relaxed text-ink-muted">
                 Antes: {item.before}
               </p>
               <p className="text-sm leading-relaxed text-ink">
@@ -92,7 +92,7 @@ export function Casos() {
         </div>
 
         <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-xl text-sm leading-relaxed text-ink-soft">
+          <p className="max-w-xl text-sm leading-relaxed text-ink-muted">
             SoftRent aún no publica casos reales: las cifras anteriores son de
             demos internas. Cuando tengamos resultados con clientes, aparecen
             aquí primero.

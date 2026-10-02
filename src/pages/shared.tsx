@@ -14,10 +14,10 @@ export function PageIntro({
 }) {
   return (
     <header className="max-w-2xl">
-      <h1 className="font-display text-3xl leading-tight tracking-tight text-ink sm:text-4xl">
+      <h1 className="font-display text-display-sm tracking-tight text-ink sm:text-display-md">
         {title}
       </h1>
-      <p className="mt-3 text-base leading-relaxed text-ink-soft">
+      <p className="mt-3 text-base leading-relaxed text-ink-muted">
         {description}
       </p>
       {children}
@@ -37,7 +37,7 @@ export type StatusItem = {
 export function StatusList({ items }: { items: StatusItem[] }) {
   return (
     <Card padded={false}>
-      <ul className="divide-y divide-line">
+      <ul className="divide-y divide-border">
         {items.map((item) => (
           <li
             key={item.title}
@@ -46,7 +46,7 @@ export function StatusList({ items }: { items: StatusItem[] }) {
             <div className="min-w-0">
               <p className="text-sm font-medium text-ink">{item.title}</p>
               {item.meta && (
-                <p className="mt-0.5 text-xs leading-relaxed text-ink-soft">
+                <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
                   {item.meta}
                 </p>
               )}

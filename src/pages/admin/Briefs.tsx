@@ -28,17 +28,17 @@ export function AdminBriefs() {
       />
 
       <Card padded={false} className="overflow-hidden">
-        <ul className="divide-y divide-line">
+        <ul className="divide-y divide-border">
           {lista.map((b) => (
             <li key={b.id} className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-5">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-ink">
                   {b.nombre}
-                  <span className="ms-2 text-xs font-normal text-ink-soft">
+                  <span className="ms-2 text-xs font-normal text-ink-muted">
                     {b.negocio} · {b.origen}
                   </span>
                 </p>
-                <p className="mt-0.5 text-xs leading-relaxed text-ink-soft">
+                <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
                   {b.resumen}
                 </p>
               </div>

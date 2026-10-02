@@ -59,28 +59,28 @@ export function Industrias() {
           {industries.map((industry) => (
             <Card key={industry.name} className="flex flex-col gap-3">
               <div className="flex items-start justify-between gap-3">
-                <span className="text-brand">
+                <span className="text-accent-text">
                   <industry.icon className="h-6 w-6" aria-hidden="true" />
                 </span>
                 <Badge tone={industry.demoTone} dot>
                   {industry.demo}
                 </Badge>
               </div>
-              <h2 className="font-display text-xl text-ink">{industry.name}</h2>
-              <p className="text-sm leading-relaxed text-ink-soft">
+              <h2 className="text-heading-lg text-ink">{industry.name}</h2>
+              <p className="text-sm leading-relaxed text-ink-muted">
                 {industry.description}
               </p>
-              <p className="text-xs text-ink-soft">{industry.examples}</p>
+              <p className="text-xs text-ink-muted">{industry.examples}</p>
             </Card>
           ))}
         </div>
 
         <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div>
-            <h2 className="font-display text-xl text-ink">
+            <h2 className="text-heading-lg text-ink">
               ¿Su industria no está en la lista?
             </h2>
-            <p className="mt-1 text-sm text-ink-soft">
+            <p className="mt-1 text-sm text-ink-muted">
               Trabajamos con cualquier negocio de servicios. Cuéntenos su caso.
             </p>
           </div>

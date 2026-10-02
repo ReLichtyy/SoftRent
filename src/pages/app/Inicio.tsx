@@ -67,7 +67,7 @@ export function AppInicio() {
 
       <section aria-labelledby="impacto-heading" className="space-y-4">
         <div className="flex flex-wrap items-center gap-3">
-          <h2 id="impacto-heading" className="font-display text-xl text-ink">
+          <h2 id="impacto-heading" className="text-heading-lg text-ink">
             Su impacto
           </h2>
           <Badge tone="neutral">Datos de ejemplo</Badge>
@@ -85,14 +85,14 @@ export function AppInicio() {
       </section>
 
       <section aria-labelledby="atencion-heading" className="space-y-4">
-        <h2 id="atencion-heading" className="font-display text-xl text-ink">
+        <h2 id="atencion-heading" className="text-heading-lg text-ink">
           Requiere su atención (3)
         </h2>
         <StatusList items={attention} />
       </section>
 
       <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm leading-relaxed text-ink-soft">
+        <p className="text-sm leading-relaxed text-ink-muted">
           Cada ítem anterior tiene su pantalla para resolverlo en dos toques.
         </p>
         <div className="flex shrink-0 flex-wrap gap-3">

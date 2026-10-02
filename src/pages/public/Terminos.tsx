@@ -12,9 +12,9 @@ export function Terminos() {
           description="Las reglas claras de cómo trabajamos con su negocio."
         />
 
-        <div className="space-y-6 text-sm leading-relaxed text-ink-soft">
+        <div className="space-y-6 text-sm leading-relaxed text-ink-muted">
           <div>
-            <h2 className="font-display text-lg text-ink">Qué incluye</h2>
+            <h2 className="text-heading-md text-ink">Qué incluye</h2>
             <p className="mt-2">
               SoftRent diseña, implementa y mantiene el sistema de
               reservas, mensajes y cobros de su negocio. La suscripción
@@ -25,7 +25,7 @@ export function Terminos() {
           </div>
 
           <div>
-            <h2 className="font-display text-lg text-ink">Precios y pagos</h2>
+            <h2 className="text-heading-md text-ink">Precios y pagos</h2>
             <p className="mt-2">
               Los precios publicados no incluyen IVA. La suscripción se
               cobra por mes; si paga anual, le regalamos dos meses. Si un
@@ -35,7 +35,7 @@ export function Terminos() {
           </div>
 
           <div>
-            <h2 className="font-display text-lg text-ink">Sus datos</h2>
+            <h2 className="text-heading-md text-ink">Sus datos</h2>
             <p className="mt-2">
               Los datos de su negocio son suyos. Puede exportarlos cuando
               quiera; al cancelar se los entregamos y la copia se elimina
@@ -45,7 +45,7 @@ export function Terminos() {
           </div>
 
           <div>
-            <h2 className="font-display text-lg text-ink">Cambios y garantía</h2>
+            <h2 className="text-heading-md text-ink">Cambios y garantía</h2>
             <p className="mt-2">
               Las metas concretas de su sistema se firman en la propuesta:
               si no las cumplimos, lo trabajamos sin costo hasta

@@ -15,12 +15,12 @@ export function AdminFlujos() {
       />
 
       <Card padded={false} className="overflow-hidden">
-        <ul className="divide-y divide-line">
+        <ul className="divide-y divide-border">
           {flujos.map((f) => (
             <li key={f.id} className="flex flex-col gap-2 p-4 sm:flex-row sm:items-center sm:justify-between sm:gap-4 sm:p-5">
               <div className="min-w-0">
                 <p className="text-sm font-medium text-ink">{f.nombre}</p>
-                <p className="mt-0.5 text-xs leading-relaxed text-ink-soft">
+                <p className="mt-0.5 text-xs leading-relaxed text-ink-muted">
                   {f.detalle} · Última ejecución {f.ultimaEjecucion}
                 </p>
               </div>

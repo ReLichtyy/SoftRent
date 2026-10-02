@@ -216,9 +216,9 @@ export function Comenzar() {
                     aria-current={activo ? 'step' : undefined}
                     className={cn(
                       'flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium transition-colors',
-                      hecho && 'bg-brand text-on-brand',
-                      activo && 'bg-brand/10 text-brand ring-1 ring-brand',
-                      !hecho && !activo && 'bg-surface-2 text-ink-soft',
+                      hecho && 'bg-accent text-on-accent',
+                      activo && 'bg-accent-soft text-accent-text ring-1 ring-focus',
+                      !hecho && !activo && 'bg-surface-sunken text-ink-muted',
                     )}
                   >
                     {hecho ? (
@@ -230,13 +230,13 @@ export function Comenzar() {
                   <span
                     className={cn(
                       'hidden text-xs sm:block',
-                      activo ? 'text-ink' : 'text-ink-soft',
+                      activo ? 'text-ink' : 'text-ink-muted',
                     )}
                   >
                     {nombre}
                   </span>
                   {n < PASOS.length && (
-                    <span aria-hidden="true" className="h-px w-4 bg-line sm:w-6" />
+                    <span aria-hidden="true" className="h-px w-4 bg-border sm:w-6" />
                   )}
                 </li>
               )
@@ -246,10 +246,10 @@ export function Comenzar() {
           <div ref={pasoRef} key={paso} className="mt-8">
             {paso === 1 && (
               <fieldset>
-                <legend className="font-display text-xl text-ink">
+                <legend className="text-heading-lg text-ink">
                   ¿A qué se dedica su negocio?
                 </legend>
-                <p className="mt-1 text-sm text-ink-soft">
+                <p className="mt-1 text-sm text-ink-muted">
                   Toque la tarjeta que más se parezca a su negocio. Puede
                   cambiarla después, nada queda fijo todavía.
                 </p>
@@ -263,20 +263,20 @@ export function Comenzar() {
                         onClick={() => elegirIndustria(demo.id)}
                         aria-pressed={industria === demo.id}
                         className={cn(
-                          'flex items-start gap-3 rounded-md border p-4 text-left outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+                          'flex items-start gap-3 rounded-md border p-4 text-left outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[var(--ease-out)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
                           industria === demo.id
-                            ? 'border-brand bg-brand/5 ring-1 ring-brand'
-                            : 'border-line bg-surface hover:border-ink-soft/40',
+                            ? 'border-accent bg-accent-soft ring-1 ring-focus'
+                            : 'border-border bg-surface hover:border-ink-muted/40',
                         )}
                       >
-                        <span className="shrink-0 text-brand">
+                        <span className="shrink-0 text-accent-text">
                           <Icono className="h-6 w-6" aria-hidden="true" />
                         </span>
                         <span>
-                          <span className="block font-display text-lg text-ink">
+                          <span className="block text-heading-md text-ink">
                             {demo.nombre.replace('SoftRent ', '')}
                           </span>
-                          <span className="mt-0.5 block text-xs leading-relaxed text-ink-soft">
+                          <span className="mt-0.5 block text-xs leading-relaxed text-ink-muted">
                             {demo.industria}
                           </span>
                         </span>
@@ -288,26 +288,26 @@ export function Comenzar() {
                     onClick={() => elegirIndustria('otro')}
                     aria-pressed={industria === 'otro'}
                     className={cn(
-                      'flex items-start gap-3 rounded-md border p-4 text-left outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] sm:col-span-2',
+                      'flex items-start gap-3 rounded-md border p-4 text-left outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[var(--ease-out)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] sm:col-span-2',
                       industria === 'otro'
-                        ? 'border-brand bg-brand/5 ring-1 ring-brand'
-                        : 'border-line bg-surface hover:border-ink-soft/40',
+                        ? 'border-accent bg-accent-soft ring-1 ring-focus'
+                        : 'border-border bg-surface hover:border-ink-muted/40',
                     )}
                   >
-                    <span className="shrink-0 text-ink-soft">
+                    <span className="shrink-0 text-ink-muted">
                       <Question className="h-6 w-6" aria-hidden="true" />
                     </span>
                     <span>
-                      <span className="block font-display text-lg text-ink">
+                      <span className="block text-heading-md text-ink">
                         Aún no lo sé
                       </span>
-                      <span className="mt-0.5 block text-xs leading-relaxed text-ink-soft">
+                      <span className="mt-0.5 block text-xs leading-relaxed text-ink-muted">
                         Conversamos y encontramos la forma de ayudarle.
                       </span>
                     </span>
                   </button>
                 </div>
-                <p className="mt-4 text-sm text-ink-soft">
+                <p className="mt-4 text-sm text-ink-muted">
                   ¿Prefiere ver ejemplos funcionando primero?{' '}
                   <LinkButton to="/demos" variant="link" size="sm">
                     Vea las demos
@@ -318,10 +318,10 @@ export function Comenzar() {
 
             {paso === 2 && (
               <fieldset>
-                <legend className="font-display text-xl text-ink">
+                <legend className="text-heading-lg text-ink">
                   ¿Qué le gustaría resolver primero?
                 </legend>
-                <p className="mt-1 text-sm text-ink-soft">
+                <p className="mt-1 text-sm text-ink-muted">
                   Elija todos los que le suenen.
                 </p>
                 <div className="mt-5 grid gap-3 sm:grid-cols-2">
@@ -334,10 +334,10 @@ export function Comenzar() {
                         onClick={() => alternarDolor(s.id)}
                         aria-pressed={activo}
                         className={cn(
-                          'rounded-md border p-4 text-left text-sm leading-relaxed outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
+                          'rounded-md border p-4 text-left text-sm leading-relaxed outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[var(--ease-out)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]',
                           activo
-                            ? 'border-brand bg-brand/5 text-ink ring-1 ring-brand'
-                            : 'border-line bg-surface text-ink-soft hover:border-ink-soft/40',
+                            ? 'border-accent bg-accent-soft text-ink ring-1 ring-focus'
+                            : 'border-border bg-surface text-ink-muted hover:border-ink-muted/40',
                         )}
                       >
                         {s.dolor}
@@ -363,7 +363,7 @@ export function Comenzar() {
             {paso === 3 && (
               <Card className="flex flex-col gap-4">
                 <div>
-                  <h2 className="font-display text-xl text-ink">
+                  <h2 className="text-heading-lg text-ink">
                     Para enviarle la propuesta
                   </h2>
                   {plan && (
@@ -450,11 +450,11 @@ export function Comenzar() {
                   error={errores.consentimiento || undefined}
                 />
 
-                <div className="rounded-md border border-line bg-surface-2/50 p-4">
-                  <h3 className="font-display text-base text-ink">
+                <div className="rounded-md border border-border bg-surface-sunken/50 p-4">
+                  <h3 className="text-heading-sm text-ink">
                     ¿Tiene a la mano su menú, catálogo o lista de precios?
                   </h3>
-                  <p className="mt-1 text-xs leading-relaxed text-ink-soft">
+                  <p className="mt-1 text-xs leading-relaxed text-ink-muted">
                     No es obligatorio. Si los comparte, su propuesta llega más
                     precisa y montamos su asistente más rápido.
                   </p>
@@ -485,10 +485,10 @@ export function Comenzar() {
                     <Badge tone="success" dot>
                       Brief listo
                     </Badge>
-                    <h2 className="font-display text-xl text-ink">
+                    <h2 className="text-heading-lg text-ink">
                       Gracias, {datos.nombre.split(' ')[0] || 'de corazón'}.
                     </h2>
-                    <p className="text-sm leading-relaxed text-ink-soft">
+                    <p className="text-sm leading-relaxed text-ink-muted">
                       Su correo se abrió con el brief completo. Si no se abrió,
                       envíe el mensaje a hola@softrent.com y seguimos igual.
                       Le respondemos en menos de un día hábil con los
@@ -497,25 +497,25 @@ export function Comenzar() {
                   </>
                 ) : (
                   <>
-                    <h2 className="font-display text-xl text-ink">
+                    <h2 className="text-heading-lg text-ink">
                       Revise su brief
                     </h2>
                     <dl className="space-y-2 text-sm">
                       <div className="flex justify-between gap-4">
-                        <dt className="text-ink-soft">Industria</dt>
+                        <dt className="text-ink-muted">Industria</dt>
                         <dd className="text-right text-ink">
                           {industriaNombre}
                         </dd>
                       </div>
                       {plan && (
                         <div className="flex justify-between gap-4">
-                          <dt className="text-ink-soft">Plan de interés</dt>
+                          <dt className="text-ink-muted">Plan de interés</dt>
                           <dd className="text-right text-ink">{plan.nombre}</dd>
                         </div>
                       )}
                       {archivos.length > 0 && (
                         <div className="flex justify-between gap-4">
-                          <dt className="text-ink-soft">Contexto compartido</dt>
+                          <dt className="text-ink-muted">Contexto compartido</dt>
                           <dd className="text-right text-ink">
                             {archivos.length}{' '}
                             {archivos.length === 1 ? 'archivo' : 'archivos'}
@@ -523,11 +523,11 @@ export function Comenzar() {
                         </div>
                       )}
                       <div className="flex justify-between gap-4">
-                        <dt className="text-ink-soft">Negocio</dt>
+                        <dt className="text-ink-muted">Negocio</dt>
                         <dd className="text-right text-ink">{datos.negocio}</dd>
                       </div>
                       <div className="justify-between gap-4 sm:flex">
-                        <dt className="text-ink-soft">Qué quiere resolver</dt>
+                        <dt className="text-ink-muted">Qué quiere resolver</dt>
                         <dd className="mt-2 text-ink sm:mt-0 sm:text-right">
                           {doloresElegidos.map((d) => (
                             <span key={d.id} className="block">
@@ -540,7 +540,7 @@ export function Comenzar() {
                     <Button href={mailto} onClick={enviar}>
                       Enviar por correo
                     </Button>
-                    <p className="text-xs leading-relaxed text-ink-soft">
+                    <p className="text-xs leading-relaxed text-ink-muted">
                       Se abre su correo con el brief ya redactado. Le
                       respondemos en menos de un día hábil.
                     </p>

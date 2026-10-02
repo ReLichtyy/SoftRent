@@ -16,15 +16,15 @@ export default function Industrias() {
   })
 
   return (
-    <section ref={scope} className="border-t border-line bg-surface/60 py-20 sm:py-28">
+    <section ref={scope} className="border-t border-border bg-surface/60 py-20 sm:py-28">
       <Container>
         <h2
           data-reveal
-          className="max-w-md font-display text-3xl leading-tight text-ink sm:text-4xl"
+          className="max-w-md font-display text-display-sm text-ink sm:text-display-md"
         >
           Un sistema por industria, con su cara
         </h2>
-        <p data-reveal className="mt-4 max-w-md text-ink-soft">
+        <p data-reveal className="mt-4 max-w-md text-ink-muted">
           Mismas piezas, plantilla distinta. Cada sistema vive en su propio
           subdominio, armado sobre lo que su negocio necesita.
         </p>
@@ -36,10 +36,10 @@ export default function Industrias() {
               className="mt-12 grid items-center gap-10 lg:grid-cols-[1fr_1.15fr] lg:gap-14"
             >
               <div>
-                <h3 className="font-display text-2xl leading-tight text-ink">
+                <h3 className="font-display text-display-sm text-ink">
                   La demo de Citas ya está en vivo
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-ink-soft">
+                <p className="mt-3 text-sm leading-relaxed text-ink-muted">
                   Recórrala como si fuera su cliente: elija un horario,
                   confirme la cita y vea el recordatorio que llega solo. Nadie
                   de nuestro lado interviene.
@@ -64,7 +64,7 @@ export default function Industrias() {
             return (
               <Card key={demo.id} data-reveal className="flex flex-col gap-3">
                 <div className="flex items-start justify-between gap-3">
-                  <span className="text-brand">
+                  <span className="text-accent-text">
                     <Icono className="h-6 w-6" aria-hidden="true" />
                   </span>
                   <Badge
@@ -76,9 +76,9 @@ export default function Industrias() {
                       : 'Próximamente'}
                   </Badge>
                 </div>
-                <h3 className="font-display text-xl text-ink">{demo.nombre}</h3>
-                <p className="text-xs text-ink-soft">{demo.industria}</p>
-                <p className="flex-1 text-sm leading-relaxed text-ink-soft">
+                <h3 className="text-heading-lg text-ink">{demo.nombre}</h3>
+                <p className="text-xs text-ink-muted">{demo.industria}</p>
+                <p className="flex-1 text-sm leading-relaxed text-ink-muted">
                   {demo.resumen}
                 </p>
                 <LinkButton to={demo.cta} variant="secondary" size="sm">

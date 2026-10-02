@@ -50,11 +50,11 @@ export default function Seguridad() {
   })
 
   return (
-    <section ref={scope} className="border-t border-line bg-surface/60 py-20 sm:py-28">
+    <section ref={scope} className="border-t border-border bg-surface/60 py-20 sm:py-28">
       <Container>
         <h2
           data-reveal
-          className="max-w-md font-display text-3xl leading-tight text-ink sm:text-4xl"
+          className="max-w-md font-display text-display-sm text-ink sm:text-display-md"
         >
           Sus datos, tratados como deben ser
         </h2>
@@ -62,12 +62,12 @@ export default function Seguridad() {
         <div className="mt-12 grid gap-5 md:grid-cols-2">
           {garantias.map((g) => (
             <Card key={g.titulo} data-reveal className="flex gap-4">
-              <span className="shrink-0 text-brand">
+              <span className="shrink-0 text-accent-text">
                 <g.icono className="h-6 w-6" aria-hidden="true" />
               </span>
               <div>
-                <h3 className="font-display text-lg text-ink">{g.titulo}</h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-ink-soft">
+                <h3 className="text-heading-md text-ink">{g.titulo}</h3>
+                <p className="mt-1.5 text-sm leading-relaxed text-ink-muted">
                   {g.detalle}
                 </p>
               </div>

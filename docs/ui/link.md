@@ -27,7 +27,7 @@ import { Link } from '../ui/Link'
 
 | Prop | Tipo | Por defecto | Descripción |
 | --- | --- | --- | --- |
-| `variant` | `'brand' \| 'muted' \| 'inherit'` | `'brand'` | Color e interacción |
+| `variant` | `'accent' | 'brand' (alias) | 'neutral| 'muted' \| 'inherit'` | `'brand'` | Color e interacción |
 | `children` | `ReactNode` | — | Contenido del enlace |
 | `className` | `string` | — | Clases extra (se fusiona con `cn`) |
 | `...props` | `AnchorHTMLAttributes` | — | Se delegan al `<a>` |
@@ -42,9 +42,9 @@ Comportamiento por variante:
 
 - `<a>` nativo con `href`: foco, Enter y anuncio por rol heredados.
 - `brand` cumple AA sobre fondo de página y superficie (4.86:1 en claro).
-- El foco visible global (`outline` de 2px en `--brand`) aplica
+- El foco visible global (`outline` de 2px en `--focus-ring`) aplica
   automáticamente.
 
 ## Tokens usados
 
-`--brand` (brand), `--ink-soft` → `--ink` (muted).
+`--accent-text` (brand), `--ink-muted` → `--ink` (muted).

@@ -1,120 +1,254 @@
 /*
  * Tokens SoftRent: fuente única de diseño.
- * Valores y reglas: Notion "Lógica de negocio", secciones 2.3 y 2.4.
- * Tema claro por defecto; [data-theme="dark"] define el tema oscuro.
+ * Sistema "papel tibio, una señal roja" (design system SoftRent v2):
+ * papel y tinta con mucho aire; el rojo del logo aparece pocas veces
+ * (acción primaria, controles marcados, el punto de marca).
+ *
+ * Tema oscuro por defecto del producto: [data-theme="dark"] define el
+ * oscuro; sin atributo se usa el claro. Cada rol existe en ambos temas.
  */
+
+/* Fuentes autoalojadas (Figtree + Newsreader), sin petición externa.
+ * Figtree: interfaz y textos. Newsreader: titulares editoriales y cifras
+ * grandes, solo en peso regular. */
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("../assets/fonts/figtree-latin-wght-normal.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("../assets/fonts/figtree-latin-wght-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Figtree Ext";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("../assets/fonts/figtree-latin-ext-wght-normal.woff2") format("woff2");
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF,
+    U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020,
+    U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../assets/fonts/newsreader-latin-opsz-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("../assets/fonts/newsreader-latin-opsz-italic.woff2") format("woff2");
+}
 
 /* Mapa de variables semánticas a utilidades de Tailwind.
  * `inline` hace que las utilidades usen var(--…) en vivo,
  * para que el cambio de tema no requiera regenerar CSS. */
 @theme inline {
-  /* Tipografía: Inter para toda la interfaz,
-   * Play solo para logotipo y titulares grandes. */
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Play", "Inter", ui-sans-serif, sans-serif;
+  --font-sans: "Figtree", "Figtree Ext", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, "Times New Roman", serif;
 
-  /* Escala: 12 · 14 · 16 (base) · 20 · 24 · 32 · 48.
-   * Interlineado 1,5 en texto, 1,15 en titulares. */
+  /* Escala de interfaz: 12 · 14 · 16 (base) · 18 · 22 · 28 · 40 · 56 · 72.
+   * Los tamaños 2xl en adelante coinciden con la escala display. */
   --text-xs: 0.75rem;
-  --text-xs--line-height: 1.5;
+  --text-xs--line-height: 1.34;
   --text-sm: 0.875rem;
-  --text-sm--line-height: 1.5;
+  --text-sm--line-height: 1.43;
   --text-base: 1rem;
   --text-base--line-height: 1.5;
-  --text-lg: 1.25rem;
-  --text-lg--line-height: 1.15;
-  --text-xl: 1.5rem;
-  --text-xl--line-height: 1.15;
-  --text-2xl: 2rem;
-  --text-2xl--line-height: 1.15;
-  --text-3xl: 3rem;
-  --text-3xl--line-height: 1.15;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.56;
+  --text-xl: 1.375rem;
+  --text-xl--line-height: 1.36;
+  --text-2xl: 1.75rem;
+  --text-2xl--line-height: 1.18;
+  --text-3xl: 2.5rem;
+  --text-3xl--line-height: 1.1;
+  --text-4xl: 3.5rem;
+  --text-4xl--line-height: 1.05;
+  --text-5xl: 4.5rem;
+  --text-5xl--line-height: 1.02;
 
-  /* Radios: 8 px (inputs, botones), 12 px (tarjetas), 16 px (modales). */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  /* Estilos del sistema (utilidades text-display-*, text-heading-*).
+   * Display: Newsreader, un solo peso, tracking cerrado; combinar con
+   * font-display y text-balance. Interfaz: Figtree 600. */
+  --text-display-xl: 4.5rem;
+  --text-display-xl--line-height: 1.02;
+  --text-display-xl--letter-spacing: -0.025em;
+  --text-display-xl--font-weight: 400;
+  --text-display-lg: 3.5rem;
+  --text-display-lg--line-height: 1.05;
+  --text-display-lg--letter-spacing: -0.022em;
+  --text-display-lg--font-weight: 400;
+  --text-display-md: 2.5rem;
+  --text-display-md--line-height: 1.1;
+  --text-display-md--letter-spacing: -0.018em;
+  --text-display-md--font-weight: 400;
+  --text-display-sm: 1.75rem;
+  --text-display-sm--line-height: 1.18;
+  --text-display-sm--letter-spacing: -0.012em;
+  --text-display-sm--font-weight: 400;
+  --text-heading-lg: 1.375rem;
+  --text-heading-lg--line-height: 1.36;
+  --text-heading-lg--letter-spacing: -0.012em;
+  --text-heading-lg--font-weight: 600;
+  --text-heading-md: 1.125rem;
+  --text-heading-md--line-height: 1.44;
+  --text-heading-md--letter-spacing: -0.008em;
+  --text-heading-md--font-weight: 600;
+  --text-heading-sm: 0.9375rem;
+  --text-heading-sm--line-height: 1.47;
+  --text-heading-sm--font-weight: 600;
+  --text-label: 0.875rem;
+  --text-label--line-height: 1.43;
+  --text-label--font-weight: 500;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.34;
+  --text-caption--font-weight: 500;
+  --text-eyebrow: 0.75rem;
+  --text-eyebrow--line-height: 1.34;
+  --text-eyebrow--letter-spacing: 0.16em;
+  --text-eyebrow--font-weight: 600;
 
-  /* Color (sección 2.3). */
-  --color-brand: var(--brand);
-  --color-brand-hover: var(--brand-hover);
-  --color-brand-deep: var(--brand-deep);
-  --color-brand-text: var(--brand-text);
-  --color-on-brand: var(--on-brand);
-  --color-on-deep: var(--on-deep);
+  /* Radios: 6 (checkbox), 10 (controles), 16 (tarjetas), 24 (diálogos). */
+  --radius-xs: 6px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+
+  /* Sombras: planas por defecto; la sombra significa "flota". */
+  --shadow-xs: var(--elev-xs);
+  --shadow-sm: var(--elev-sm);
+  --shadow-md: var(--elev-md);
+  --shadow-lg: var(--elev-lg);
+
+  /* Color. */
   --color-bg: var(--bg);
   --color-surface: var(--surface);
-  --color-surface-2: var(--surface-2);
-  --color-line: var(--border);
-  --color-ink: var(--text);
-  --color-ink-soft: var(--text-muted);
+  --color-surface-sunken: var(--surface-sunken);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-subtle: var(--ink-subtle);
+  --color-ink-inverse: var(--ink-inverse);
+  --color-brand: var(--brand);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-active: var(--accent-active);
+  --color-on-accent: var(--on-accent);
+  --color-accent-text: var(--accent-text);
+  --color-accent-soft: var(--accent-soft);
+  --color-focus: var(--focus-ring);
   --color-success: var(--success);
+  --color-success-soft: var(--success-soft);
   --color-warning: var(--warning);
+  --color-warning-soft: var(--warning-soft);
   --color-danger: var(--danger);
+  --color-danger-soft: var(--danger-soft);
   --color-info: var(--info);
-
-  /* Colores de plan (heredados y ajustados, sección 2.3). */
-  --color-plan-arranque: var(--plan-arranque);
-  --color-plan-crecimiento: var(--plan-crecimiento);
-  --color-plan-pro: var(--plan-pro);
-  --color-plan-medida: var(--plan-medida);
+  --color-info-soft: var(--info-soft);
+  --color-scrim: var(--scrim);
 }
 
 /* Tema claro */
 :root {
-  --brand: #d8182a;
-  --brand-hover: #b31222;
-  /* Texto de marca sobre fondos tenues (badge brand): AA en 12px. */
-  --brand-text: #b31222;
-  --brand-deep: #400517;
-  --on-brand: #ffffff;
-  --on-deep: #faf8f8;
-  --bg: #faf8f8;
+  --bg: #f8f6f3;
   --surface: #ffffff;
-  --surface-2: #f3eeee;
-  --border: #e5dedf;
-  --text: #161214;
-  --text-muted: #5f585b;
-  --success: #22754a;
-  --warning: #96630d;
-  --danger: #b23a08;
-  --info: #1f6fa8;
-  --plan-arranque: #437a22;
-  --plan-crecimiento: #006494;
-  --plan-pro: #8a6a10;
-  --plan-medida: #400517;
+  --surface-sunken: #f1eee9;
+  --surface-inverse: #171513;
+  --border: #e5e0d9;
+  --border-strong: #8c847b;
+  --ink: #171513;
+  --ink-muted: #5f5952;
+  --ink-subtle: #6e675f;
+  --ink-inverse: #f3f0eb;
+
+  /* Rojo, tres trabajos: brand (marca, solo marcas y puntos), accent
+   * (relleno de acción primaria, 5.1:1 con texto blanco) y accent-text
+   * (palabras en rojo). Nunca para errores: danger es naranja quemado. */
+  --brand: #ea1b25;
+  --accent: #d9161f;
+  --accent-hover: #c0121b;
+  --accent-active: #a80f17;
+  --on-accent: #ffffff;
+  --accent-text: #c8131c;
+  --accent-soft: #fdeceb;
+  --focus-ring: #d9161f;
+
+  --success: #1d7348;
+  --success-soft: #e5f1ea;
+  --warning: #8f5b00;
+  --warning-soft: #f7eedc;
+  --danger: #b2410c;
+  --danger-soft: #fbeae1;
+  --info: #245f9e;
+  --info-soft: #e7eef7;
+  --scrim: rgba(23, 21, 19, 0.44);
+
+  --elev-xs: 0 1px 2px rgba(23, 21, 19, 0.06);
+  --elev-sm: 0 1px 2px rgba(23, 21, 19, 0.04), 0 4px 12px rgba(23, 21, 19, 0.06);
+  --elev-md: 0 2px 4px rgba(23, 21, 19, 0.04), 0 12px 32px rgba(23, 21, 19, 0.1);
+  --elev-lg: 0 4px 8px rgba(23, 21, 19, 0.04), 0 24px 64px rgba(23, 21, 19, 0.18);
+
+  /* Medidas y movimiento (valores del sistema). */
+  --control-sm: 32px;
+  --control-md: 40px;
+  --control-lg: 48px;
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 320ms;
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
 
   color-scheme: light;
 }
 
-/* Tema oscuro.
- * Nota de contraste (WCAG AA): sobre --brand #f0374a el texto
- * debe ser tinta oscura (5.03:1); el blanco queda en 3.92:1. */
+/* Tema oscuro: espeja el claro rol por rol. */
 [data-theme="dark"] {
-  --brand: #f0374a;
-  --brand-hover: #ff5566;
-  /* Texto de marca sobre fondos tenues: 6.73:1 en badge oscuro. */
-  --brand-text: #ff7a8a;
-  --brand-deep: #400517;
-  --on-brand: #0c0a0b;
-  --on-deep: #faf8f8;
-  --bg: #0c0a0b;
-  --surface: #171314;
-  --surface-2: #221b1c;
-  --border: #3a2c2e;
-  --text: #eeeaea;
-  --text-muted: #a0979a;
-  --success: #4cc38a;
-  --warning: #e0a93b;
-  --danger: #f07a45;
-  --info: #5aa9e6;
+  --bg: #0f0e0d;
+  --surface: #181715;
+  --surface-sunken: #1b1917;
+  --surface-inverse: #2b2824;
+  --border: #2e2b27;
+  --border-strong: #6f685f;
+  --ink: #f3f0eb;
+  --ink-muted: #a8a198;
+  --ink-subtle: #948d84;
+  --ink-inverse: #f3f0eb;
 
-  /* Colores de plan en oscuro: versiones claras para contraste AA.
-   * El carmesi de "A la medida" pasa al rojo de marca (fondo oscuro). */
-  --plan-arranque: #8ec556;
-  --plan-crecimiento: #56b0e0;
-  --plan-pro: #d8bb6e;
-  --plan-medida: #f0374a;
+  --accent-text: #ff6b70;
+  --accent-soft: #3a1416;
+  --focus-ring: #ff3b44;
+
+  --success: #4cc38a;
+  --success-soft: #12281d;
+  --warning: #e2a93f;
+  --warning-soft: #2d2310;
+  --danger: #f2804f;
+  --danger-soft: #341a0f;
+  --info: #6aaef0;
+  --info-soft: #12223a;
+  --scrim: rgba(0, 0, 0, 0.64);
+
+  --elev-xs: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --elev-sm: 0 1px 2px rgba(0, 0, 0, 0.4), 0 4px 12px rgba(0, 0, 0, 0.32);
+  --elev-md: 0 2px 4px rgba(0, 0, 0, 0.4), 0 12px 32px rgba(0, 0, 0, 0.48);
+  --elev-lg: 0 4px 8px rgba(0, 0, 0, 0.4), 0 24px 64px rgba(0, 0, 0, 0.6);
 
   color-scheme: dark;
 }

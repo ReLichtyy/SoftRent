@@ -1,5 +1,6 @@
 import type { AnchorHTMLAttributes, ButtonHTMLAttributes, ReactNode } from 'react'
 import { cn } from '../../lib/cn'
+import { Spinner } from './Spinner'
 
 type Variant = 'primary' | 'secondary' | 'ghost' | 'link'
 type Size = 'sm' | 'md' | 'lg' | 'icon'
@@ -13,26 +14,35 @@ export type ButtonProps = {
   size?: Size
   /** Cuando se define, el botón se renderiza como enlace (<a>). */
   href?: string
+  /** Muestra un spinner, conserva el ancho, marca `aria-busy` e ignora
+   * los clics. El botón sigue siendo enfocable. Solo en botones, no en
+   * enlaces (`href`).
+   * @default false */
+  loading?: boolean
+  /** Texto anunciado mientras `loading`.
+   * @default "Cargando" */
+  loadingLabel?: string
   /** Contenido del botón (acepta iconos junto al texto). */
   children: ReactNode
   className?: string
 }
 
 const baseStyles =
-  'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-sm font-medium outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[cubic-bezier(0.32,0.72,0,1)] active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] disabled:pointer-events-none disabled:opacity-50'
+  'inline-flex shrink-0 items-center justify-center gap-2 whitespace-nowrap rounded-sm font-medium tracking-[-0.005em] outline-none transition-[color,background-color,border-color,transform] duration-[var(--duration-fast)] ease-[var(--ease-out)] active:translate-y-px focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] disabled:cursor-not-allowed disabled:opacity-45'
 
 const variantStyles: Record<Variant, string> = {
-  primary: 'bg-brand text-on-brand hover:bg-brand-hover',
+  primary:
+    'bg-accent text-on-accent shadow-[inset_0_1px_0_rgba(255,255,255,0.14),var(--elev-xs)] hover:bg-accent-hover active:bg-accent-active',
   secondary:
-    'border border-line bg-surface text-ink hover:bg-surface-2 hover:border-ink-soft/40',
-  ghost: 'text-ink hover:bg-surface-2',
-  link: 'text-brand underline-offset-4 hover:underline',
+    'border border-border bg-surface text-ink shadow-xs hover:border-border-strong hover:bg-surface-sunken',
+  ghost: 'text-ink hover:bg-surface-sunken active:bg-border',
+  link: 'text-accent-text underline-offset-4 hover:underline',
 }
 
 const sizeStyles: Record<Size, string> = {
   sm: 'h-8 px-3 text-sm',
   md: 'h-10 px-4 text-sm',
-  lg: 'h-12 px-6 text-base',
+  lg: 'h-12 px-5 text-base',
   icon: 'size-10',
 }
 
@@ -42,8 +52,11 @@ export function Button({
   variant = 'primary',
   size = 'md',
   href,
+  loading = false,
+  loadingLabel = 'Cargando',
   className,
   children,
+  onClick,
   ...props
 }: ButtonProps &
   (ButtonHTMLAttributes<HTMLButtonElement> &
@@ -65,8 +78,31 @@ export function Button({
   }
 
   return (
-    <button className={classes} {...props}>
-      {children}
+    <button
+      className={cn(classes, loading && 'relative cursor-progress')}
+      aria-busy={loading || undefined}
+      onClick={(event) => {
+        if (loading) {
+          event.preventDefault()
+          return
+        }
+        onClick?.(event)
+      }}
+      {...props}
+    >
+      {loading ? (
+        <>
+          <span className="invisible inline-flex items-center gap-2">
+            {children}
+          </span>
+          <span className="absolute inset-0 grid place-items-center">
+            <Spinner size={size === 'lg' ? 'lg' : 'md'} />
+            <span className="sr-only">{loadingLabel}</span>
+          </span>
+        </>
+      ) : (
+        children
+      )}
     </button>
   )
 }

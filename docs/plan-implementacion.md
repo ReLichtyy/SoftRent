@@ -90,7 +90,7 @@ Criterio de aceptación: desde `/` se llega a cada página del mapa por navegaci
 3. Regla: agregar una demo nueva = una entrada en `content/demos` + un archivo en `knowledge/demos/`, sin tocar componentes.
 
 ### Fase 3 - Secciones del sitio público (3.4.2 a 3.4.9) [COMPLETADA]
-1. Hero según wireframe 2.7: fondo brand-deep, titular "Su negocio responde, agenda y cobra solo.", CTAs Comenzar / Ver demos, mockup de conversación, franja de confianza (Hecho en Costa Rica, SINPE, facturación electrónica, WhatsApp).
+1. Hero según wireframe 2.7: fondo surface-inverse, titular "Su negocio responde, agenda y cobra solo.", CTAs Comenzar / Ver demos, mockup de conversación, franja de confianza (Hecho en Costa Rica, SINPE, facturación electrónica, WhatsApp).
 2. Problemas a Soluciones: 4 a 6 tarjetas desde `content/soluciones`, sin jerga técnica.
 3. Galería de demos con filtro por industria y estados.
 4. Cómo trabajamos: Diagnóstico, Propuesta, Implementación, Acompañamiento, con duración estimada y CTA.

@@ -79,10 +79,10 @@ export function AppBandeja() {
             onClick={() => setFiltro(f.id)}
             aria-pressed={filtro === f.id}
             className={cn(
-              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-brand',
+              'rounded-full border px-3.5 py-2 text-xs font-medium outline-none transition-colors focus-visible:ring-2 focus-visible:ring-focus',
               filtro === f.id
-                ? 'border-brand bg-brand/10 text-brand'
-                : 'border-line text-ink-soft hover:border-ink-soft/40 hover:text-ink',
+                ? 'border-accent bg-accent-soft text-accent-text'
+                : 'border-border text-ink-muted hover:border-ink-muted/40 hover:text-ink',
             )}
           >
             {f.label}
@@ -92,7 +92,7 @@ export function AppBandeja() {
 
       {cargando ? (
         <Card padded={false} className="overflow-hidden">
-          <ul className="divide-y divide-line" aria-label="Cargando conversaciones">
+          <ul className="divide-y divide-border" aria-label="Cargando conversaciones">
             {[0, 1, 2, 3].map((i) => (
               <li key={i} className="flex flex-col gap-2 p-4">
                 <Skeleton className="h-4 w-32" />
@@ -103,8 +103,8 @@ export function AppBandeja() {
         </Card>
       ) : visibles.length === 0 ? (
         <Card className="flex flex-col items-center gap-2 py-10 text-center">
-          <p className="font-display text-lg text-ink">Todo en orden</p>
-          <p className="max-w-sm text-sm text-ink-soft">
+          <p className="text-heading-md text-ink">Todo en orden</p>
+          <p className="max-w-sm text-sm text-ink-muted">
             No hay conversaciones en este filtro. Cuando un cliente escriba,
             aparece aquí.
           </p>
@@ -112,7 +112,7 @@ export function AppBandeja() {
       ) : (
         <div ref={scope} className="grid gap-5 lg:grid-cols-[1fr_1.4fr]">
           <Card padded={false} className="h-fit overflow-hidden">
-            <ul className="divide-y divide-line">
+            <ul className="divide-y divide-border">
               {visibles.map((c) => {
                 const tono = tonoEstado[c.estado]
                 const ultimo = c.mensajes[c.mensajes.length - 1]
@@ -123,8 +123,8 @@ export function AppBandeja() {
                       onClick={() => setSeleccionada(c)}
                       aria-pressed={seleccionada?.id === c.id}
                       className={cn(
-                        'flex w-full flex-col gap-1.5 p-4 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand',
-                        seleccionada?.id === c.id ? 'bg-brand/5' : 'hover:bg-surface-2',
+                        'flex w-full flex-col gap-1.5 p-4 text-left outline-none transition-colors focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus',
+                        seleccionada?.id === c.id ? 'bg-accent-soft' : 'hover:bg-surface-sunken',
                       )}
                     >
                       <span className="flex items-center justify-between gap-3">
@@ -135,7 +135,7 @@ export function AppBandeja() {
                           {tono.badge}
                         </Badge>
                       </span>
-                      <span className="truncate text-xs text-ink-soft">
+                      <span className="truncate text-xs text-ink-muted">
                         {ultimo.autor === 'cliente' ? '' : 'Usted: '}
                         {ultimo.texto}
                       </span>
@@ -149,12 +149,12 @@ export function AppBandeja() {
           <Card padded={false} className="flex min-h-[420px] flex-col overflow-hidden">
             {seleccionada ? (
               <>
-                <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-3">
+                <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
                   <div className="min-w-0">
                     <p className="truncate text-sm font-medium text-ink">
                       {seleccionada.cliente}
                     </p>
-                    <p className="text-xs text-ink-soft">{seleccionada.telefono}</p>
+                    <p className="text-xs text-ink-muted">{seleccionada.telefono}</p>
                   </div>
                   <Badge tone={tonoEstado[seleccionada.estado].tone} dot>
                     {tonoEstado[seleccionada.estado].badge}
@@ -168,12 +168,12 @@ export function AppBandeja() {
                       className={cn(
                         'max-w-[85%] rounded-md px-3 py-2 text-sm leading-relaxed',
                         m.autor === 'cliente'
-                          ? 'bg-surface-2 text-ink'
-                          : 'ms-auto bg-brand text-on-brand',
+                          ? 'bg-surface-sunken text-ink'
+                          : 'ms-auto bg-accent text-on-accent',
                       )}
                     >
                       {m.texto}
-                      <span className="ms-2 text-[10px] text-on-brand/70">
+                      <span className="ms-2 text-[10px] text-on-accent/70">
                         {m.hora}
                       </span>
                     </div>
@@ -181,10 +181,10 @@ export function AppBandeja() {
                   {(extra[seleccionada.id] ?? []).map((m, i) => (
                     <div
                       key={`extra-${i}`}
-                      className="ms-auto max-w-[85%] rounded-md bg-brand px-3 py-2 text-sm leading-relaxed text-on-brand"
+                      className="ms-auto max-w-[85%] rounded-md bg-accent px-3 py-2 text-sm leading-relaxed text-on-accent"
                     >
                       {m.texto}
-                      <span className="ms-2 text-[10px] text-on-brand/70">
+                      <span className="ms-2 text-[10px] text-on-accent/70">
                         {m.hora}
                       </span>
                     </div>
@@ -192,13 +192,13 @@ export function AppBandeja() {
                 </div>
 
                 {seleccionada.estado === 'cerrada' ? (
-                  <p className="border-t border-line px-4 py-3 text-xs text-ink-soft">
+                  <p className="border-t border-border px-4 py-3 text-xs text-ink-muted">
                     Conversación cerrada. Puede reabrirla escribiéndole al
                     cliente.
                   </p>
                 ) : (
                   <form
-                    className="flex items-center gap-2 border-t border-line p-3"
+                    className="flex items-center gap-2 border-t border-border p-3"
                     onSubmit={(e) => {
                       e.preventDefault()
                       enviarRespuesta()
@@ -209,7 +209,7 @@ export function AppBandeja() {
                       onChange={(e) => setRespuesta(e.target.value)}
                       placeholder="Escriba su respuesta"
                       aria-label={`Responder a ${seleccionada.cliente}`}
-                      className="w-full rounded-sm border border-line bg-surface-2 px-3 py-2 text-sm text-ink placeholder:text-ink-soft/70 outline-none transition-colors focus:border-brand focus:ring-2 focus:ring-brand/30"
+                      className="w-full rounded-sm border border-border-strong bg-surface px-3 py-2 text-base text-ink placeholder:text-ink-subtle outline-none transition-colors hover:border-ink-muted focus:border-focus focus:shadow-[0_0_0_1px_var(--focus-ring)]"
                     />
                     <Button type="submit" size="sm" className="shrink-0">
                       Enviar
@@ -219,10 +219,10 @@ export function AppBandeja() {
               </>
             ) : (
               <div className="flex flex-1 flex-col items-center justify-center gap-2 p-8 text-center">
-                <p className="font-display text-lg text-ink">
+                <p className="text-heading-md text-ink">
                   Elija una conversación
                 </p>
-                <p className="max-w-xs text-sm text-ink-soft">
+                <p className="max-w-xs text-sm text-ink-muted">
                  Seleccione un cliente de la lista para leer el hilo completo
                   y responderle desde aquí.
                 </p>

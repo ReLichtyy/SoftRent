@@ -36,14 +36,14 @@ export function AdminOnboarding() {
       </div>
 
       <Card padded={false} className="overflow-hidden">
-        <ul className="divide-y divide-line">
+        <ul className="divide-y divide-border">
           {pasos.map((paso) => (
             <li key={paso.id}>
               <button
                 type="button"
                 onClick={() => alternar(paso.id)}
                 aria-pressed={paso.hecho}
-                className="flex w-full items-center gap-3 p-4 text-left outline-none transition-colors hover:bg-surface-2 focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-brand sm:p-5"
+                className="flex w-full items-center gap-3 p-4 text-left outline-none transition-colors hover:bg-surface-sunken focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-focus sm:p-5"
               >
                 {paso.hecho ? (
                   <CheckCircle
@@ -52,12 +52,12 @@ export function AdminOnboarding() {
                     weight="fill"
                   />
                 ) : (
-                  <Circle className="h-5 w-5 shrink-0 text-ink-soft" aria-hidden="true" />
+                  <Circle className="h-5 w-5 shrink-0 text-ink-muted" aria-hidden="true" />
                 )}
                 <span
                   className={cn(
                     'text-sm',
-                    paso.hecho ? 'text-ink-soft line-through' : 'text-ink',
+                    paso.hecho ? 'text-ink-muted line-through' : 'text-ink',
                   )}
                 >
                   {paso.nombre}
