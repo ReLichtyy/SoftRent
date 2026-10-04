@@ -35,17 +35,138 @@ export type Demo = {
   cta: string
 }
 
+/** A quién le resuelve el problema: al administrador del negocio o a
+ * sus clientes. */
+export type SolucionArea = 'administracion' | 'clientes'
+
+/** Nichos (sistemas) que filtran la página de soluciones. */
+export type SolucionNicho =
+  | 'supermercados'
+  | 'reservas'
+  | 'pedidos'
+  | 'servicios'
+  | 'chatbot'
+
+/** "pregunta": el sistema responde con datos. "instruccion": el
+ * sistema ejecuta un proceso completo a partir de un mensaje. */
+export type SolucionTipo = 'pregunta' | 'instruccion'
+
 export type Solucion = {
   id: string
+  area: SolucionArea
+  tipo: SolucionTipo
+  /** Sistemas donde aplica; alimenta el filtro por nicho. */
+  nichos: SolucionNicho[]
   /** Frase de dolor del cliente, tal como la diría. */
   dolor: string
+  /** Pasos que hoy exige un sistema moderno sin IA (2 a 3, cortos). */
+  friccion: string[]
+  /** Uno o más mensajes al sistema con su contestación y, si aplica,
+   * la pieza visual de lo que devuelve o deja hecho. */
+  conversacion: SolucionIntercambio[]
+  /** Lo que el sistema deja hecho al final. */
+  accion: string
   /** Qué hace SoftRent, en una oración. */
   respuesta: string
-  /** Beneficio medible: horas, colones o minutos. */
+  /** Beneficio en una línea, sin cifras inventadas. */
   beneficio: string
   /** Demo relacionada. */
   demo: DemoId
+  /** Ventana donde ocurre la conversación. */
+  canal: SolucionCanal
+  /** Título de esa ventana, p. ej. "Ingresos del mes". */
+  titulo: string
 }
+
+/** Un mensaje (del administrador o del cliente, según el área) y lo
+ * que contesta la IA, con datos ilustrativos. */
+export type SolucionIntercambio = {
+  pregunta: string
+  contestacion: string
+  pieza?: SolucionPieza
+}
+
+/** Dónde ocurre la conversación de la solución. */
+export type SolucionCanal = 'whatsapp' | 'panel'
+
+/** Pieza visual de un intercambio. Los valores son ilustrativos. */
+export type SolucionPieza =
+  | {
+      /** Barras horizontales; valor en 0..100, cifra = texto a la derecha. */
+      tipo: 'barras'
+      filas: {
+        etiqueta: string
+        valor: number
+        cifra?: string
+        destacado?: boolean
+      }[]
+      /** Texto del distintivo de la fila destacada. */
+      destacado?: string
+    }
+  | {
+      /** Lista de personas con un detalle y un estado final. */
+      tipo: 'clientes'
+      filas: { nombre: string; detalle: string }[]
+      estado: string
+    }
+  | {
+      /** Existencias en unidades frente al mínimo de cada producto. */
+      tipo: 'existencias'
+      filas: { producto: string; unidades: number; minimo: number }[]
+      /** Nota al pie, p. ej. el pedido sugerido. */
+      nota?: { titulo: string; texto: string }
+    }
+  | {
+      /** Cifras del día en tiles. */
+      tipo: 'resumen'
+      filas: { etiqueta: string; valor: string }[]
+    }
+  | {
+      /** Una venta que el sistema reparte a otras herramientas. */
+      tipo: 'conexiones'
+      origen: { titulo: string; detalle: string; total: string }
+      nodos: {
+        nombre: string
+        icono: 'factura' | 'contabilidad' | 'web'
+        estado: string
+        filas: { etiqueta: string; valor: string }[]
+      }[]
+    }
+  | {
+      /** Franja de agenda; "movido" = espacio que queda libre. */
+      tipo: 'agenda'
+      dia: string
+      slots: {
+        hora: string
+        estado: 'ocupado' | 'libre' | 'nuevo' | 'movido'
+        etiqueta?: string
+      }[]
+    }
+  | {
+      /** Comprobante de cobro por SINPE Móvil. */
+      tipo: 'cobro'
+      concepto: string
+      monto: string
+      detalle: string
+    }
+  | {
+      /** Proceso que el sistema ejecutó, paso a paso. */
+      tipo: 'proceso'
+      pasos: string[]
+    }
+  | {
+      /** Pedido o venta con sus líneas y total. */
+      tipo: 'ticket'
+      filas: { producto: string; cantidad: number; monto: string }[]
+      total: string
+      nota?: string
+    }
+  | {
+      /** Cambios aplicados: antes → después. */
+      tipo: 'cambios'
+      filas: { etiqueta: string; antes: string; despues: string }[]
+      nota?: string
+    }
 
 export type Plan = {
   id: PlanId

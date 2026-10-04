@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react'
+import type { ComponentPropsWithRef } from 'react'
 import { cn } from '../../lib/cn'
 
 export type SectionTone = 'bg' | 'surface' | 'deep'
@@ -10,7 +10,7 @@ export type SectionProps = {
    * - "deep": bloque de marca (surface-inverse, texto claro fijo)
    * @default "bg" */
   tone?: SectionTone
-} & HTMLAttributes<HTMLElement>
+} & ComponentPropsWithRef<'section'>
 
 const toneStyles: Record<SectionTone, string> = {
   bg: '',

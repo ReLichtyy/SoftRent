@@ -48,20 +48,26 @@ function pasoActual(paso: number): string {
 }
 
 /** Flujo "Comenzar" (sección 3.4.10): cuatro pasos que convierten
- * el interés en un brief estructurado. Acepta ?demo y ?plan para
- * precargar; el brief viaja por correo a SoftRent. */
+ * el interés en un brief estructurado. Acepta ?demo, ?plan y
+ * ?problema (id de una solución, llega marcado) para precargar; el
+ * brief viaja por correo a SoftRent. */
 export function Comenzar() {
   const [searchParams] = useSearchParams()
 
   const demoParam = searchParams.get('demo')
   const planParam = searchParams.get('plan')
+  const problemaParam = searchParams.get('problema')
   const plan = planParam ? planPorId(planParam) : undefined
 
   const [paso, setPaso] = useState(1)
   const [industria, setIndustria] = useState<Industria | null>(
     demoParam && demoPorId(demoParam) ? (demoParam as DemoId) : null,
   )
-  const [dolores, setDolores] = useState<string[]>([])
+  const [dolores, setDolores] = useState<string[]>(
+    problemaParam && soluciones.some((s) => s.id === problemaParam)
+      ? [problemaParam]
+      : [],
+  )
   const [datos, setDatos] = useState<Datos>(datosIniciales)
   const [consentimiento, setConsentimiento] = useState(false)
   const [archivos, setArchivos] = useState<ArchivoContexto[]>([])
