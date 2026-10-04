@@ -110,3 +110,38 @@
     outline-color: Highlight;
   }
 }
+
+/* Demo interactivo del hero: entrada de vistas, mensajes y respuestas
+ * rápidas, más el pulso breve que marca una cita recién agendada.
+ * El bloque global de movimiento reducido ya anula estas animaciones. */
+@keyframes demo-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.demo-enter {
+  animation: demo-fade-up var(--duration-slow) var(--ease-out) both;
+}
+
+.demo-msg {
+  animation: demo-fade-up var(--duration-base) var(--ease-out) both;
+}
+
+@keyframes demo-cita-pulse {
+  0% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--success) 40%, transparent);
+  }
+  100% {
+    box-shadow: 0 0 0 8px transparent;
+  }
+}
+
+.demo-cita-nueva {
+  animation: demo-cita-pulse 900ms var(--ease-out) 2;
+}

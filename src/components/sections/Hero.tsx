@@ -1,26 +1,27 @@
 import {
   MapPin,
-  Receipt,
+  ChatsCircle,
+  PlugsConnected,
   WhatsappLogo,
-  CreditCard,
 } from '@phosphor-icons/react'
 import { LinkButton } from '../ui/LinkButton'
 import { Container } from '../layout/Container'
 import { useScrollReveal } from '../../lib/useScrollReveal'
-import { HeroCrmMockup } from './HeroCrmMockup'
+import { HeroLiveDemo } from './HeroLiveDemo'
 
 /* Franja de confianza (sección 3.4.2): señalales locales
  * debajo del hero, sin logos de terceros. */
 const confianzaItems = [
+  { icono: ChatsCircle, texto: 'Pregunte en lenguaje normal' },
+  { icono: WhatsappLogo, texto: 'Desde su chat de WhatsApp' },
+  { icono: PlugsConnected, texto: 'Conecta con sus otras herramientas' },
   { icono: MapPin, texto: 'Hecho en Costa Rica' },
-  { icono: CreditCard, texto: 'Cobros por SINPE' },
-  { icono: Receipt, texto: 'Facturación electrónica' },
-  { icono: WhatsappLogo, texto: 'WhatsApp Business' },
 ]
 
-/** Hero dividido: propuesta de valor y dos CTA a la izquierda, un CRM
- * con la IA trabajando adentro a la derecha. En pantallas angostas el
- * texto va arriba y el CRM debajo. */
+/** Hero dividido: propuesta de valor y dos CTA a la izquierda, un demo
+ * interactivo del producto a la derecha (el visitante responde en el
+ * chat y recorre las vistas). En pantallas angostas el texto va arriba
+ * y el demo debajo. */
 export default function Hero() {
   const scope = useScrollReveal<HTMLElement>({
     selector: '[data-hero]',
@@ -38,14 +39,16 @@ export default function Hero() {
               data-hero
               className="text-balance font-display text-display-md sm:text-display-lg"
             >
-              Su sistema, con IA integrada.
+              Pregúntele a su negocio.{' '}
+              <span className="italic text-[#ff6b70]">Ya sabe la respuesta.</span>
             </h1>
             <p
               data-hero
-              className="mt-6 max-w-md text-lg leading-relaxed text-ink-inverse/75"
+              className="mt-6 max-w-lg text-lg leading-relaxed text-ink-inverse/75"
             >
-              CRM a la medida para su pyme. La IA responde clientes, agenda
-              citas y cobra por SINPE mientras usted atiende.
+              Un sistema con IA integrada: usted pregunta como hablaría con
+              un empleado, desde el panel o su chat de WhatsApp, y recibe la
+              respuesta con sus propios datos.
             </p>
 
             <div data-hero className="mt-9 flex flex-wrap items-center gap-4">
@@ -59,7 +62,7 @@ export default function Hero() {
           </div>
 
           <div data-hero>
-            <HeroCrmMockup />
+            <HeroLiveDemo />
           </div>
         </div>
       </Container>
