@@ -1,0 +1,270 @@
+/*
+ * Barra superior "dos píldoras": vidrio, foco desde arriba y
+ * animación de atracción de Comenzar. Valores en styles/tokens.css.
+ * Todo lo que se mueve anima solo transform y opacity, y se apaga
+ * con prefers-reduced-motion.
+ */
+
+@layer components {
+  /* ---------- Vidrio ---------- */
+  .nav-glass {
+    isolation: isolate;
+    background:
+      linear-gradient(180deg, var(--glass-edge-soft), transparent 60%),
+      var(--glass-tint);
+    -webkit-backdrop-filter: blur(18px) saturate(170%);
+    backdrop-filter: blur(18px) saturate(170%);
+    box-shadow:
+      inset 0 1px 0 var(--glass-edge),
+      inset 0 -1px 0 var(--glass-edge-soft),
+      var(--glass-shadow);
+  }
+  .nav-glass::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    border: 1px solid var(--glass-line);
+    pointer-events: none;
+  }
+  .nav-glass-strong {
+    background:
+      linear-gradient(180deg, var(--glass-edge-soft), transparent 60%),
+      var(--glass-tint-strong);
+  }
+  /* Reflejo especular: la luz entra por arriba a la izquierda. */
+  .nav-glass-liquid::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    border-radius: inherit;
+    pointer-events: none;
+    background:
+      radial-gradient(120% 160% at 12% -30%, var(--glass-edge) 0%, transparent 42%),
+      radial-gradient(90% 140% at 100% 130%, var(--glass-edge-soft), transparent 60%);
+  }
+  /* Respaldo sólido: quien pide menos transparencia o sin soporte de blur. */
+  @media (prefers-reduced-transparency: reduce) {
+    .nav-glass {
+      background: var(--surface);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .nav-glass {
+      background: var(--glass-tint-strong);
+    }
+  }
+
+  /* ---------- Foco desde arriba ---------- */
+  .nav-beam-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    height: 100%;
+    padding-inline: 1rem;
+    color: var(--ink-muted);
+    transition:
+      color var(--duration-base) var(--ease-out),
+      text-shadow var(--duration-base) var(--ease-out);
+  }
+  /* Haz: se abre hacia abajo desde el borde superior. */
+  .nav-beam-link::before {
+    content: "";
+    position: absolute;
+    inset: 0 2px;
+    pointer-events: none;
+    background: linear-gradient(to bottom, var(--beam) 0%, transparent 92%);
+    clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+    opacity: 0;
+    transform: scaleY(0.45);
+    transform-origin: top;
+    transition:
+      opacity 260ms var(--ease-out),
+      transform 360ms var(--ease-out);
+  }
+  /* Fuente de luz en el borde de la píldora. */
+  .nav-beam-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 32%;
+    right: 32%;
+    height: 2px;
+    border-radius: 0 0 2px 2px;
+    background: var(--beam-line);
+    box-shadow: 0 0 10px 1px var(--beam-line);
+    opacity: 0;
+    transition: opacity var(--duration-base) var(--ease-out);
+  }
+  .nav-beam-link[aria-current="page"] {
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .nav-beam-link:focus-visible,
+  .nav-beam-link:active {
+    color: var(--ink);
+  }
+  .nav-beam-link:focus-visible::before,
+  .nav-beam-link:active::before {
+    opacity: 1;
+    transform: none;
+  }
+  .nav-beam-link:focus-visible::after,
+  .nav-beam-link:active::after {
+    opacity: 1;
+  }
+  @media (hover: hover) {
+    .nav-beam-link:hover {
+      color: var(--ink);
+      text-shadow: 0 0 18px var(--beam-text);
+    }
+    .nav-beam-link:hover::before {
+      opacity: 1;
+      transform: none;
+    }
+    .nav-beam-link:hover::after {
+      opacity: 1;
+    }
+  }
+
+  /* Focos fijos (Demos y Precios): encendidos siempre, latiendo cada 2 s. */
+  .nav-beam-link[data-foco] {
+    color: var(--ink);
+  }
+  .nav-beam-link[data-foco]::before {
+    transform: none;
+    animation: nav-lamp-beam 2s ease-in-out infinite;
+  }
+  .nav-beam-link[data-foco]::after {
+    animation: nav-lamp-source 2s ease-in-out infinite;
+  }
+  @media (hover: hover) {
+    .nav-beam-link[data-foco]:hover::before,
+    .nav-beam-link[data-foco]:hover::after {
+      animation: none;
+      opacity: 1;
+    }
+  }
+
+  /* ---------- Comenzar: atracción ---------- */
+  /* Destello que cruza el botón; el resto del ciclo queda en calma. */
+  .nav-cta {
+    position: relative;
+    overflow: hidden;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.22),
+      var(--elev-sm);
+  }
+  .nav-cta::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 55%;
+    pointer-events: none;
+    background: linear-gradient(105deg, transparent 15%, rgba(255, 255, 255, 0.5) 50%, transparent 85%);
+    transform: translateX(-130%) skewX(-18deg);
+    will-change: transform;
+    animation: nav-cta-sweep 2s cubic-bezier(0.45, 0, 0.25, 1) infinite;
+  }
+  /* Brillo desde arriba al pasar el mouse. */
+  .nav-cta::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0.3), transparent 60%);
+    opacity: 0;
+    transition: opacity 240ms var(--ease-out);
+  }
+  /* Halo que sale de la píldora y se desvanece. */
+  .nav-cta-halo {
+    position: absolute;
+    inset: -3px;
+    z-index: -1;
+    border-radius: 999px;
+    pointer-events: none;
+    box-shadow:
+      0 0 0 1px var(--accent),
+      0 0 18px 2px var(--accent);
+    opacity: 0;
+    transform: scale(0.94);
+    will-change: transform, opacity;
+    animation: nav-cta-halo 2s var(--ease-out) infinite;
+  }
+  @media (hover: hover) {
+    .nav-cta:hover::after {
+      opacity: 1;
+    }
+    /* Con el cursor encima la invitación ya cumplió: se pausa. */
+    .nav-cta-wrap:hover .nav-cta-halo,
+    .nav-cta:hover::before {
+      animation-play-state: paused;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-cta::before,
+    .nav-cta-halo,
+    .nav-beam-link[data-foco]::before,
+    .nav-beam-link[data-foco]::after {
+      animation: none;
+    }
+    .nav-beam-link[data-foco]::before {
+      opacity: 0.6;
+    }
+    .nav-beam-link[data-foco]::after {
+      opacity: 0.8;
+    }
+  }
+}
+
+@keyframes nav-cta-sweep {
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  45%,
+  100% {
+    transform: translateX(230%) skewX(-18deg);
+  }
+}
+
+@keyframes nav-cta-halo {
+  0% {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+  30% {
+    opacity: 0.55;
+  }
+  70%,
+  100% {
+    opacity: 0;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes nav-lamp-beam {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes nav-lamp-source {
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+}

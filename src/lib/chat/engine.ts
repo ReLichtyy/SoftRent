@@ -230,7 +230,7 @@ export function bienvenida(): RespuestaChat {
     acciones: [
       {
         tipo: 'quickReplies',
-        opciones: ['Ver demos', '¿Cuánto cuesta?', '¿Cómo funciona?', 'Hablar con alguien'],
+        opciones: ['Ver demos', '¿Cuánto cuesta?'],
       },
     ],
   }

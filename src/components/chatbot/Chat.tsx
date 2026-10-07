@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
-import { ChatsCircle, X } from '@phosphor-icons/react'
+import { X } from '@phosphor-icons/react'
 import { useChat } from '../../lib/chat/useChat'
 import { nombreDemo, avisoPrivacidad } from '../../lib/chat/engine'
 import { Input } from '../ui/Input'
@@ -125,8 +125,8 @@ export default function Chat() {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
     gsap.fromTo(
       el,
-      { opacity: 0, scale: 0.85, y: 12 },
-      { opacity: 1, scale: 1, y: 0, duration: 0.5, ease: 'back.out(1.6)', delay: 0.8 },
+      { opacity: 0, y: 8 },
+      { opacity: 1, y: 0, duration: 0.32, ease: 'power2.out', delay: 0.8 },
     )
   }, [cerrado])
 
@@ -138,10 +138,17 @@ export default function Chat() {
           type="button"
           onClick={chat.abrir}
           aria-label="Abrir el asistente de SoftRent"
-          className="fixed bottom-5 right-5 z-50 flex h-12 items-center gap-2 rounded-full bg-accent px-4 text-sm font-medium text-on-accent shadow-md outline-none transition-transform duration-200 ease-[var(--ease-out)] hover:scale-[1.03] active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+          className="group fixed bottom-5 right-5 z-50 flex h-[46px] items-center gap-2.5 rounded-full bg-surface/95 pr-5 pl-4 font-display text-lg text-ink italic shadow-[inset_0_0_0_1px_var(--border),var(--elev-sm)] outline-none transition-transform duration-200 ease-[var(--ease-out)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
         >
-          <ChatsCircle className="h-5 w-5" aria-hidden="true" />
-          Hable con el asistente
+          {/* Nota al margen: papel, cursiva y el punto de marca. El rojo
+           * queda para Comenzar en el navbar. */}
+          <span
+            aria-hidden="true"
+            className="size-2 shrink-0 rounded-full bg-brand shadow-[0_0_0_3px_color-mix(in_srgb,var(--brand)_18%,transparent)]"
+          />
+          <span className="relative after:absolute after:inset-x-0 after:bottom-px after:h-px after:origin-left after:scale-x-0 after:bg-current after:transition-transform after:duration-300 after:ease-[var(--ease-out)] group-hover:after:scale-x-100 group-focus-visible:after:scale-x-100">
+            ¿Tiene una pregunta?
+          </span>
         </button>
       )}
 
@@ -226,7 +233,7 @@ export default function Chat() {
 
           {mostrarPrivacidad && (
             <div className="flex items-start justify-between gap-2 border-t border-border bg-surface-sunken px-4 py-2.5">
-              <p className="text-xs leading-relaxed text-ink-muted">
+              <p className="text-[0.6875rem] leading-snug text-ink-muted">
                 {avisoPrivacidad}
               </p>
               <button

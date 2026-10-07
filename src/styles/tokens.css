@@ -252,3 +252,31 @@
 
   color-scheme: dark;
 }
+
+/* Vidrio y foco de la barra superior. Aproximación web con
+ * backdrop-filter: no es el Liquid Glass oficial de Apple, que solo
+ * existe en sus plataformas. Respaldo sólido en styles/navbar.css. */
+:root {
+  --glass-tint: rgba(255, 255, 255, 0.66);
+  --glass-tint-strong: rgba(255, 255, 255, 0.88);
+  --glass-edge: rgba(255, 255, 255, 0.7);
+  --glass-edge-soft: rgba(255, 255, 255, 0.22);
+  --glass-line: rgba(23, 21, 19, 0.1);
+  --glass-shadow: 0 10px 30px rgba(23, 21, 19, 0.14);
+  /* Foco: en papel la luz blanca no se ve, se usa el rojo tenue. */
+  --beam: rgba(217, 22, 31, 0.13);
+  --beam-line: rgba(217, 22, 31, 0.85);
+  --beam-text: transparent;
+}
+
+[data-theme="dark"] {
+  --glass-tint: rgba(24, 23, 21, 0.76);
+  --glass-tint-strong: rgba(24, 23, 21, 0.86);
+  --glass-edge: rgba(255, 255, 255, 0.22);
+  --glass-edge-soft: rgba(255, 255, 255, 0.06);
+  --glass-line: rgba(255, 255, 255, 0.09);
+  --glass-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  --beam: rgba(255, 240, 220, 0.17);
+  --beam-line: rgba(255, 248, 236, 0.95);
+  --beam-text: rgba(255, 255, 255, 0.45);
+}

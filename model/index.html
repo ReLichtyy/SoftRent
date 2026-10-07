@@ -1,0 +1,1179 @@
+<!doctype html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chatbot SoftRent: conceptos</title>
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+/* Fuentes y tokens copiados de src/styles/tokens.css (mismos valores). */
+@font-face { font-family: "Figtree"; font-weight: 300 900; font-display: swap;
+  src: url("/src/assets/fonts/figtree-latin-wght-normal.woff2") format("woff2"); }
+@font-face { font-family: "Newsreader"; font-weight: 200 800; font-display: swap;
+  src: url("/src/assets/fonts/newsreader-latin-opsz-normal.woff2") format("woff2"); }
+@font-face { font-family: "Newsreader"; font-style: italic; font-weight: 200 800; font-display: swap;
+  src: url("/src/assets/fonts/newsreader-latin-opsz-italic.woff2") format("woff2"); }
+
+:root {
+  --font-sans: "Figtree", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Newsreader", Georgia, serif;
+  --bg: #f8f6f3; --surface: #ffffff; --surface-sunken: #f1eee9; --surface-inverse: #171513;
+  --border: #e5e0d9; --border-strong: #8c847b;
+  --ink: #171513; --ink-muted: #5f5952; --ink-subtle: #6e675f; --ink-inverse: #f3f0eb;
+  --brand: #ea1b25; --accent: #d9161f; --accent-hover: #c0121b; --accent-active: #a80f17;
+  --on-accent: #ffffff; --accent-text: #c8131c; --accent-soft: #fdeceb; --focus-ring: #d9161f;
+  --success: #1d7348; --danger: #b2410c; --info: #245f9e; --info-soft: #e7eef7;
+  --scrim: rgba(23,21,19,.44);
+  --elev-xs: 0 1px 2px rgba(23,21,19,.06);
+  --elev-sm: 0 1px 2px rgba(23,21,19,.04), 0 4px 12px rgba(23,21,19,.06);
+  --elev-md: 0 2px 4px rgba(23,21,19,.04), 0 12px 32px rgba(23,21,19,.1);
+  --elev-lg: 0 4px 8px rgba(23,21,19,.04), 0 24px 64px rgba(23,21,19,.18);
+  --ease-out: cubic-bezier(.2,.8,.2,1);
+  --glass-tint: rgba(255,255,255,.66); --glass-tint-strong: rgba(255,255,255,.88);
+  --glass-edge: rgba(255,255,255,.7); --glass-edge-soft: rgba(255,255,255,.22);
+  --glass-line: rgba(23,21,19,.10); --glass-shadow: 0 10px 30px rgba(23,21,19,.14);
+  --glass-blur: 18px; --glass-sat: 170%;
+  --beam: rgba(217,22,31,.13); --beam-line: rgba(217,22,31,.85); --beam-text: transparent;
+  /* Escala de capas propuesta (hoy: z-40 y z-50 sueltos). */
+  --z-sticky: 100; --z-chat: 1100;
+  --vw: 1280px; --stage-h: 600px;
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  --bg: #0f0e0d; --surface: #181715; --surface-sunken: #1b1917; --surface-inverse: #2b2824;
+  --border: #2e2b27; --border-strong: #6f685f;
+  --ink: #f3f0eb; --ink-muted: #a8a198; --ink-subtle: #948d84;
+  --accent-text: #ff6b70; --accent-soft: #3a1416; --focus-ring: #ff3b44;
+  --success: #4cc38a; --danger: #f2804f; --info: #6aaef0; --info-soft: #12223a; --scrim: rgba(0,0,0,.64);
+  --elev-xs: 0 1px 2px rgba(0,0,0,.4);
+  --elev-sm: 0 1px 2px rgba(0,0,0,.4), 0 4px 12px rgba(0,0,0,.32);
+  --elev-md: 0 2px 4px rgba(0,0,0,.4), 0 12px 32px rgba(0,0,0,.48);
+  --elev-lg: 0 4px 8px rgba(0,0,0,.4), 0 24px 64px rgba(0,0,0,.6);
+  --glass-tint: rgba(24,23,21,.76); --glass-tint-strong: rgba(24,23,21,.86);
+  --glass-edge: rgba(255,255,255,.22); --glass-edge-soft: rgba(255,255,255,.06);
+  --glass-line: rgba(255,255,255,.09); --glass-shadow: 0 10px 30px rgba(0,0,0,.45);
+  --beam: rgba(255,240,220,.17); --beam-line: rgba(255,248,236,.95); --beam-text: rgba(255,255,255,.45);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font-sans); background: var(--bg); color: var(--ink);
+  font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; padding: 0; }
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; border-radius: 6px; }
+code { font-size: .85em; background: var(--surface-sunken); border: 1px solid var(--border);
+  border-radius: 6px; padding: 1px 5px; }
+kbd { font: 500 12px/1 var(--font-sans); min-width: 22px; height: 22px; padding: 0 6px; border-radius: 6px;
+  display: inline-grid; place-items: center; color: var(--ink-muted); box-shadow: inset 0 0 0 1px var(--border-strong); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0ms !important; animation: none !important; }
+}
+
+/* ---------- Herramienta ---------- */
+.tool { position: sticky; top: 0; z-index: 2000; background: var(--bg); border-bottom: 1px solid var(--border); }
+.tool-inner { max-width: 1360px; margin: 0 auto; padding: 12px 20px; display: flex;
+  flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; }
+.tool-title { font-weight: 600; font-size: 15px; }
+.seg { display: inline-flex; border: 1px solid var(--border); border-radius: 10px; padding: 3px; background: var(--surface); }
+.seg button { height: 32px; padding: 0 12px; border-radius: 7px; font-size: 14px;
+  color: var(--ink-muted); display: inline-flex; align-items: center; gap: 6px; }
+.seg button[aria-pressed="true"] { background: var(--surface-sunken); color: var(--ink); font-weight: 500; }
+.tool-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+
+main { max-width: 1360px; margin: 0 auto; padding: 40px 20px 96px; }
+.intro { max-width: 72ch; margin-bottom: 40px; }
+.intro h1 { font-family: var(--font-display); font-weight: 400; font-size: 44px; line-height: 1.08;
+  letter-spacing: -.018em; margin: 0 0 12px; }
+.intro p { color: var(--ink-muted); margin: 0 0 16px; }
+.issues { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.issues li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; color: var(--ink-muted); font-size: 15px; }
+.issues i { color: var(--accent-text); margin-top: 3px; }
+.issues strong { color: var(--ink); font-weight: 600; }
+
+.option { margin-top: 72px; }
+.option-head { display: grid; gap: 4px; margin-bottom: 16px; max-width: 82ch; }
+.option-head h2 { margin: 0; font-size: 22px; font-weight: 600; letter-spacing: -.012em;
+  display: flex; gap: 10px; align-items: baseline; flex-wrap: wrap; }
+.tag { font-size: 12px; font-weight: 600; border: 1px solid var(--border); border-radius: 6px;
+  padding: 1px 8px; color: var(--ink-muted); }
+.tag.rec { border-color: var(--accent); color: var(--accent-text); }
+.option-head p { margin: 0; color: var(--ink-muted); }
+.changes { margin: 8px 0 0; padding-left: 18px; color: var(--ink-muted); font-size: 15px; }
+.changes li + li { margin-top: 2px; }
+.try { margin-top: 10px; display: flex; flex-wrap: wrap; gap: 8px; font-size: 13px; color: var(--ink-subtle); align-items: center; }
+
+.frame { width: min(var(--vw), 100%); margin-inline: auto; border: 1px solid var(--border-strong);
+  border-radius: 16px; overflow: hidden; background: var(--bg); transition: width 200ms var(--ease-out); }
+.frame-label { font-size: 12px; color: var(--ink-subtle); padding: 6px 12px;
+  border-bottom: 1px solid var(--border); background: var(--surface); display: flex; justify-content: space-between; }
+.chat-frame { position: relative; }
+.stage { height: var(--stage-h); overflow: auto; position: relative; container-type: inline-size;
+  background: var(--bg); overscroll-behavior: contain; }
+/* Capa del chat: no hace scroll; queda fija sobre la página simulada. */
+.chat-layer { position: absolute; inset: 0; z-index: var(--z-chat); pointer-events: none; container-type: inline-size; overflow: hidden; }
+.chat-layer > * { pointer-events: auto; }
+
+/* ---------- Primitivas ---------- */
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; white-space: nowrap;
+  flex-shrink: 0; height: 40px; padding: 0 16px; border-radius: 10px; font-size: 14px; font-weight: 500;
+  transition: background-color 120ms var(--ease-out), border-color 120ms, transform 120ms; }
+.btn:active { transform: translateY(1px); }
+.btn-sm { height: 34px; padding: 0 12px; font-size: 13px; }
+.btn-block { width: 100%; }
+.btn-primary { background: var(--accent); color: var(--on-accent);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.14), var(--elev-xs); }
+.btn-primary:hover { background: var(--accent-hover); }
+.btn-secondary { border: 1px solid var(--border); background: var(--surface); color: var(--ink); }
+.btn-secondary:hover { border-color: var(--border-strong); background: var(--surface-sunken); }
+.logo { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 18px; letter-spacing: -.01em; flex-shrink: 0; }
+.logo img { width: 27px; height: 28px; }
+
+/* ---------- Vidrio (igual que styles/navbar.css) ---------- */
+.glass { isolation: isolate;
+  background: linear-gradient(180deg, var(--glass-edge-soft), transparent 60%), var(--glass-tint);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-sat));
+  box-shadow: inset 0 1px 0 var(--glass-edge), inset 0 -1px 0 var(--glass-edge-soft), var(--glass-shadow); }
+.glass::after { content: ""; position: absolute; inset: 0; border-radius: inherit;
+  border: 1px solid var(--glass-line); pointer-events: none; }
+.glass-strong { background: linear-gradient(180deg, var(--glass-edge-soft), transparent 60%), var(--glass-tint-strong); }
+.glass-liquid::before { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: -1;
+  background: radial-gradient(120% 160% at 12% -30%, var(--glass-edge) 0%, transparent 42%),
+              radial-gradient(90% 140% at 100% 130%, var(--glass-edge-soft), transparent 60%); }
+html[data-transparency="reduced"] .glass { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: var(--surface); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+
+/* ---------- Navbar P1 (el diseño nuevo, como en NavBar.tsx) ---------- */
+.nav { position: sticky; top: 0; z-index: var(--z-sticky); }
+.duo { background: transparent; height: 76px; padding-top: 12px; }
+.duo-bar { max-width: 72rem; margin: 0 auto; padding: 0 16px; height: 52px; display: flex; align-items: center;
+  justify-content: space-between; gap: 12px; }
+@container (min-width: 640px) { .duo-bar { padding: 0 32px; } }
+.pill { position: relative; height: 52px; border-radius: 999px; display: flex; align-items: center; }
+.pill-main { padding: 0 20px; gap: 20px; min-width: 0; }
+.pill-divider { width: 1px; height: 20px; background: var(--border); display: none; }
+.links { display: none; align-items: center; gap: 4px; height: 100%; font-size: 14px; }
+@container (min-width: 768px) { .links { display: flex; } .pill-divider { display: block; } .pill-main { padding: 0 8px 0 20px; } }
+.links a { position: relative; height: 100%; padding: 0 16px; display: inline-flex; align-items: center;
+  color: var(--ink-muted); transition: color 200ms var(--ease-out), text-shadow 200ms var(--ease-out); }
+.beam a::before { content: ""; position: absolute; inset: 0 2px; pointer-events: none;
+  background: linear-gradient(to bottom, var(--beam) 0%, transparent 92%);
+  clip-path: polygon(30% 0, 70% 0, 100% 100%, 0 100%);
+  opacity: 0; transform: scaleY(.45); transform-origin: top;
+  transition: opacity 260ms var(--ease-out), transform 360ms var(--ease-out); }
+.beam a::after { content: ""; position: absolute; top: 0; left: 32%; right: 32%; height: 2px; border-radius: 0 0 2px 2px;
+  background: var(--beam-line); box-shadow: 0 0 10px 1px var(--beam-line); opacity: 0; transition: opacity 200ms var(--ease-out); }
+@media (hover: hover) {
+  .beam a:hover { color: var(--ink); text-shadow: 0 0 18px var(--beam-text); }
+  .beam a:hover::before { opacity: 1; transform: none; }
+  .beam a:hover::after { opacity: 1; }
+}
+.beam a[data-lamp] { color: var(--ink); }
+.beam a[data-lamp]::before { transform: none; animation: lamp-beam 2s ease-in-out infinite; }
+.beam a[data-lamp]::after { animation: lamp-source 2s ease-in-out infinite; }
+@keyframes lamp-beam { 0%, 100% { opacity: .35; } 50% { opacity: .85; } }
+@keyframes lamp-source { 0%, 100% { opacity: .5; } 50% { opacity: 1; } }
+.cta-wrap { position: relative; display: inline-flex; isolation: isolate; border-radius: 999px; }
+.pill-solid { height: 52px; border-radius: 999px; padding: 0 26px; font-size: 15px; position: relative; overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.22), var(--elev-sm); }
+.cta-attract::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; width: 55%; pointer-events: none;
+  background: linear-gradient(105deg, transparent 15%, rgba(255,255,255,.5) 50%, transparent 85%);
+  transform: translateX(-130%) skewX(-18deg); animation: cta-sweep 2s cubic-bezier(.45,0,.25,1) infinite; }
+@keyframes cta-sweep { 0% { transform: translateX(-130%) skewX(-18deg); } 45%, 100% { transform: translateX(230%) skewX(-18deg); } }
+.cta-halo { position: absolute; inset: -3px; border-radius: 999px; pointer-events: none; z-index: -1;
+  box-shadow: 0 0 0 1px var(--accent), 0 0 18px 2px var(--accent); opacity: 0; transform: scale(.94);
+  animation: cta-halo 2s var(--ease-out) infinite; }
+@keyframes cta-halo { 0% { opacity: 0; transform: scale(.94); } 30% { opacity: .55; } 70%, 100% { opacity: 0; transform: scale(1.12); } }
+
+/* ---------- Página simulada ---------- */
+.gpage { margin-top: -76px; padding-bottom: 140px; }
+.ghero { position: relative; min-height: 420px; display: grid; align-items: end; padding: 120px 20px 36px;
+  background-size: cover; background-position: center; color: #f3f0eb; }
+.ghero::before { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(15,14,13,.82), rgba(15,14,13,.15) 65%); }
+.ghero > div { position: relative; max-width: 72rem; margin: 0 auto; width: 100%; }
+.ghero h3 { font-family: var(--font-display); font-weight: 400; font-size: 40px; line-height: 1.1;
+  letter-spacing: -.018em; margin: 0 0 8px; max-width: 18ch; text-wrap: balance; }
+.ghero p { margin: 0; color: rgba(243,240,235,.86); }
+.gsec { max-width: 72rem; margin: 40px auto 0; padding: 0 20px; }
+.gsec h4 { font-family: var(--font-display); font-weight: 400; font-size: 28px; margin: 0 0 16px; letter-spacing: -.012em; }
+.gstrip { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); }
+.gstrip img { width: 100%; height: 170px; object-fit: cover; border-radius: 16px; display: block; background: var(--surface-sunken); }
+.gplans { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--border); }
+.gplans li { display: flex; justify-content: space-between; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--border); font-size: 15px; }
+.gplans span { color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.filler { max-width: 72rem; margin: 40px auto 0; height: 200px; border-radius: 16px; background: var(--surface-sunken);
+  display: grid; place-items: center; color: var(--ink-subtle); font-size: 14px; }
+@container (min-width: 640px) { .ghero { padding-inline: 32px; } .gsec { padding-inline: 32px; } }
+
+/* ==========================================================
+ * PIEZAS COMPARTIDAS DEL CHAT
+ * Reglas: rojo solo en la acción de enviar y en el punto de marca;
+ * movimiento solo como respuesta (nada en bucle); texto nunca sobre
+ * vidrio sin respaldo; todo con prefers-reduced-motion.
+ * ========================================================== */
+.ch-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--brand); flex-shrink: 0;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 18%, transparent); }
+/* Respuesta que aparece palabra por palabra (solo opacidad). */
+.w { animation: w-in 260ms var(--ease-out) both; }
+@keyframes w-in { from { opacity: 0; } }
+.src { display: inline-flex; align-items: center; gap: 6px; margin-top: 8px; font-size: 12px; color: var(--ink-subtle);
+  text-decoration: underline; text-decoration-color: var(--border-strong); text-underline-offset: 3px; }
+.src:hover { color: var(--ink); }
+
+/* Formulario de contacto: una columna, error en línea + resumen, nada se borra. */
+.ch-lead { flex-shrink: 0; max-height: 58%; overflow-y: auto; padding: 16px; border-top: 1px solid var(--border);
+  background: var(--surface); display: grid; gap: 12px; }
+.ch-lead[hidden], .ch-done[hidden] { display: none; }
+.ch-lead-title { font-size: 14px; font-weight: 600; margin: 0; }
+.ch-summary { margin: 0; padding: 8px 12px; border-radius: 10px; background: color-mix(in srgb, var(--danger) 12%, var(--surface));
+  color: var(--danger); font-size: 13px; font-weight: 500; }
+.ch-summary[hidden] { display: none; }
+.ch-f { display: grid; gap: 6px; }
+.ch-f label { font-size: 13px; font-weight: 500; }
+.ch-f input { height: 44px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--surface);
+  padding: 0 12px; font: inherit; font-size: 16px; color: var(--ink); }
+.ch-f input:focus { outline: none; border-color: var(--focus-ring); box-shadow: 0 0 0 1px var(--focus-ring); }
+.ch-f input[aria-invalid="true"] { border-color: var(--danger); }
+.ch-f .err { font-size: 12px; color: var(--danger); margin: 0; }
+.ch-f .err:empty { display: none; }
+.ch-check { display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; font-size: 13px; color: var(--ink-muted); }
+.ch-check input { width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--accent); }
+.ch-done { flex-shrink: 0; display: grid; gap: 8px; padding: 16px; border-top: 1px solid var(--border);
+  background: var(--surface); font-size: 13px; color: var(--ink-muted); }
+.ch-done b { color: var(--ink); font-size: 14px; display: inline-flex; gap: 8px; align-items: center; }
+.ch-done b i { color: var(--success); font-size: 18px; }
+.ch-done .row { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ---------- Estilo burbuja (A, F expandido, actual) ---------- */
+.ch-launcher { position: absolute; right: 20px; bottom: 20px; height: 52px; border-radius: 999px;
+  padding: 0 22px 0 18px; display: inline-flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 500;
+  white-space: nowrap; transition: transform 120ms var(--ease-out), opacity 200ms var(--ease-out); }
+.ch-launcher:active { transform: scale(.98); }
+.ch-launcher[data-hidden] { opacity: 0; transform: translateY(8px); pointer-events: none; }
+.ch-panel { position: absolute; right: 20px; bottom: 20px; width: 400px; height: min(600px, calc(100% - 40px));
+  border-radius: 24px; overflow: hidden; display: flex; flex-direction: column; background: var(--surface);
+  box-shadow: var(--elev-md), 0 0 0 1px var(--border); transform-origin: bottom right;
+  opacity: 0; visibility: hidden; transform: scale(.96);
+  transition: opacity 120ms var(--ease-out), transform 120ms var(--ease-out), visibility 0s linear 120ms; }
+.ch-panel[data-open] { opacity: 1; visibility: visible; transform: none;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out), visibility 0s; }
+/* Encabezado de vidrio sobre el hilo: los mensajes pasan por debajo, desenfocados. */
+.ch-head { position: absolute; top: 0; left: 0; right: 0; z-index: 1; min-height: 60px; padding: 8px 8px 8px 16px;
+  display: flex; align-items: center; gap: 10px; }
+.ch-title { min-width: 0; flex: 1; display: grid; gap: 4px; justify-items: start; }
+.ch-title b { font-size: 15px; font-weight: 600; display: inline-flex; align-items: center; gap: 8px; }
+.ch-close { width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; font-size: 18px;
+  color: var(--ink-muted); flex-shrink: 0; }
+.ch-close:hover { background: var(--surface-sunken); color: var(--ink); }
+.ch-module { position: relative; overflow: hidden; display: inline-flex; align-items: center; gap: 6px; width: fit-content;
+  height: 24px; padding: 0 4px 0 10px; border-radius: 999px; background: var(--info-soft); color: var(--info);
+  font-size: 12px; font-weight: 500; }
+.ch-module[hidden] { display: none; }
+.ch-module button { width: 20px; height: 20px; border-radius: 999px; display: grid; place-items: center; font-size: 12px; }
+.ch-module::before { content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(to bottom, var(--beam) 0%, transparent 92%);
+  clip-path: polygon(25% 0, 75% 0, 100% 100%, 0 100%); opacity: 0; }
+.ch-module[data-lit]::before { animation: ch-beam 900ms var(--ease-out) 1; }
+@keyframes ch-beam { 0% { opacity: 0; transform: scaleY(.4); } 35% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+.ch-thread { position: relative; flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 76px 16px 16px;
+  display: flex; flex-direction: column; gap: 8px; background: var(--surface); }
+.ch-msg { max-width: 85%; padding: 9px 13px; border-radius: 16px; font-size: 14px; line-height: 1.5; overflow-wrap: anywhere;
+  display: grid; justify-items: start; }
+.ch-msg.bot { align-self: flex-start; background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--border); border-bottom-left-radius: 6px; }
+.ch-msg.user { align-self: flex-end; background: var(--surface-inverse); color: var(--ink-inverse); border-bottom-right-radius: 6px;
+  animation: msg-in 160ms var(--ease-out); }
+.ch-msg .src { margin-top: 6px; }
+@keyframes msg-in { from { opacity: 0; transform: translateY(4px); } }
+.ch-typing { align-self: flex-start; display: inline-flex; gap: 4px; padding: 12px 14px; border-radius: 16px;
+  background: var(--surface-sunken); box-shadow: inset 0 0 0 1px var(--border); }
+.ch-typing span { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-muted); animation: ch-dot 1s infinite; }
+.ch-typing span:nth-child(2) { animation-delay: 150ms; }
+.ch-typing span:nth-child(3) { animation-delay: 300ms; }
+@keyframes ch-dot { 0%, 60%, 100% { transform: none; opacity: .5; } 30% { transform: translateY(-3px); opacity: 1; } }
+.ch-new { position: sticky; bottom: 0; align-self: center; flex-shrink: 0; height: 32px; padding: 0 12px; border-radius: 999px;
+  font-size: 12px; font-weight: 500; background: var(--surface); box-shadow: var(--elev-sm), 0 0 0 1px var(--border);
+  display: inline-flex; align-items: center; gap: 6px; }
+.ch-new[hidden] { display: none; }
+.ch-privacy { flex-shrink: 0; display: flex; gap: 8px; align-items: flex-start; padding: 8px 12px 8px 16px;
+  border-top: 1px solid var(--border); background: var(--surface-sunken); font-size: 12px; color: var(--ink-muted); }
+.ch-privacy p { margin: 0; flex: 1; line-height: 1.45; }
+.ch-privacy button { width: 24px; height: 24px; border-radius: 999px; display: grid; place-items: center; flex-shrink: 0; }
+.ch-privacy[hidden] { display: none; }
+/* El formulario ya pide consentimiento: el aviso sobra mientras está abierto. */
+.ch-privacy:has(~ .ch-lead:not([hidden])) { display: none; }
+.ch-chips { flex-shrink: 0; display: flex; flex-wrap: wrap; gap: 6px; padding: 10px 16px 0; background: var(--surface); }
+.ch-chips:empty { display: none; }
+.ch-chips button { min-height: 36px; padding: 0 14px; border-radius: 999px; font-size: 13px; color: var(--ink-muted);
+  box-shadow: inset 0 0 0 1px var(--border); transition: color 120ms, box-shadow 120ms; }
+.ch-chips button:hover { color: var(--accent-text); box-shadow: inset 0 0 0 1px var(--accent); }
+.ch-compose { flex-shrink: 0; padding: 10px 12px 12px; background: var(--surface); }
+.ch-compose[hidden] { display: none; }
+.ch-field { position: relative; height: 52px; border-radius: 999px; display: flex; align-items: center; gap: 6px;
+  padding: 0 6px 0 18px; background: var(--surface-sunken); box-shadow: inset 0 1px 0 var(--glass-edge-soft), inset 0 0 0 1px var(--border); }
+.ch-field input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font: inherit; font-size: 16px; color: var(--ink); outline: none; }
+.ch-field input::placeholder { color: var(--ink-subtle); }
+.ch-field:focus-within { box-shadow: 0 0 0 2px var(--focus-ring); }
+.ch-send { width: 40px; height: 40px; border-radius: 999px; display: grid; place-items: center; font-size: 18px;
+  background: var(--accent); color: var(--on-accent); flex-shrink: 0; box-shadow: inset 0 1px 0 rgba(255,255,255,.22), var(--elev-xs); }
+.ch-send:hover { background: var(--accent-hover); }
+@container (max-width: 639px) {
+  .ch-launcher { right: 16px; bottom: 16px; width: 52px; padding: 0; justify-content: center; }
+  .ch-launcher .lbl { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .ch-launcher .ch-dot { position: absolute; top: 10px; right: 10px; }
+  .ch-launcher:not(:has(i)) .ch-dot { position: static; }
+  .ch-panel { inset: 0; width: auto; height: auto; border-radius: 0; transform-origin: bottom center; }
+  .ch-chips button { min-height: 44px; }
+}
+
+/* ---------- Estilo nota (D y E): sin burbujas, como una transcripción ---------- */
+.nt-q { padding-top: 22px; }
+.nt-q + .nt-a, .nt-a + .nt-a { padding-top: 0; }
+.nt-a + .nt-q, .nt-wait + .nt-q { border-top: 1px solid var(--border); margin-top: 22px; }
+.nt-q small { display: block; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-subtle); }
+.nt-q p { margin: 4px 0 0; font-family: var(--font-display); font-style: italic; font-size: 20px; line-height: 1.3; color: var(--ink); overflow-wrap: anywhere; }
+.nt-a p { margin: 10px 0 0; font-size: 15px; line-height: 1.6; color: var(--ink); overflow-wrap: anywhere; }
+.nt-a.welcome p { font-family: var(--font-display); font-size: 19px; line-height: 1.4; color: var(--ink-muted); }
+/* Espera: una línea fina que se llena; reemplaza los puntos que rebotan. */
+.nt-wait { height: 1px; margin-top: 18px; background: var(--border); overflow: hidden; }
+.nt-wait span { display: block; height: 100%; background: var(--ink-muted); transform-origin: left; animation: nt-fill var(--d, 900ms) linear both; }
+@keyframes nt-fill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+.nt-sugs { list-style: none; margin: 0; padding: 4px 24px 0; flex-shrink: 0; }
+.nt-sugs:empty { display: none; }
+.nt-sugs button { width: 100%; display: flex; align-items: center; gap: 10px; min-height: 42px; text-align: left;
+  font-size: 14px; color: var(--ink-muted); border-top: 1px solid var(--border); transition: color 160ms var(--ease-out); }
+.nt-sugs button i { font-size: 14px; color: var(--ink-subtle); transition: transform 200ms var(--ease-out), color 160ms; }
+.nt-sugs button:hover { color: var(--ink); }
+.nt-sugs button:hover i { transform: translateX(3px); color: var(--accent-text); }
+.nt-module { margin: 8px 0 0; font-size: 13px; color: var(--info); }
+.nt-module[hidden] { display: none; }
+.nt-module button { text-decoration: underline; text-underline-offset: 3px; }
+
+/* ---------- D: nota al margen ---------- */
+.nt-launcher { position: absolute; right: 20px; bottom: 20px; height: 46px; padding: 0 20px 0 16px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 10px; background: color-mix(in srgb, var(--surface) 94%, transparent);
+  box-shadow: inset 0 0 0 1px var(--border), var(--elev-sm); font-family: var(--font-display); font-style: italic; font-size: 18px;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); }
+.nt-launcher .u { position: relative; }
+.nt-launcher .u::after { content: ""; position: absolute; left: 0; right: 0; bottom: 1px; height: 1px; background: currentColor;
+  transform: scaleX(0); transform-origin: left; transition: transform 320ms var(--ease-out); }
+@media (hover: hover) { .nt-launcher:hover .u::after { transform: scaleX(1); } }
+.nt-launcher:focus-visible .u::after { transform: scaleX(1); }
+.nt-launcher[data-hidden] { opacity: 0; transform: translateY(6px); pointer-events: none; }
+.nt-sheet { position: absolute; top: 0; right: 0; bottom: 0; width: 420px; max-width: 100%; display: flex; flex-direction: column;
+  background: var(--surface); box-shadow: -1px 0 0 var(--border), -32px 0 64px -32px rgba(0,0,0,.35);
+  transform: translateX(104%); visibility: hidden;
+  transition: transform 280ms var(--ease-out), visibility 0s linear 280ms; }
+.nt-sheet[data-open] { transform: none; visibility: visible; transition: transform 320ms var(--ease-out), visibility 0s; }
+.nt-head { flex-shrink: 0; padding: 22px 16px 14px 24px; display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid var(--border); }
+.nt-head > div { flex: 1; min-width: 0; }
+.nt-eyebrow { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; color: var(--ink-subtle);
+  display: inline-flex; align-items: center; gap: 8px; }
+.nt-head h3 { margin: 6px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 30px; line-height: 1.1; letter-spacing: -.015em; }
+.nt-thread { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; padding: 0 24px 20px; }
+.nt-compose { flex-shrink: 0; display: flex; align-items: center; gap: 12px; padding: 12px 24px 8px; }
+.nt-compose[hidden] { display: none; }
+.nt-compose input { flex: 1; min-width: 0; height: 44px; border: 0; border-bottom: 1px solid var(--border-strong); background: transparent;
+  font: inherit; font-size: 16px; color: var(--ink); outline: none; border-radius: 0; }
+.nt-compose input:focus { border-bottom-color: var(--focus-ring); }
+.nt-compose input::placeholder { color: var(--ink-subtle); font-family: var(--font-display); font-style: italic; font-size: 17px; }
+.nt-send { height: 40px; display: inline-flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--accent-text); }
+.nt-send i { transition: transform 200ms var(--ease-out); }
+.nt-send:hover i { transform: translateX(3px); }
+.nt-foot { flex-shrink: 0; margin: 0; padding: 0 24px 16px; font-size: 11px; color: var(--ink-subtle); }
+.nt .ch-lead, .nt .ch-done { padding: 16px 24px; }
+.nt .ch-f input { border: 0; border-bottom: 1px solid var(--border-strong); border-radius: 0; padding: 0; background: transparent; }
+.nt .ch-f input:focus { box-shadow: none; border-bottom-color: var(--focus-ring); }
+.nt .ch-lead-title { font-family: var(--font-display); font-weight: 400; font-size: 22px; }
+
+/* ---------- E: paleta de preguntas ---------- */
+.pe-launcher { position: absolute; right: 20px; bottom: 20px; height: 44px; padding: 0 8px 0 16px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500; transition: opacity 200ms; }
+.pe-launcher i { font-size: 18px; }
+.pe-launcher[data-hidden] { opacity: 0; pointer-events: none; }
+.pe-scrim { position: absolute; inset: 0; display: grid; justify-items: center; align-items: start; padding-top: 72px;
+  background: color-mix(in srgb, var(--scrim) 80%, transparent); opacity: 0; visibility: hidden;
+  transition: opacity 160ms var(--ease-out), visibility 0s linear 160ms; }
+.pe-scrim[data-open] { opacity: 1; visibility: visible; transition: opacity 200ms var(--ease-out), visibility 0s; }
+.pe-box { width: min(600px, calc(100% - 32px)); max-height: calc(100% - 96px); display: flex; flex-direction: column;
+  background: var(--surface); border-radius: 20px; box-shadow: var(--elev-lg), 0 0 0 1px var(--border); overflow: hidden;
+  transform: translateY(-8px) scale(.985); transition: transform 220ms var(--ease-out); }
+.pe-scrim[data-open] .pe-box { transform: none; }
+.pe-input { flex-shrink: 0; display: flex; align-items: center; gap: 12px; padding: 0 12px 0 18px; height: 60px; border-bottom: 1px solid var(--border); }
+.pe-input > i { font-size: 20px; color: var(--ink-subtle); }
+.pe-input input { flex: 1; min-width: 0; height: 100%; border: 0; background: transparent; font: inherit; font-size: 18px; color: var(--ink); outline: none; }
+.pe-input input::placeholder { color: var(--ink-subtle); }
+.pe-input .ch-dot { margin-right: 4px; }
+.pe-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.pe-thread { padding: 0 20px 4px; }
+.pe-thread:empty { display: none; }
+.pe .nt-q p { font-size: 18px; }
+.pe-label { margin: 0; padding: 14px 20px 6px; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-subtle); }
+.pe-list { list-style: none; margin: 0; padding: 0 8px 8px; }
+.pe-list [role="option"] { display: flex; align-items: center; gap: 12px; min-height: 44px; padding: 0 12px; border-radius: 10px;
+  font-size: 14px; color: var(--ink); cursor: pointer; }
+.pe-list [role="option"] > i { font-size: 18px; color: var(--ink-subtle); }
+.pe-list [role="option"] span { flex: 1; min-width: 0; }
+.pe-list [role="option"] kbd { visibility: hidden; }
+.pe-list [aria-selected="true"] { background: var(--surface-sunken); }
+.pe-list [aria-selected="true"] kbd { visibility: visible; }
+.pe-list mark { background: none; color: var(--accent-text); font-weight: 600; }
+.pe-foot { flex-shrink: 0; display: flex; flex-wrap: wrap; gap: 6px 16px; padding: 10px 16px; border-top: 1px solid var(--border);
+  font-size: 12px; color: var(--ink-subtle); }
+.pe-foot span { display: inline-flex; align-items: center; gap: 6px; }
+.pe .ch-lead, .pe .ch-done { padding: 16px 20px; max-height: none; }
+@container (max-width: 639px) {
+  .pe-scrim { padding-top: 12px; }
+  .pe-box { width: calc(100% - 24px); max-height: calc(100% - 24px); }
+  .pe-launcher kbd { display: none; }
+  .pe-foot { display: none; }
+}
+
+/* ---------- F: sugerencia en contexto ---------- */
+.fc-pill { position: absolute; right: 20px; bottom: 20px; height: 48px; max-width: calc(100% - 40px); padding: 0 14px 0 16px;
+  border-radius: 999px; display: inline-flex; align-items: center; gap: 10px; font-size: 14px; font-weight: 500;
+  transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out); }
+.fc-pill[data-hidden] { opacity: 0; transform: translateY(6px); pointer-events: none; }
+.fc-text { min-width: 0; white-space: nowrap; transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out); }
+.fc-pill[data-swap] .fc-text { opacity: 0; transform: translateY(4px); }
+.fc-pill > i { font-size: 16px; color: var(--ink-subtle); }
+.fc-card { position: absolute; right: 20px; bottom: 80px; width: 360px; max-width: calc(100% - 40px);
+  background: var(--surface); border-radius: 20px; box-shadow: var(--elev-md), 0 0 0 1px var(--border); padding: 16px 20px 18px;
+  transform-origin: bottom right; opacity: 0; visibility: hidden; transform: translateY(6px) scale(.98);
+  transition: opacity 140ms var(--ease-out), transform 140ms var(--ease-out), visibility 0s linear 140ms; }
+.fc-card[data-open] { opacity: 1; visibility: visible; transform: none;
+  transition: opacity 220ms var(--ease-out), transform 220ms var(--ease-out), visibility 0s; }
+.fc-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.fc-top p { margin: 0; font-size: 11px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--ink-subtle);
+  display: inline-flex; align-items: center; gap: 8px; }
+.fc-top .ch-close { width: 32px; height: 32px; font-size: 16px; margin-right: -8px; }
+.fc-q { margin: 6px 0 0; font-family: var(--font-display); font-weight: 400; font-size: 24px; line-height: 1.2; letter-spacing: -.01em; }
+.fc-a { margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: var(--ink-muted); min-height: 3.2em; }
+.fc-more { list-style: none; margin: 14px 0 0; padding: 0; }
+.fc-more button { width: 100%; display: flex; align-items: center; gap: 10px; min-height: 40px; text-align: left; font-size: 14px;
+  color: var(--ink); border-top: 1px solid var(--border); }
+.fc-more button i { color: var(--ink-subtle); transition: transform 200ms var(--ease-out); }
+.fc-more button:hover i { transform: translateX(3px); color: var(--accent-text); }
+.fc-actions { margin-top: 12px; display: flex; gap: 8px; align-items: center; }
+.fc-actions .btn { border-radius: 999px; }
+@container (max-width: 639px) {
+  .fc-pill { right: 16px; left: 16px; bottom: 16px; max-width: none; justify-content: center; }
+  .fc-card { right: 16px; left: 16px; width: auto; max-width: none; bottom: 76px; }
+}
+
+/* ---------- Actual (réplica de Chat.tsx, con sus fallas) ---------- */
+.cx-launcher { position: absolute; right: 20px; bottom: 20px; height: 48px; padding: 0 16px; border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 500; background: var(--accent);
+  color: var(--on-accent); box-shadow: var(--elev-md); }
+.cx-launcher[data-hidden] { display: none; }
+.cx-panel { position: absolute; right: 20px; bottom: 20px; width: 380px; height: min(560px, calc(100% - 40px));
+  border-radius: 16px; border: 1px solid var(--border); background: var(--surface); box-shadow: var(--elev-md);
+  display: none; flex-direction: column; overflow: hidden; }
+.cx-panel[data-open] { display: flex; }
+.cx-panel .ch-head { position: relative; border-bottom: 1px solid var(--border); background: var(--surface); }
+.cx-panel .ch-thread { padding-top: 16px; }
+.cx-panel .ch-msg { border-radius: 16px; box-shadow: none; animation: none; }
+.cx-panel .ch-msg.user { background: var(--accent); color: var(--on-accent); }
+.cx-panel .ch-chips { border-top: 1px solid var(--border); padding-bottom: 10px; }
+.cx-panel .ch-chips button { min-height: 28px; font-size: 12px; }
+.cx-compose { flex-shrink: 0; display: flex; gap: 8px; border-top: 1px solid var(--border); padding: 12px; }
+.cx-compose[hidden] { display: none; }
+.cx-compose input { flex: 1; min-width: 0; height: 38px; border-radius: 10px; border: 1px solid var(--border-strong);
+  background: var(--surface); padding: 0 12px; font: inherit; color: var(--ink); }
+@container (max-width: 639px) { .cx-panel { left: 12px; right: 12px; bottom: 12px; top: 56px; width: auto; height: auto; } }
+
+/* ---------- Comparación ---------- */
+.compare { margin-top: 88px; }
+.compare h2 { font-size: 22px; font-weight: 600; margin: 0 0 16px; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 16px; }
+table { border-collapse: collapse; width: 100%; min-width: 760px; font-size: 14px; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+th { font-weight: 600; background: var(--surface); }
+tr:last-child td { border-bottom: 0; }
+td:first-child { color: var(--ink-muted); width: 20%; }
+.verdict { margin-top: 16px; max-width: 78ch; color: var(--ink-muted); }
+.verdict strong { color: var(--ink); }
+</style>
+</head>
+<body>
+
+<header class="tool">
+  <div class="tool-inner">
+    <span class="tool-title">Chatbot SoftRent: conceptos</span>
+    <div class="tool-actions">
+      <div class="seg" role="group" aria-label="Ancho de prueba">
+        <button type="button" data-vw="1280" aria-pressed="true"><i class="ph ph-desktop"></i>Escritorio</button>
+        <button type="button" data-vw="820" aria-pressed="false"><i class="ph ph-device-tablet"></i>Tablet</button>
+        <button type="button" data-vw="390" aria-pressed="false"><i class="ph ph-device-mobile"></i>Móvil</button>
+      </div>
+      <div class="seg" role="group" aria-label="Transparencia del vidrio">
+        <button type="button" data-transparency="full" aria-pressed="true">Vidrio</button>
+        <button type="button" data-transparency="reduced" aria-pressed="false">Sólido</button>
+      </div>
+      <button type="button" class="btn btn-secondary btn-sm" data-theme-toggle aria-pressed="true" aria-label="Cambiar a tema claro"><i class="ph ph-sun"></i>Tema</button>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="intro">
+    <h1>El asistente, en voz baja</h1>
+    <p>Cuatro maneras de llevar el chatbot del sitio público al lenguaje del navbar nuevo sin que compita con él. Arriba, el navbar ya hace el trabajo de llamar la atención (Comenzar, los focos de Demos y Precios); el chat acompaña. Todos los marcos funcionan: pregunte, toque las sugerencias, active el tema Citas y pruebe el formulario de contacto (envíelo vacío para ver los errores).</p>
+    <ul class="issues" aria-label="Problemas del chatbot actual">
+      <li><i class="ph ph-warning-circle"></i><span><strong>Dos rojos compiten.</strong> El launcher es una píldora roja sólida abajo y Comenzar es la acción roja de arriba: dos acciones primarias en pantalla.</span></li>
+      <li><i class="ph ph-warning-circle"></i><span><strong>Burbujas propias en rojo.</strong> En una conversación larga el panel entero se vuelve rojo.</span></li>
+      <li><i class="ph ph-warning-circle"></i><span><strong>Móvil "casi completo".</strong> El panel arranca a 56 px del borde y tapa a medias la píldora del navbar.</span></li>
+      <li><i class="ph ph-warning-circle"></i><span><strong>Escape no cierra</strong>, y la lista entera es <code>aria-live</code>: al abrir se relee toda la conversación.</span></li>
+      <li><i class="ph ph-warning-circle"></i><span><strong>Formulario con un solo error genérico</strong>, en dos columnas a 380 px; <code>mailto:</code> falla en silencio sin cliente de correo.</span></li>
+    </ul>
+  </section>
+
+  <article class="option" id="chat-d">
+    <div class="option-head">
+      <h2>D. Nota al margen <span class="tag rec">recomendado</span></h2>
+      <p>La versión más callada y la más fiel a "papel tibio". Un enlace en cursiva Newsreader sobre papel; al abrir, una hoja entra desde el borde como el margen de un libro. Sin burbujas: la conversación se lee como una transcripción, con la pregunta en cursiva y la respuesta en texto corrido, cada una con su fuente.</p>
+      <ul class="changes">
+        <li>La espera es una línea fina que se llena, no tres puntos que rebotan.</li>
+        <li>Sugerencias como índice de preguntas; la flecha se corre 3 px al pasar el mouse.</li>
+        <li>El único rojo es la palabra Enviar.</li>
+      </ul>
+    </div>
+    <div class="frame">
+      <div class="frame-label"><span>D. Nota al margen</span><span data-width-label></span></div>
+      <div class="chat-frame"><div class="stage" data-chat-stage></div><div class="chat-layer" data-chat="d"></div></div>
+    </div>
+  </article>
+
+  <article class="option" id="chat-f">
+    <div class="option-head">
+      <h2>F. Sugerencia en contexto <span class="tag">se adelanta</span></h2>
+      <p>El launcher no dice "chat": propone la pregunta que la persona probablemente tiene según lo que está leyendo. Baje por la página del marco: en el hero sugiere "¿Cómo funciona?", sobre los rubros "¿Sirve para mi negocio?" y sobre los planes "¿Qué plan me conviene?". Un toque responde en una tarjeta breve; "Seguir conversando" abre el chat completo con lo hablado.</p>
+      <ul class="changes">
+        <li>La pregunta cambia con un fundido de 160 ms, solo mientras la tarjeta está cerrada.</li>
+        <li>Combina con D: el enlace de D puede tomar la pregunta en contexto en vez de un texto fijo.</li>
+      </ul>
+    </div>
+    <div class="frame">
+      <div class="frame-label"><span>F. Sugerencia en contexto (haga scroll dentro del marco)</span><span data-width-label></span></div>
+      <div class="chat-frame"><div class="stage" data-chat-stage></div><div class="chat-layer" data-chat="f"></div></div>
+    </div>
+  </article>
+
+  <article class="option" id="chat-e">
+    <div class="option-head">
+      <h2>E. Paleta de preguntas <span class="tag">teclado primero</span></h2>
+      <p>Una píldora discreta "Preguntar /" que abre una paleta centrada, como un buscador. Al escribir, las preguntas conocidas se filtran en vivo con la coincidencia resaltada; las flechas se mueven, Enter pregunta, Escape cierra. La respuesta aparece en la misma paleta y las sugerencias pasan a ser "Siga con".</p>
+      <ul class="changes">
+        <li>Pruebe con el teclado: con el mouse sobre el marco, presione <kbd>/</kbd>.</li>
+        <li>Si no hay coincidencia, la primera fila ofrece preguntar el texto tal cual.</li>
+      </ul>
+    </div>
+    <div class="frame">
+      <div class="frame-label"><span>E. Paleta de preguntas</span><span data-width-label></span></div>
+      <div class="chat-frame"><div class="stage" data-chat-stage></div><div class="chat-layer pe" data-chat="e"></div></div>
+    </div>
+  </article>
+
+  <article class="option" id="chat-a">
+    <div class="option-head">
+      <h2>A. Tercera píldora <span class="tag">la más cercana al navbar</span></h2>
+      <p>El launcher es una píldora de vidrio gemela de la del navbar. El encabezado del panel es vidrio y los mensajes pasan por debajo, desenfocados; las burbujas propias van en tinta invertida y las respuestas aparecen palabra por palabra, con su fuente.</p>
+    </div>
+    <div class="frame">
+      <div class="frame-label"><span>A. Tercera píldora</span><span data-width-label></span></div>
+      <div class="chat-frame"><div class="stage" data-chat-stage></div><div class="chat-layer" data-chat="a"></div></div>
+    </div>
+  </article>
+
+  <article class="option" id="chat-x">
+    <div class="option-head">
+      <h2>Chat actual <span class="tag">referencia</span></h2>
+      <p>Réplica de <code>components/chatbot/Chat.tsx</code> sobre el navbar nuevo, con sus fallas, para comparar.</p>
+    </div>
+    <div class="frame">
+      <div class="frame-label"><span>Actual</span><span data-width-label></span></div>
+      <div class="chat-frame"><div class="stage" data-chat-stage></div><div class="chat-layer" data-chat="x"></div></div>
+    </div>
+  </article>
+
+  <section class="compare">
+    <h2>Comparación</h2>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th scope="col">Criterio</th><th scope="col">Actual</th><th scope="col">D. Nota al margen</th><th scope="col">F. En contexto</th><th scope="col">E. Paleta</th><th scope="col">A. Tercera píldora</th></tr></thead>
+        <tbody>
+          <tr><td>Presencia en reposo</td><td>Alta, rojo sólido</td><td>Mínima, texto sobre papel</td><td>Baja, pero dice algo útil</td><td>Mínima</td><td>Media, vidrio</td></tr>
+          <tr><td>Encaje con "papel tibio"</td><td>Bajo</td><td>El más cercano</td><td>Alto</td><td>Alto</td><td>Alto, más tecnológico</td></tr>
+          <tr><td>Lectura de respuestas largas</td><td>Burbujas angostas</td><td>La mejor (texto corrido)</td><td>Buena para una respuesta</td><td>Buena</td><td>Buena</td></tr>
+          <tr><td>Teclado</td><td>Sin Escape</td><td>Completo</td><td>Completo</td><td>El mejor (/, flechas, Enter)</td><td>Completo</td></tr>
+          <tr><td>Móvil</td><td>Tapa medio navbar</td><td>Hoja completa</td><td>Píldora ancha + tarjeta</td><td>Paleta arriba</td><td>Hoja completa</td></tr>
+          <tr><td>Esfuerzo de cambio</td><td>-</td><td>Bajo</td><td>Medio (observa secciones)</td><td>Medio</td><td>Bajo</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="verdict"><strong>Recomendación: D, con el launcher de F.</strong> D es la versión más elegante y la que mejor lee respuestas largas, y no le roba nada al navbar. Darle a su enlace la pregunta en contexto de F (en vez de "¿Tiene una pregunta?") lo vuelve útil sin hacerlo más ruidoso. E queda como atajo de teclado opcional encima de cualquiera de los dos.</p>
+  </section>
+</main>
+
+<script>
+(() => {
+  const root = document.documentElement;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+
+  /* ---------- Herramienta: tema, ancho, transparencia ---------- */
+  function setTheme(t) {
+    root.dataset.theme = t;
+    document.querySelectorAll('[data-theme-toggle]').forEach((b) => {
+      b.setAttribute('aria-pressed', String(t === 'dark'));
+      b.setAttribute('aria-label', t === 'dark' ? 'Cambiar a tema claro' : 'Cambiar a tema oscuro');
+      b.querySelector('i').className = 'ph ' + (t === 'dark' ? 'ph-sun' : 'ph-moon');
+    });
+  }
+  setTheme('dark');
+  document.querySelector('[data-theme-toggle]').addEventListener('click', () => setTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'));
+  document.querySelectorAll('[data-vw]').forEach((b) => b.addEventListener('click', () => {
+    root.style.setProperty('--vw', b.dataset.vw + 'px');
+    document.querySelectorAll('[data-vw]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+  }));
+  document.querySelectorAll('[data-transparency]').forEach((b) => b.addEventListener('click', () => {
+    root.dataset.transparency = b.dataset.transparency;
+    document.querySelectorAll('[data-transparency]').forEach((o) => o.setAttribute('aria-pressed', String(o === b)));
+  }));
+
+  /* ---------- Página simulada con el navbar P1 ---------- */
+  const PAGE = `
+    <header class="nav duo"><div class="duo-bar">
+      <div class="pill pill-main glass glass-liquid">
+        <a href="/" class="logo"><img src="/src/assets/brand/softrent-symbol.png" alt="" />SoftRent</a>
+        <span class="pill-divider" aria-hidden="true"></span>
+        <nav class="links beam" aria-label="Principal">
+          <a href="/soluciones">Soluciones</a><a href="/demos" data-lamp>Demos</a><a href="/precios" data-lamp>Precios</a><a href="/nosotros">Nosotros</a>
+        </nav>
+      </div>
+      <span class="cta-wrap"><span class="cta-halo" aria-hidden="true"></span>
+        <a href="/comenzar" class="btn btn-primary pill-solid cta-attract">Comenzar</a></span>
+    </div></header>
+    <div class="gpage">
+      <section class="ghero" data-ctx="hero" style="background-image:url(https://picsum.photos/seed/softrent-chat/1600/900)"><div><h3>Su negocio responde, agenda y cobra solo.</h3><p>Fondo fotográfico para ver el vidrio sobre algo con color.</p></div></section>
+      <section class="gsec" data-ctx="rubros"><h4>Para negocios que atienden por WhatsApp</h4>
+        <div class="gstrip"><img src="https://picsum.photos/seed/sr-c1/400/340" alt="" /><img src="https://picsum.photos/seed/sr-c2/400/340" alt="" /><img src="https://picsum.photos/seed/sr-c3/400/340" alt="" /><img src="https://picsum.photos/seed/sr-c4/400/340" alt="" /></div></section>
+      <section class="gsec" data-ctx="precios"><h4>Planes</h4>
+        <ul class="gplans"><li><b>Arranque</b><span>₡29.900 al mes</span></li><li><b>Crecimiento</b><span>₡64.900 al mes</span></li><li><b>Pro</b><span>₡129.900 al mes</span></li><li><b>A la medida</b><span>desde ₡250.000 al mes</span></li></ul></section>
+      <div class="filler">Contenido de la página</div>
+    </div>`;
+  document.querySelectorAll('[data-chat-stage]').forEach((s) => (s.innerHTML = PAGE));
+  /* Los enlaces del navbar simulado no navegan. */
+  document.addEventListener('click', (e) => { if (e.target.closest('.stage a')) e.preventDefault(); });
+
+  /* ---------- Guion: respuestas del motor real (lib/chat/engine.ts) y content/planes.ts ---------- */
+  const BIENVENIDA_TXT = 'Hola. Puedo contarle qué hace SoftRent, cuánto cuesta y mostrarle las demos. Si prefiere, le paso con una persona.';
+  const BIENVENIDA = ['¿Cómo funciona?', '¿Cuánto cuesta?', 'Ver demos', 'Hablar con alguien'];
+  const CONOCIDAS = ['¿Cómo funciona?', '¿Cuánto cuesta?', '¿Qué plan me conviene?', '¿Sirve para mi negocio?', 'Ver demos', 'Sí, cuénteme de Citas', 'Hablar con alguien'];
+  function responder(t) {
+    const n = t.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    if (t === 'Hablar con alguien' || /persona|humano|asesor/.test(n)) return { texto: 'Con gusto. Déjeme sus datos y una persona de SoftRent le escribe; fuera de horario le respondemos al día hábil siguiente.', lead: true };
+    if (t === 'Ver demos' || /demo/.test(n)) return { texto: 'La demo de Citas está en vivo: sus clientes eligen horario, confirman y reciben recordatorios por WhatsApp. ¿Le cuento de ella aquí mismo?', fuente: 'Demos', chips: ['Sí, cuénteme de Citas', '¿Cuánto cuesta?'] };
+    if (t === 'Sí, cuénteme de Citas') return { texto: 'Listo, hablemos de Citas. Sus clientes eligen horario, confirman con un toque y reciben el recordatorio por WhatsApp, sin que usted conteste cada mensaje.', fuente: 'Demo de Citas', modulo: true, chips: ['¿Qué plan me conviene?', 'Hablar con alguien'] };
+    if (t === 'No, gracias') return { texto: 'Perfecto. ¿Qué más le gustaría saber?', chips: BIENVENIDA.slice(0, 3) };
+    if (/como funciona/.test(n)) return { texto: 'Primero entendemos cómo atiende hoy, después configuramos el asistente con sus servicios y horarios, y usted lo revisa antes de que hable con sus clientes.', fuente: 'Cómo trabajamos', chips: ['¿Sirve para mi negocio?', '¿Cuánto cuesta?'] };
+    if (/sirve|mi negocio|rubro/.test(n)) return { texto: 'Hoy trabajamos con negocios que agendan citas, toman pedidos o venden servicios por WhatsApp: barberías, sodas, talleres. ¿Cuál se parece más al suyo?', fuente: 'Industrias', chips: ['Sí, cuénteme de Citas', 'Hablar con alguien'] };
+    if (/conviene|que plan/.test(n)) return { texto: 'Depende de cuántas conversaciones atiende. Arranque cuesta ₡29.900 al mes y Crecimiento ₡64.900; en Precios está lo que incluye cada uno, para comparar con calma.', fuente: 'Precios', chips: ['¿Cuánto cuesta?', 'Hablar con alguien'] };
+    if (/cuesta|precio|cuanto|plan/.test(n)) return { texto: 'Arranque: ₡29.900 al mes. Crecimiento: ₡64.900 al mes. Pro: ₡129.900 al mes. A la medida: desde ₡250.000 al mes.', fuente: 'Precios', chips: ['¿Qué plan me conviene?', 'Hablar con alguien'] };
+    if (/cita|agenda|reserva|barber|salon|corte/.test(n)) return { texto: 'Parece que su negocio trabaja con citas. ¿Le cuento de la demo de Citas?', chips: ['Sí, cuénteme de Citas', 'No, gracias'] };
+    return { texto: 'No tengo esa respuesta con certeza y prefiero no inventarla. Le puedo pasar con una persona de SoftRent.', chips: ['Hablar con alguien', '¿Cuánto cuesta?'] };
+  }
+  const demora = (r) => Math.min(500 + r.texto.length * 3, 1400);
+
+  /* Palabra por palabra, solo opacidad; estático con movimiento reducido. */
+  function revelar(el, texto) {
+    if (reduce.matches) { el.textContent = texto; return; }
+    el.textContent = '';
+    texto.split(' ').forEach((w, i) => {
+      const s = document.createElement('span');
+      s.className = 'w';
+      s.style.animationDelay = Math.min(i * 22, 700) + 'ms';
+      s.textContent = w + ' ';
+      el.append(s);
+    });
+  }
+
+  const leadHTML = (uid) => `
+    <form class="ch-lead" data-lead hidden novalidate>
+      <p class="ch-lead-title">Para que le escribamos</p>
+      <p class="ch-summary" hidden></p>
+      <div class="ch-f"><label for="${uid}-n">Su nombre</label><input id="${uid}-n" name="nombre" autocomplete="name" aria-describedby="${uid}-n-e" /><p class="err" id="${uid}-n-e"></p></div>
+      <div class="ch-f"><label for="${uid}-c">WhatsApp o correo</label><input id="${uid}-c" name="contacto" autocomplete="email" aria-describedby="${uid}-c-e" /><p class="err" id="${uid}-c-e"></p></div>
+      <div class="ch-f"><label for="${uid}-q">Qué necesita, en una línea (opcional)</label><input id="${uid}-q" name="necesidad" /></div>
+      <label class="ch-check"><input type="checkbox" name="consent" aria-describedby="${uid}-k-e" /><span>Acepto que SoftRent use estos datos para escribirme.</span></label>
+      <div class="ch-f"><p class="err" id="${uid}-k-e"></p></div>
+      <button type="submit" class="btn btn-primary btn-block" style="border-radius:999px;height:44px">Enviar solicitud</button>
+    </form>
+    <div class="ch-done" data-done hidden>
+      <b><i class="ph ph-check-circle"></i>Solicitud lista</b>
+      <span>Le escribimos en menos de un día hábil. Si su correo no se abrió, copie el resumen y envíelo a hola@softrent.com.</span>
+      <div class="row"><button type="button" class="btn btn-secondary btn-sm" data-act="copiar"><i class="ph ph-copy"></i>Copiar resumen</button>
+        <button type="button" class="btn btn-secondary btn-sm" data-act="reiniciar">Seguir conversando</button></div>
+    </div>`;
+
+  /* ---------- Conversación reutilizable ----------
+   * estilo 'burbuja' (A, F, actual) o 'nota' (D, E). Busca dentro de
+   * root: [data-thread] [data-sugs] [data-compose] [data-lead] [data-done]
+   * [data-status] [data-module] [data-nuevos]. */
+  function conversacion(root, estilo, opts = {}) {
+    const q = (s) => root.querySelector(s);
+    const thread = q('[data-thread]'), sugs = q('[data-sugs]'), lead = q('[data-lead]'), done = q('[data-done]'),
+      status = q('[data-status]'), mod = q('[data-module]'), nuevos = q('[data-nuevos]');
+    const forms = [...root.querySelectorAll('[data-compose]')];
+    const scroller = opts.scroller || thread;
+    let timer = 0, brief = '', iniciado = false;
+
+    const cerca = () => scroller.scrollHeight - scroller.scrollTop - scroller.clientHeight < 48;
+    function poner(el) { nuevos ? thread.insertBefore(el, nuevos) : thread.append(el); }
+    function pintar(autor, texto, fuente, animar, extra = '') {
+      const pegado = cerca();
+      const el = document.createElement('div');
+      const body = document.createElement(estilo === 'nota' ? 'p' : 'span');
+      if (estilo === 'nota') {
+        el.className = autor === 'bot' ? 'nt-a ' + extra : 'nt-q';
+        if (autor === 'user') el.innerHTML = '<small>Usted</small>';
+      } else {
+        el.className = 'ch-msg ' + autor;
+      }
+      el.append(body);
+      if (autor === 'bot' && animar && !opts.simple) revelar(body, texto); else body.textContent = texto;
+      if (fuente && !opts.simple) {
+        const f = document.createElement('a');
+        f.className = 'src'; f.href = '#';
+        f.innerHTML = `<i class="ph ph-book-open"></i>Fuente: ${fuente}`;
+        f.addEventListener('click', (e) => e.preventDefault());
+        el.append(f);
+      }
+      poner(el);
+      if (pegado || autor === 'user') scroller.scrollTop = scroller.scrollHeight;
+      else if (nuevos) nuevos.hidden = false;
+    }
+    function sugerir(list = []) {
+      if (opts.sugerir) return opts.sugerir(list);
+      sugs.innerHTML = list.map((c) => estilo === 'nota'
+        ? `<li><button type="button" data-q="${c}"><i class="ph ph-arrow-right"></i>${c}</button></li>`
+        : `<button type="button" data-q="${c}">${c}</button>`).join('');
+    }
+    function esperar(ms) {
+      let el;
+      if (estilo === 'nota') {
+        el = document.createElement('div');
+        el.className = 'nt-wait';
+        el.style.setProperty('--d', ms + 'ms');
+        el.innerHTML = '<span></span>';
+      } else {
+        el = document.createElement('div');
+        el.className = 'ch-typing';
+        el.innerHTML = '<span></span><span></span><span></span>';
+      }
+      el.setAttribute('aria-hidden', 'true');
+      poner(el);
+      scroller.scrollTop = scroller.scrollHeight;
+      status.textContent = 'El asistente está escribiendo';
+      return () => { el.remove(); status.textContent = ''; };
+    }
+    function mostrarLead() {
+      lead.hidden = false;
+      forms.forEach((f) => { if (!f.hasAttribute('data-keep')) f.hidden = true; });
+      sugerir([]);
+      requestAnimationFrame(() => { lead.scrollIntoView({ block: 'nearest' }); lead.querySelector('input').focus(); });
+    }
+    function preguntar(t) {
+      t = t.trim();
+      if (!t) return;
+      iniciar();
+      pintar('user', t);
+      sugerir([]);
+      const r = responder(t);
+      const listo = esperar(demora(r));
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        listo();
+        pintar('bot', r.texto, r.fuente, true);
+        sugerir(r.chips);
+        if (r.modulo && mod) {
+          mod.hidden = false;
+          mod.removeAttribute('data-lit'); void mod.offsetWidth; mod.setAttribute('data-lit', '');
+        }
+        if (r.lead) mostrarLead();
+        opts.alResponder?.(r);
+      }, reduce.matches ? 200 : demora(r));
+    }
+    function iniciar() {
+      if (iniciado) return;
+      iniciado = true;
+      if (opts.sinBienvenida) return;
+      pintar('bot', BIENVENIDA_TXT, null, false, 'welcome');
+      sugerir(BIENVENIDA);
+    }
+    /* Trae lo ya conversado en otra superficie (F: tarjeta -> chat). */
+    function sembrar(pares) {
+      iniciado = true;
+      pares.forEach(([t, r]) => { pintar('user', t); pintar('bot', r.texto, r.fuente, false); });
+      sugerir(pares.at(-1)?.[1].chips || BIENVENIDA);
+    }
+
+    /* Formulario: valida al salir del campo y al enviar; nunca borra lo escrito. */
+    const reglas = {
+      nombre: (el) => (el.value.trim() ? '' : 'Escriba su nombre para saber cómo llamarle.'),
+      contacto: (el) => (/^\+?[\d\s-]{8,}$/.test(el.value.trim()) || /\S+@\S+\.\S+/.test(el.value) ? '' : 'Escriba un WhatsApp de 8 dígitos o un correo válido.'),
+      consent: (el) => (el.checked ? '' : 'Necesitamos su permiso para escribirle.'),
+    };
+    function revisar(el) {
+      const msg = reglas[el.name](el);
+      document.getElementById(el.getAttribute('aria-describedby')).textContent = msg;
+      el.setAttribute('aria-invalid', String(!!msg));
+      return msg;
+    }
+    lead.addEventListener('focusout', (e) => { if (reglas[e.target.name] && e.target.value) revisar(e.target); });
+    lead.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const malos = [...lead.elements].filter((el) => reglas[el.name] && revisar(el));
+      const sum = lead.querySelector('.ch-summary');
+      if (malos.length) {
+        sum.hidden = false;
+        sum.textContent = malos.length === 1 ? 'Falta 1 dato para enviar.' : `Faltan ${malos.length} datos para enviar.`;
+        malos[0].focus();
+        return;
+      }
+      sum.hidden = true;
+      const f = lead.elements;
+      brief = [`Nombre: ${f.nombre.value}`, `Contacto: ${f.contacto.value}`,
+        `Necesidad: ${f.necesidad.value || 'Por definir en la conversación'}`, 'Origen: chatbot del sitio'].join('\n');
+      lead.hidden = true;
+      done.hidden = false;
+      pintar('bot', 'Gracias. Su solicitud quedó lista para que una persona de SoftRent le escriba en menos de un día hábil.', null, true);
+      done.querySelector('button').focus();
+    });
+
+    root.addEventListener('click', (e) => {
+      const sq = e.target.closest('[data-q]');
+      if (sq && root.contains(sq)) return preguntar(sq.dataset.q);
+      const btn = e.target.closest('[data-act]');
+      switch (btn?.dataset.act) {
+        case 'salir': mod.hidden = true; pintar('bot', 'Listo, volvemos a lo general. ¿Qué más le gustaría saber?', null, true); sugerir(BIENVENIDA.slice(0, 3)); break;
+        case 'bajar': scroller.scrollTop = scroller.scrollHeight; nuevos.hidden = true; break;
+        case 'privacidad': q('.ch-privacy').hidden = true; break;
+        case 'copiar': navigator.clipboard?.writeText(brief); btn.innerHTML = '<i class="ph ph-check"></i>Copiado'; break;
+        case 'reiniciar': done.hidden = true; forms.forEach((f) => (f.hidden = false)); sugerir(['¿Cuánto cuesta?', 'Ver demos']); forms[0]?.querySelector('input').focus(); break;
+      }
+    });
+    scroller.addEventListener('scroll', () => { if (nuevos && cerca()) nuevos.hidden = true; });
+    forms.forEach((f) => f.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const inp = f.querySelector('input');
+      preguntar(inp.value);
+      inp.value = '';
+    }));
+    return { preguntar, iniciar, sembrar, input: forms[0]?.querySelector('input'), lead };
+  }
+
+  /* Panel burbuja (A, F expandido, actual). */
+  const panelBurbuja = (uid, actual) => `
+    <div class="${actual ? 'cx-panel' : 'ch-panel'}" role="dialog" aria-labelledby="${uid}-t" data-dialog>
+      <div class="ch-head ${actual ? '' : 'glass glass-strong'}">
+        <div class="ch-title">
+          <b id="${uid}-t">${actual ? '' : '<span class="ch-dot" aria-hidden="true"></span>'}Asistente SoftRent</b>
+          <span class="ch-module" data-module hidden>Hablando de: Citas<button type="button" aria-label="Salir del tema Citas" data-act="salir"><i class="ph ph-x"></i></button></span>
+        </div>
+        <button type="button" class="ch-close" aria-label="Cerrar el chat" data-act="cerrar"><i class="ph ph-x"></i></button>
+      </div>
+      <div class="ch-thread" role="log" aria-labelledby="${uid}-t" data-thread>
+        <button type="button" class="ch-new" hidden data-nuevos data-act="bajar">Nuevos mensajes <i class="ph ph-arrow-down"></i></button>
+      </div>
+      <p class="sr-only" role="status" data-status></p>
+      <div class="ch-privacy"><p>Este chat guarda la conversación para que SoftRent pueda responderle mejor. No usamos sus datos para nada más.</p>
+        <button type="button" aria-label="Cerrar el aviso de privacidad" data-act="privacidad"><i class="ph ph-x"></i></button></div>
+      <div class="ch-chips" role="group" aria-label="Respuestas sugeridas" data-sugs></div>
+      ${leadHTML(uid)}
+      ${actual
+        ? '<form class="cx-compose" data-compose><input placeholder="Escriba su pregunta" aria-label="Escriba su pregunta" /><button class="btn btn-primary btn-sm" type="submit">Enviar</button></form>'
+        : '<form class="ch-compose" data-compose><div class="ch-field"><input placeholder="Escriba su pregunta" aria-label="Escriba su pregunta" /><button type="submit" class="ch-send" aria-label="Enviar"><i class="ph ph-arrow-up"></i></button></div></form>'}
+    </div>`;
+
+  /* Registro para Escape: cada concepto sabe cerrarse. */
+  const abiertos = [];
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape') return;
+    const c = abiertos.find((s) => s.abierto() && s.layer.contains(document.activeElement));
+    if (c) { e.preventDefault(); c.cerrar(); }
+  });
+
+  /* Abrir/cerrar genérico de un launcher + diálogo. */
+  function conmutador(layer, launcher, dlg, conv, alAbrir) {
+    let abierto = false;
+    const s = {
+      layer,
+      abierto: () => abierto,
+      abrir() {
+        if (abierto) return;
+        abierto = true;
+        dlg.setAttribute('data-open', '');
+        launcher?.setAttribute('data-hidden', '');
+        dlg.setAttribute('aria-modal', String(layer.clientWidth < 640));
+        conv.iniciar();
+        alAbrir?.();
+        requestAnimationFrame(() => (conv.lead.hidden ? conv.input : conv.lead.querySelector('input'))?.focus());
+      },
+      cerrar() {
+        if (!abierto) return;
+        abierto = false;
+        dlg.removeAttribute('data-open');
+        launcher?.removeAttribute('data-hidden');
+        launcher?.focus();
+      },
+    };
+    launcher?.addEventListener('click', s.abrir);
+    layer.addEventListener('click', (e) => { if (e.target.closest('[data-act="cerrar"]')) s.cerrar(); });
+    abiertos.push(s);
+    return s;
+  }
+
+  /* ---------- A: tercera píldora ---------- */
+  document.querySelectorAll('[data-chat="a"], [data-chat="x"]').forEach((layer) => {
+    const actual = layer.dataset.chat === 'x';
+    const uid = 'c-' + layer.dataset.chat;
+    layer.innerHTML = panelBurbuja(uid, actual) + (actual
+      ? '<button type="button" class="cx-launcher"><i class="ph ph-chats-circle"></i>Hable con el asistente</button>'
+      : '<button type="button" class="ch-launcher glass glass-strong glass-liquid" aria-label="Pregúntele a SoftRent"><span class="ch-dot" aria-hidden="true"></span><span class="lbl">Pregúntele a SoftRent</span></button>');
+    const conv = conversacion(layer.querySelector('[data-dialog]'), 'burbuja', { simple: actual });
+    conmutador(layer, layer.querySelector('.ch-launcher, .cx-launcher'), layer.querySelector('[data-dialog]'), conv);
+  });
+
+  /* ---------- D: nota al margen ---------- */
+  document.querySelectorAll('[data-chat="d"]').forEach((layer) => {
+    const uid = 'c-d';
+    layer.classList.add('nt');
+    layer.innerHTML = `
+      <button type="button" class="nt-launcher"><span class="ch-dot" aria-hidden="true"></span><span class="u">¿Tiene una pregunta?</span></button>
+      <aside class="nt-sheet" role="dialog" aria-labelledby="${uid}-t" data-dialog>
+        <div class="nt-head">
+          <div>
+            <p class="nt-eyebrow"><span class="ch-dot" aria-hidden="true"></span>Asistente SoftRent</p>
+            <h3 id="${uid}-t">Pregúntenos</h3>
+            <p class="nt-module" data-module hidden>Conversando sobre Citas. <button type="button" data-act="salir">Volver a lo general</button></p>
+          </div>
+          <button type="button" class="ch-close" aria-label="Cerrar" data-act="cerrar"><i class="ph ph-x"></i></button>
+        </div>
+        <div class="nt-thread" role="log" aria-labelledby="${uid}-t" data-thread></div>
+        <p class="sr-only" role="status" data-status></p>
+        <ul class="nt-sugs" aria-label="Preguntas sugeridas" data-sugs></ul>
+        ${leadHTML(uid)}
+        <form class="nt-compose" data-compose>
+          <input placeholder="Escriba su pregunta" aria-label="Escriba su pregunta" />
+          <button type="submit" class="nt-send">Enviar <i class="ph ph-arrow-right"></i></button>
+        </form>
+        <p class="nt-foot">Guardamos la conversación solo para responderle mejor.</p>
+      </aside>`;
+    const dlg = layer.querySelector('[data-dialog]');
+    const conv = conversacion(dlg, 'nota');
+    conmutador(layer, layer.querySelector('.nt-launcher'), dlg, conv);
+  });
+
+  /* ---------- F: sugerencia en contexto ---------- */
+  const CONTEXTO = { hero: '¿Cómo funciona?', rubros: '¿Sirve para mi negocio?', precios: '¿Qué plan me conviene?' };
+  document.querySelectorAll('[data-chat="f"]').forEach((layer) => {
+    const uid = 'c-f';
+    const stage = layer.previousElementSibling;
+    layer.innerHTML = `
+      <button type="button" class="fc-pill glass glass-strong glass-liquid" aria-describedby="${uid}-hint">
+        <span class="ch-dot" aria-hidden="true"></span><span class="fc-text">${CONTEXTO.hero}</span><i class="ph ph-arrow-up-right" aria-hidden="true"></i>
+      </button>
+      <span class="sr-only" id="${uid}-hint">Pregunta sugerida según la sección que está leyendo</span>
+      <div class="fc-card" role="dialog" aria-labelledby="${uid}-q">
+        <div class="fc-top"><p><span class="ch-dot" aria-hidden="true"></span>Respuesta rápida</p>
+          <button type="button" class="ch-close" aria-label="Cerrar" data-act="cerrar-card"><i class="ph ph-x"></i></button></div>
+        <h3 class="fc-q" id="${uid}-q"></h3>
+        <p class="fc-a" aria-live="polite"></p>
+        <ul class="fc-more" aria-label="Preguntas relacionadas"></ul>
+        <div class="fc-actions"><button type="button" class="btn btn-secondary btn-sm" data-act="expandir"><i class="ph ph-chats-circle"></i>Seguir conversando</button></div>
+      </div>
+      ${panelBurbuja(uid)}`;
+    const pill = layer.querySelector('.fc-pill'), text = layer.querySelector('.fc-text'), card = layer.querySelector('.fc-card');
+    const qEl = card.querySelector('.fc-q'), aEl = card.querySelector('.fc-a'), more = card.querySelector('.fc-more');
+    const panel = layer.querySelector('[data-dialog]');
+    const conv = conversacion(panel, 'burbuja');
+    const chat = conmutador(layer, null, panel, conv, () => { pill.setAttribute('data-hidden', ''); });
+    const cerrarChat = chat.cerrar;
+    chat.cerrar = () => { cerrarChat(); pill.removeAttribute('data-hidden'); pill.focus(); };
+    const historial = [];
+    let cardAbierta = false, actual = CONTEXTO.hero, t = 0;
+
+    function responderEnTarjeta(pregunta) {
+      const r = responder(pregunta);
+      if (r.lead) { abrirChatCon(pregunta); return; }
+      historial.push([pregunta, r]);
+      qEl.textContent = pregunta;
+      revelar(aEl, r.texto);
+      more.innerHTML = (r.chips || []).filter((c) => c !== pregunta).slice(0, 2)
+        .map((c) => `<li><button type="button" data-fq="${c}"><i class="ph ph-arrow-right"></i>${c}</button></li>`).join('');
+    }
+    function abrirCard() {
+      cardAbierta = true;
+      card.setAttribute('data-open', '');
+      pill.setAttribute('aria-expanded', 'true');
+      responderEnTarjeta(actual);
+      requestAnimationFrame(() => card.querySelector('[data-act="expandir"]').focus());
+    }
+    function cerrarCard(volver = true) {
+      cardAbierta = false;
+      card.removeAttribute('data-open');
+      pill.setAttribute('aria-expanded', 'false');
+      if (volver) pill.focus();
+    }
+    function abrirChatCon(pendiente) {
+      cerrarCard(false);
+      if (historial.length) { conv.sembrar(historial.splice(0)); }
+      chat.abrir();
+      if (pendiente) conv.preguntar(pendiente);
+    }
+    pill.addEventListener('click', () => (cardAbierta ? cerrarCard() : abrirCard()));
+    card.addEventListener('click', (e) => {
+      const fq = e.target.closest('[data-fq]');
+      if (fq) return responderEnTarjeta(fq.dataset.fq);
+      const act = e.target.closest('[data-act]')?.dataset.act;
+      if (act === 'cerrar-card') cerrarCard();
+      if (act === 'expandir') abrirChatCon();
+    });
+    abiertos.push({ layer: card, abierto: () => cardAbierta, cerrar: () => cerrarCard() });
+
+    /* La pregunta sigue a la sección más visible del marco. */
+    const visibles = new Map();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => visibles.set(en.target.dataset.ctx, en.intersectionRatio));
+      const [ctx] = [...visibles.entries()].sort((a, b) => b[1] - a[1])[0] || [];
+      const nueva = CONTEXTO[ctx];
+      if (!nueva || nueva === actual || cardAbierta) return;
+      actual = nueva;
+      clearTimeout(t);
+      pill.setAttribute('data-swap', '');
+      t = setTimeout(() => { text.textContent = nueva; pill.removeAttribute('data-swap'); }, reduce.matches ? 0 : 160);
+    }, { root: stage, threshold: [0, .25, .5, .75, 1] });
+    stage.querySelectorAll('[data-ctx]').forEach((el) => io.observe(el));
+  });
+
+  /* ---------- E: paleta de preguntas ---------- */
+  document.querySelectorAll('[data-chat="e"]').forEach((layer) => {
+    const uid = 'c-e';
+    layer.innerHTML = `
+      <button type="button" class="pe-launcher glass glass-strong glass-liquid"><i class="ph ph-magnifying-glass" aria-hidden="true"></i>Preguntar<kbd aria-hidden="true">/</kbd></button>
+      <div class="pe-scrim" data-scrim>
+        <div class="pe-box" role="dialog" aria-modal="true" aria-label="Preguntar a SoftRent" data-dialog>
+          <div class="pe-input">
+            <i class="ph ph-magnifying-glass" aria-hidden="true"></i>
+            <input role="combobox" aria-expanded="true" aria-controls="${uid}-list" aria-autocomplete="list"
+              placeholder="Pregunte lo que quiera sobre SoftRent" aria-label="Pregunta" autocomplete="off" />
+            <button type="button" aria-label="Cerrar" data-act="cerrar"><kbd>Esc</kbd></button>
+          </div>
+          <div class="pe-body" data-body>
+            <div class="pe-thread" role="log" aria-label="Respuestas" data-thread></div>
+            <p class="sr-only" role="status" data-status></p>
+            ${leadHTML(uid)}
+            <p class="pe-label" id="${uid}-lbl">Sugerencias</p>
+            <ul class="pe-list" role="listbox" id="${uid}-list" aria-labelledby="${uid}-lbl" data-sugs></ul>
+          </div>
+          <div class="pe-foot"><span><kbd>↑</kbd><kbd>↓</kbd>moverse</span><span><kbd>Enter</kbd>preguntar</span><span><kbd>Esc</kbd>cerrar</span></div>
+        </div>
+      </div>`;
+    const launcher = layer.querySelector('.pe-launcher'), scrim = layer.querySelector('[data-scrim]');
+    const input = layer.querySelector('[role="combobox"]'), list = layer.querySelector('.pe-list'), label = layer.querySelector('.pe-label');
+    const body = layer.querySelector('[data-body]');
+    let base = BIENVENIDA, activo = 0, abierto = false;
+
+    const escapar = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
+    const norm = (s) => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+    function filas() {
+      const v = input.value.trim();
+      let items = v ? [...new Set([...base, ...CONOCIDAS])].filter((c) => norm(c).includes(norm(v))) : base;
+      if (v && !items.some((c) => norm(c) === norm(v))) items = [...items, { libre: v }];
+      label.textContent = v ? 'Coincidencias' : (base === BIENVENIDA ? 'Sugerencias' : 'Siga con');
+      activo = Math.min(activo, items.length - 1);
+      list.innerHTML = items.map((c, i) => {
+        const txt = typeof c === 'string' ? c : c.libre;
+        let html = escapar(txt);
+        if (v && typeof c === 'string') {
+          const k = norm(txt).indexOf(norm(v));
+          if (k >= 0) html = escapar(txt.slice(0, k)) + '<mark>' + escapar(txt.slice(k, k + v.length)) + '</mark>' + escapar(txt.slice(k + v.length));
+        }
+        return `<li role="option" id="${uid}-o${i}" data-opt="${escapar(txt)}" aria-selected="${i === activo}">
+          <i class="ph ${typeof c === 'string' ? 'ph-chat-circle-text' : 'ph-paper-plane-tilt'}" aria-hidden="true"></i>
+          <span>${typeof c === 'string' ? html : 'Preguntar: "' + html + '"'}</span><kbd aria-hidden="true">Enter</kbd></li>`;
+      }).join('');
+      input.setAttribute('aria-activedescendant', items.length ? `${uid}-o${activo}` : '');
+    }
+    const conv = conversacion(layer.querySelector('[data-dialog]'), 'nota', {
+      scroller: body,
+      sinBienvenida: true,
+      sugerir: (l) => { if (l.length) base = l; activo = 0; },
+      /* Con el formulario abierto, la lista se esconde; si no, vuelve como "Siga con". */
+      alResponder: () => { const libre = conv.lead.hidden; list.hidden = label.hidden = !libre; if (libre) filas(); },
+    });
+    function preguntar(t) { input.value = ''; list.hidden = label.hidden = true; conv.preguntar(t); }
+    function abrir() {
+      if (abierto) return;
+      abierto = true;
+      scrim.setAttribute('data-open', '');
+      launcher.setAttribute('data-hidden', '');
+      filas();
+      requestAnimationFrame(() => input.focus());
+    }
+    function cerrar() {
+      if (!abierto) return;
+      abierto = false;
+      scrim.removeAttribute('data-open');
+      launcher.removeAttribute('data-hidden');
+      launcher.focus();
+    }
+    launcher.addEventListener('click', abrir);
+    scrim.addEventListener('click', (e) => {
+      if (e.target === scrim || e.target.closest('[data-act="cerrar"]')) return cerrar();
+      const o = e.target.closest('[data-opt]');
+      if (o) preguntar(o.dataset.opt);
+    });
+    input.addEventListener('input', () => { activo = 0; list.hidden = false; label.hidden = false; filas(); });
+    input.addEventListener('keydown', (e) => {
+      const n = list.children.length;
+      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+        e.preventDefault();
+        if (!n) return;
+        activo = (activo + (e.key === 'ArrowDown' ? 1 : n - 1)) % n;
+        [...list.children].forEach((li, i) => li.setAttribute('aria-selected', String(i === activo)));
+        input.setAttribute('aria-activedescendant', `${uid}-o${activo}`);
+        list.children[activo].scrollIntoView({ block: 'nearest' });
+      }
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const o = list.children[activo];
+        if (o && !list.hidden) preguntar(o.dataset.opt);
+        else if (input.value.trim()) preguntar(input.value);
+      }
+    });
+    /* Atajo "/": abre la paleta del marco bajo el cursor, nunca mientras se escribe. */
+    let encima = false;
+    layer.parentElement.addEventListener('pointerenter', () => (encima = true));
+    layer.parentElement.addEventListener('pointerleave', () => (encima = false));
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== '/' || !encima || abierto) return;
+      if (/input|textarea/i.test(document.activeElement?.tagName)) return;
+      e.preventDefault();
+      abrir();
+    });
+    abiertos.push({ layer, abierto: () => abierto, cerrar });
+  });
+
+  /* Ancho real de cada marco. */
+  document.querySelectorAll('.stage').forEach((stage) => {
+    const label = stage.closest('.frame').querySelector('[data-width-label]');
+    new ResizeObserver(([en]) => (label.textContent = Math.round(en.contentRect.width) + ' px')).observe(stage);
+  });
+})();
+</script>
+</body>
+</html>
