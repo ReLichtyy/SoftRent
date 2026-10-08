@@ -13,6 +13,12 @@ export const demos: Demo[] = [
     industria: 'Barberías, salones, veterinarias, tatuajes y consultorios',
     estado: 'publicada',
     demoUrl: 'https://mivps-217-77-11-250.sslip.io/',
+    captura: '/ReservasImages/37_dashboard_dueno_agenda_diaria.png',
+    recorrido: [
+      'Reserve una cita como si fuera cliente',
+      'Búsquela en la agenda del negocio',
+      'Pregúntele al asistente por los horarios',
+    ],
     resumen:
       'Sus clientes agendan solos, según los cupos reales, y reciben el recordatorio automático.',
     impacto: 'Agenda llena sin perder la mañana contestando mensajes de uno en uno.',

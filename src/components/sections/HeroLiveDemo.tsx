@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 import {
   ArrowRight,
   CalendarBlank,
@@ -11,6 +11,7 @@ import {
 import { Badge } from '../ui/Badge'
 import { cn } from '../../lib/cn'
 import { HeroAsk } from './HeroAsk'
+import '../../styles/hero-demo.css'
 
 /* Demo interactivo del hero: una ventana del producto que el visitante
  * puede recorrer. Vocabulario estándar a propósito — negocio, servicio,
@@ -100,7 +101,11 @@ const clientesBase = [
  * completa — la IA agendó la cita — y el visitante puede responder,
  * agendar otra, repetir el guion o recorrer las demás vistas, donde
  * la cita queda reflejada al instante. */
-export function HeroLiveDemo() {
+export function HeroLiveDemo({ showcase = false }: { showcase?: boolean }) {
+  const demoId = useId()
+  const visibleViews = showcase
+    ? vistas.filter((view) => ['preguntar', 'chat', 'agenda'].includes(view.id))
+    : vistas
   const [vista, setVista] = useState<Vista>('preguntar')
   const [paso, setPaso] = useState<Paso>('saludo')
   const [mensajes, setMensajes] = useState<Mensaje[]>([])
@@ -138,7 +143,7 @@ export function HeroLiveDemo() {
   useEffect(() => {
     const el = chatEl.current
     if (el) el.scrollTop = el.scrollHeight
-  }, [mensajes, escribiendo])
+  }, [mensajes, escribiendo, vista])
 
   const ia = (texto: string) =>
     setMensajes((m) => [...m, { autor: 'ia', texto }])
@@ -150,6 +155,8 @@ export function HeroLiveDemo() {
    * con sus pausas de escritura. Deja la cita agendada y el turno
    * en el visitante. */
   const reproducirGuion = () => {
+    timers.current.forEach((timer) => window.clearTimeout(timer))
+    timers.current = []
     setMensajes([])
     setChips([])
     setCita(null)
@@ -288,16 +295,38 @@ export function HeroLiveDemo() {
 
   const botonVista = (v: (typeof vistas)[number]) => {
     const activo = vista === v.id
-    const novedad = v.id === 'agenda' && cita !== null && vista !== 'agenda'
+    const novedad = (v.id === 'agenda' && cita !== null && vista !== 'agenda') ||
+      (v.id === 'chat' && mensajes.some((mensaje) => mensaje.autor === 'ia') && vista !== 'chat')
+    const description = v.id === 'preguntar' ? 'Consulta tus datos'
+      : v.id === 'chat' ? 'Atiende a tus clientes' : 'Organiza cada cita'
     return (
       <button
         key={v.id}
         type="button"
+        role={showcase ? 'tab' : undefined}
+        id={showcase ? `${demoId}-${v.id}` : undefined}
+        aria-selected={showcase ? activo : undefined}
+        aria-controls={showcase ? `${demoId}-panel` : undefined}
+        aria-label={showcase ? v.id === 'preguntar' ? 'Preguntar a la IA' : v.etiqueta : undefined}
+        aria-description={novedad ? 'Nueva actividad disponible' : showcase ? description : undefined}
+        tabIndex={showcase && !activo ? -1 : 0}
+        onKeyDown={showcase ? (event) => {
+          const index = visibleViews.findIndex((view) => view.id === v.id)
+          const target = event.key === 'ArrowRight' ? (index + 1) % visibleViews.length
+            : event.key === 'ArrowLeft' ? (index - 1 + visibleViews.length) % visibleViews.length
+            : event.key === 'Home' ? 0 : event.key === 'End' ? visibleViews.length - 1 : null
+          if (target === null) return
+          event.preventDefault()
+          const next = visibleViews[target]
+          setVista(next.id)
+          if (next.id === 'agenda' && cita) setDia('manana')
+          document.getElementById(`${demoId}-${next.id}`)?.focus()
+        } : undefined}
         onClick={() => {
           setVista(v.id)
           if (v.id === 'agenda' && cita) setDia('manana')
         }}
-        aria-current={activo ? 'page' : undefined}
+        aria-current={!showcase && activo ? 'page' : undefined}
         className={cn(
           'relative flex flex-1 flex-col items-center gap-1 rounded-sm py-2 text-xs font-medium text-ink-muted transition-colors duration-[var(--duration-fast)] hover:text-ink',
           activo && 'bg-surface text-accent-text hover:text-accent-text',
@@ -306,7 +335,8 @@ export function HeroLiveDemo() {
         {novedad && (
           <span
             aria-hidden="true"
-            className="absolute right-2 top-1.5 h-1.5 w-1.5 animate-pulse rounded-full bg-brand"
+            data-notification={v.id}
+            className="demo-notification absolute right-2 top-1.5 h-1.5 w-1.5 animate-pulse rounded-full bg-brand"
           />
         )}
         <v.icono
@@ -314,13 +344,13 @@ export function HeroLiveDemo() {
           weight={activo ? 'fill' : 'regular'}
           aria-hidden="true"
         />
-        {v.etiqueta}
+        {showcase ? <span className="showcase-tab-copy"><span>{v.id === 'preguntar' ? 'Preguntar a la IA' : v.etiqueta}</span><small>{description}</small></span> : v.etiqueta}
       </button>
     )
   }
 
   return (
-    <div className="relative">
+    <div data-view={vista} className={cn('relative', showcase && 'hero-live-demo--showcase')}>
       {/* Halo suave detrás de la ventana, para que flote sobre el fondo
        * inverso sin introducir otro color. */}
       <div
@@ -328,41 +358,51 @@ export function HeroLiveDemo() {
         className="absolute -inset-6 -z-10 rounded-lg bg-[radial-gradient(closest-side,rgba(255,255,255,0.07),transparent)]"
       />
 
-      <div className="rounded-lg bg-white/5 p-1.5 ring-1 ring-white/10">
-        <div className="flex h-[30rem] flex-col overflow-hidden rounded-md bg-surface text-ink sm:h-[31rem]">
+      <div className="demo-frame rounded-lg bg-white/5 p-1.5 ring-1 ring-white/10">
+        <div className="demo-window flex h-[30rem] flex-col overflow-hidden rounded-md bg-surface text-ink sm:h-[31rem]">
           {/* Encabezado de la ventana */}
-          <div className="flex shrink-0 items-center justify-between gap-3 border-b border-border px-4 py-3">
+          {!showcase && <div className="demo-window-heading flex shrink-0 items-center justify-between gap-3 border-b border-border px-4 py-3">
             <div className="min-w-0">
               <p className="text-sm font-semibold">Su Negocio</p>
               <p className="truncate text-xs text-ink-muted">
                 Panel de citas · demo
               </p>
             </div>
-            <span className="inline-flex shrink-0 items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent-text">
+            <span className="demo-status inline-flex shrink-0 items-center gap-1.5 rounded-full bg-accent-soft px-2.5 py-0.5 text-xs font-medium text-accent-text">
               <span
                 aria-hidden="true"
                 className="h-1.5 w-1.5 animate-pulse rounded-full bg-brand"
               />
               Demo interactiva
             </span>
-          </div>
+          </div>}
 
-          <div className="flex min-h-0 flex-1">
+          {showcase && (
+            <div className="showcase-tabs" role="tablist" aria-label="Prueba la IA de SoftRent">
+              {visibleViews.map(botonVista)}
+            </div>
+          )}
+
+          <div className="demo-content flex min-h-0 flex-1">
             {/* Riel de vistas (escritorio) */}
-            <nav
+            {!showcase && <nav
               aria-label="Vistas del demo"
               className="hidden w-16 shrink-0 flex-col gap-1 border-e border-border bg-surface-sunken p-2 sm:flex"
             >
               {vistas.map(botonVista)}
-            </nav>
+            </nav>}
 
             {/* Contenido de la vista activa */}
-            <div key={vista} className="flex min-h-0 min-w-0 flex-1 flex-col">
-              {vista === 'preguntar' && <HeroAsk />}
+            <div key={vista} id={showcase ? `${demoId}-panel` : undefined}
+              role={showcase ? 'tabpanel' : undefined}
+              aria-labelledby={showcase ? `${demoId}-${vista}` : undefined}
+              tabIndex={showcase ? 0 : undefined}
+              className="flex min-h-0 min-w-0 flex-1 flex-col">
+              {vista === 'preguntar' && <HeroAsk showcase={showcase} />}
 
               {vista === 'chat' && (
                 <>
-                  <div className="flex shrink-0 items-center gap-3 border-b border-border px-4 py-2.5">
+                  <div className="demo-chat-heading flex shrink-0 items-center gap-3 border-b border-border px-4 py-2.5">
                     <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-surface-inverse text-xs text-ink-inverse">
                       MQ
                     </span>
@@ -400,6 +440,7 @@ export function HeroLiveDemo() {
                           key={i}
                           className={cn(
                             'demo-msg max-w-[85%] rounded-sm px-3 py-2 text-sm leading-relaxed',
+                            m.autor === 'ia' ? 'demo-message-assistant' : 'demo-message-customer',
                             m.autor === 'ia'
                               ? 'w-fit bg-surface-sunken text-ink'
                               : 'ms-auto bg-accent text-on-accent',
@@ -537,7 +578,7 @@ export function HeroLiveDemo() {
               )}
 
               {vista === 'agenda' && (
-                <div className="demo-enter flex min-h-0 flex-1 flex-col px-5 py-5">
+                <div className="demo-agenda demo-enter flex min-h-0 flex-1 flex-col px-5 py-5">
                   <div className="flex items-center justify-between gap-3">
                     <p className="text-heading-sm text-ink">Agenda</p>
                     <Badge tone="neutral">{citasDia.length} citas</Badge>
@@ -668,18 +709,18 @@ export function HeroLiveDemo() {
           </div>
 
           {/* Vistas en móvil */}
-          <nav
+          {!showcase && <nav
             aria-label="Vistas del demo"
             className="grid shrink-0 grid-cols-5 border-t border-border bg-surface-sunken sm:hidden"
           >
             {vistas.map(botonVista)}
-          </nav>
+          </nav>}
         </div>
       </div>
 
       {/* Confirmación flotante, como la del diseño original: cae cuando
        * la conversación deja la cita agendada. */}
-      {cita && vista !== 'preguntar' && (
+      {!showcase && cita && vista !== 'preguntar' && (
         <div
           key={`${cita.servicio}-${cita.hora}`}
           className="demo-enter absolute -bottom-5 left-3 hidden items-center gap-3 rounded-md bg-surface px-4 py-3 text-ink shadow-md md:flex lg:-left-6"
@@ -696,9 +737,9 @@ export function HeroLiveDemo() {
         </div>
       )}
 
-      <p className="mt-6 text-center text-xs text-ink-inverse/60">
+      {!showcase && <p className="mt-6 text-center text-xs text-ink-inverse/60">
         Demo en vivo: pregúntele al sistema, responda en el chat o explore el panel.
-      </p>
+      </p>}
     </div>
   )
 }

@@ -145,3 +145,33 @@
 .demo-cita-nueva {
   animation: demo-cita-pulse 900ms var(--ease-out) 2;
 }
+
+/* Demo en vivo: los dolores del cliente se tachan con la señal roja
+ * al entrar en vista. Es un fondo de 1.5px que crece de izquierda a
+ * derecha, así el trazo sigue el texto aunque ocupe varias líneas.
+ * Con movimiento reducido queda tachado de inmediato. */
+.sr-tachado {
+  background-image: linear-gradient(var(--brand), var(--brand));
+  background-repeat: no-repeat;
+  background-position: 0 58%;
+  background-size: 0% 1.5px;
+}
+
+/* Animación (no transición) para que el trazo se repita al cambiar
+ * de sistema, cuando la lista se vuelve a montar. */
+@keyframes sr-tachar {
+  to {
+    background-size: 100% 1.5px;
+  }
+}
+
+[data-visto="true"] .sr-tachado {
+  animation: sr-tachar 700ms var(--ease-out) var(--sr-delay, 0ms) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-visto="true"] .sr-tachado {
+    animation: none;
+    background-size: 100% 1.5px;
+  }
+}

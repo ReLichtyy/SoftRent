@@ -6,6 +6,7 @@ import { nombreDemo, avisoPrivacidad } from '../../lib/chat/engine'
 import { Input } from '../ui/Input'
 import { Button } from '../ui/Button'
 import { Checkbox } from '../ui/Checkbox'
+import { Container } from '../layout/Container'
 import { cn } from '../../lib/cn'
 
 /** Chip del submódulo activo (regla 2): "Hablando de: Citas". */
@@ -131,14 +132,14 @@ export default function Chat() {
   }, [cerrado])
 
   return (
-    <>
+    <Container className="pointer-events-none fixed inset-x-0 bottom-5 z-50 flex justify-end">
       {!abierto && (
         <button
           ref={(n) => { launcherRef.current = n; launcherAnimRef.current = n }}
           type="button"
           onClick={chat.abrir}
           aria-label="Abrir el asistente de SoftRent"
-          className="group fixed bottom-5 right-5 z-50 flex h-[46px] items-center gap-2.5 rounded-full bg-surface/95 pr-5 pl-4 font-display text-lg text-ink italic shadow-[inset_0_0_0_1px_var(--border),var(--elev-sm)] outline-none transition-transform duration-200 ease-[var(--ease-out)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
+          className="group pointer-events-auto flex h-[46px] items-center gap-2.5 rounded-full bg-surface/95 pr-5 pl-4 font-display text-lg text-ink italic shadow-[inset_0_0_0_1px_var(--border),var(--elev-sm)] outline-none transition-transform duration-200 ease-[var(--ease-out)] active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)]"
         >
           {/* Nota al margen: papel, cursiva y el punto de marca. El rojo
            * queda para Comenzar en el navbar. */}
@@ -157,9 +158,9 @@ export default function Chat() {
           role="dialog"
           aria-label="Asistente de SoftRent"
           className={cn(
-            'fixed z-50 flex flex-col overflow-hidden rounded-md border border-border bg-surface text-ink shadow-lg',
+            'pointer-events-auto fixed flex flex-col overflow-hidden rounded-md border border-border bg-surface text-ink shadow-lg',
             'inset-x-3 bottom-3 top-14',
-            'sm:inset-x-auto sm:bottom-5 sm:right-5 sm:top-auto sm:h-[560px] sm:max-h-[calc(100dvh-2.5rem)] sm:w-[380px]',
+            'sm:static sm:h-[560px] sm:max-h-[calc(100dvh-2.5rem)] sm:w-[380px]',
           )}
         >
           <div className="flex items-center justify-between gap-3 border-b border-border px-4 py-3">
@@ -271,6 +272,6 @@ export default function Chat() {
           )}
         </div>
       )}
-    </>
+    </Container>
   )
 }

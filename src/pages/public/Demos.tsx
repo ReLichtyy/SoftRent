@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ArrowRight, Eye } from '@phosphor-icons/react'
 import { Container } from '../../components/layout/Container'
 import { Section } from '../../components/layout/Section'
+import { DemoEnVivo } from '../../components/sections/DemoEnVivo'
 import { Badge } from '../../components/ui/Badge'
 import { Button } from '../../components/ui/Button'
 import { Card } from '../../components/ui/Card'
@@ -12,7 +13,6 @@ import { planPorId } from '../../content/planes'
 import { demos } from '../../content/demos'
 import type { Demo } from '../../content/types'
 import { useScrollReveal } from '../../lib/useScrollReveal'
-import { PageIntro } from '../shared'
 
 /* Vista rápida: qué hace el sistema y qué incluye, sin salir de la página. */
 function VistaRapida({ demo, onClose }: { demo: Demo; onClose: () => void }) {
@@ -57,11 +57,11 @@ function VistaRapida({ demo, onClose }: { demo: Demo; onClose: () => void }) {
               rel="noopener noreferrer"
               size="sm"
             >
-              Abrir demo en vivo
+              Abrir en pantalla completa
             </Button>
           )}
           <LinkButton to={demo.cta} variant="secondary" size="sm">
-            Seleccionar
+            Quiero este sistema
           </LinkButton>
         </div>
       </div>
@@ -80,10 +80,7 @@ export function Demos() {
   return (
     <Section className="py-16 sm:py-24">
       <Container className="space-y-12 sm:space-y-16">
-        <PageIntro
-          title="Demos"
-          description="Pruebe el sistema antes de hablar con nosotros. Sin registros ni pruebas gratuitas: la demo es la prueba."
-        />
+        <DemoEnVivo />
 
         <div ref={gridRef} className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {demos.map((demo) => {
@@ -119,7 +116,7 @@ export function Demos() {
                     Vista rápida
                   </Button>
                   <LinkButton to={demo.cta} variant="ghost" size="sm">
-                    Seleccionar
+                    Quiero este sistema
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </LinkButton>
                 </div>

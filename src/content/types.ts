@@ -20,6 +20,10 @@ export type Demo = {
   estado: DemoEstado
   /** URL del subdominio; null mientras la demo no esté publicada. */
   demoUrl: string | null
+  /** Captura del sistema para el plan B cuando el iframe no carga. */
+  captura?: string
+  /** Tareas sugeridas para recorrer la demo publicada (3, en orden). */
+  recorrido?: string[]
   /** Resumen de una línea para tarjetas y galerías. */
   resumen: string
   /** Micro-descripción de impacto: el beneficio medible, en una línea. */

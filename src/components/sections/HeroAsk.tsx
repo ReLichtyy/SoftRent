@@ -72,7 +72,7 @@ type Turno =
   | { tipo: 'pregunta'; texto: string }
   | { tipo: 'respuesta'; id: string }
 
-export function HeroAsk() {
+export function HeroAsk({ showcase = false }: { showcase?: boolean }) {
   const [turnos, setTurnos] = useState<Turno[]>([])
   const [pensando, setPensando] = useState(false)
   const [hechas, setHechas] = useState<string[]>([])
@@ -119,8 +119,8 @@ export function HeroAsk() {
   const pendientes = PREGUNTAS.filter((p) => !hechas.includes(p.id))
 
   return (
-    <div className="demo-enter flex min-h-0 flex-1 flex-col">
-      <div className="flex shrink-0 items-center gap-2 border-b border-border px-4 py-3">
+    <div className={cn('demo-enter flex min-h-0 flex-1 flex-col', showcase && 'showcase-ask')}>
+      <div className="ask-heading flex shrink-0 items-center gap-2 border-b border-border px-4 py-3">
         <Sparkle
           className="h-4 w-4 text-accent-text"
           weight="fill"
@@ -145,7 +145,7 @@ export function HeroAsk() {
             return (
               <li
                 key={i}
-                className="demo-msg ms-auto w-fit max-w-[85%] rounded-sm bg-accent px-3 py-2 text-sm leading-relaxed text-on-accent"
+                className="ask-question demo-msg ms-auto w-fit max-w-[85%] rounded-sm bg-accent px-3 py-2 text-sm leading-relaxed text-on-accent"
               >
                 {t.texto}
               </li>
@@ -155,26 +155,30 @@ export function HeroAsk() {
           return (
             <li
               key={i}
-              className="demo-msg w-fit max-w-[92%] rounded-sm bg-surface-sunken px-3.5 py-3 text-sm leading-relaxed"
+              className="ask-answer demo-msg w-fit max-w-[92%] rounded-sm bg-surface-sunken px-3.5 py-3 text-sm leading-relaxed"
             >
+              {showcase && <p className="answer-source">{r.barras ? 'Agenda' : 'Clientes'} <span>/ Datos de ejemplo</span></p>}
               <p>{r.texto}</p>
 
               {r.barras && (
                 <div
-                  aria-hidden="true"
-                  className="mt-3 flex h-16 items-end gap-2"
+                  role={showcase ? 'img' : undefined}
+                  aria-label={showcase ? r.barras.map((b) => `${b.dia}: ${b.valor} citas`).join(', ') : undefined}
+                  aria-hidden={showcase ? undefined : true}
+                  className="answer-chart mt-3 flex h-16 items-end gap-2"
                 >
                   {r.barras.map((b) => (
                     <div
                       key={b.dia}
                       className="flex flex-1 flex-col items-center gap-1"
                     >
+                      {showcase && <span className="chart-value">{b.valor}</span>}
                       <div
                         className={cn(
                           'w-full rounded-xs',
                           b.max ? 'bg-accent' : 'bg-border-strong/50',
                         )}
-                        style={{ height: `${b.valor * 9}px` }}
+                        style={{ height: `${b.valor * (showcase ? 12 : 9)}px` }}
                       />
                       <span className="text-[10px] text-ink-muted">
                         {b.dia}
@@ -226,7 +230,8 @@ export function HeroAsk() {
           )
         })}
         {pensando && (
-          <li className="flex w-fit items-center gap-1 rounded-sm bg-surface-sunken px-3 py-2.5">
+          <li className="ask-thinking flex w-fit items-center gap-1 rounded-sm bg-surface-sunken px-3 py-2.5">
+            {showcase && <span className="mr-2 text-xs">Consultando tu negocio</span>}
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink-muted" />
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink-muted [animation-delay:150ms]" />
             <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-ink-muted [animation-delay:300ms]" />
@@ -234,7 +239,7 @@ export function HeroAsk() {
         )}
       </ul>
 
-      <div className="shrink-0 border-t border-border px-4 py-3">
+      <div className="ask-suggestions shrink-0 border-t border-border px-4 py-3">
         {pendientes.length > 0 ? (
           <div
             role="group"

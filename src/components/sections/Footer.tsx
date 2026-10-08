@@ -9,7 +9,7 @@ import {
   WhatsappLogo,
   EnvelopeSimple,
 } from '@phosphor-icons/react'
-import { LogoWordmark } from '../brand/Logo'
+import { LogoSymbol, LogoWordmark } from '../brand/Logo'
 import { Container } from '../layout/Container'
 import { Select } from '../ui/Select'
 import { useTheme } from '../../lib/useTheme'
@@ -125,7 +125,29 @@ function SelectorIdioma() {
   )
 }
 
-export default function Footer() {
+export default function Footer({ compact = false }: { compact?: boolean }) {
+  if (compact) {
+    return (
+      <footer className="bg-[#0f0e0d] text-[#aaa39b]">
+        <Container className="max-w-[1140px] px-6 sm:px-6 min-[1600px]:max-w-[1240px]">
+          <div className="flex flex-wrap items-center justify-between gap-x-6 gap-y-5 border-t border-white/10 py-7 text-xs">
+            <Link to="/" className="inline-flex items-center gap-2.5 text-base font-semibold text-[#ded8d0]">
+              <LogoSymbol size={23} />SoftRent
+            </Link>
+            <nav aria-label="Enlaces del pie de página" className="flex flex-wrap gap-x-5 gap-y-3">
+              <Link className="hover:underline underline-offset-4" to="/soluciones">Soluciones</Link>
+              <Link className="hover:underline underline-offset-4" to="/precios">Precios</Link>
+              <Link className="hover:underline underline-offset-4" to="/nosotros">Nosotros</Link>
+              <Link className="hover:underline underline-offset-4" to="/privacidad">Privacidad</Link>
+              <Link className="hover:underline underline-offset-4" to="/terminos">Términos</Link>
+            </nav>
+            <span>Hecho en Costa Rica</span>
+          </div>
+        </Container>
+      </footer>
+    )
+  }
+
   return (
     <footer className="bg-surface-inverse text-ink-inverse/60">
       <Container className="py-12">

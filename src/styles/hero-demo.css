@@ -1,0 +1,30 @@
+.hero-live-demo--showcase > [aria-hidden]{display:none}
+.hero-live-demo--showcase .demo-frame{padding:0;border-radius:14px;background:var(--surface);box-shadow:none;--tw-ring-shadow:0 0 #0000}
+.hero-live-demo--showcase .demo-window{height:520px;border-radius:14px}
+.showcase-tabs{position:relative;display:grid;grid-template-columns:1.45fr 1fr 1fr;flex-shrink:0;border-bottom:1px solid var(--border);background:var(--surface-sunken);padding:0 12px;isolation:isolate}
+.showcase-tabs::after{content:'';position:absolute;left:12px;bottom:-1px;width:calc((100% - 24px)*1.45/3.45);height:2px;background:var(--accent-text);transition:left 380ms cubic-bezier(.22,1,.36,1),width 380ms cubic-bezier(.22,1,.36,1)}
+[data-view=chat] .showcase-tabs::after{left:calc(12px + (100% - 24px)*1.45/3.45);width:calc((100% - 24px)/3.45)}
+[data-view=agenda] .showcase-tabs::after{left:calc(12px + (100% - 24px)*2.45/3.45);width:calc((100% - 24px)/3.45)}
+.showcase-tabs button{display:flex;flex-direction:row;justify-content:center;gap:8px;min-height:49px;font-size:13px;border-radius:0;background:transparent;transition:color 180ms ease,background 180ms ease}
+.showcase-tabs button[aria-selected=true]{color:var(--ink)}.showcase-tabs button:hover{background:var(--surface)}.showcase-tab-copy small{display:none}.showcase-tabs button:focus-visible{outline-offset:-5px}
+.hero-live-demo--showcase [role=tabpanel]:focus-visible{outline-offset:-3px}
+.hero-live-demo--showcase .demo-message-customer{width:fit-content}
+.showcase-ask .answer-source{display:none}.showcase-ask .chart-value{font-size:10px;color:var(--ink-muted)}.showcase-ask .answer-chart{height:100px}.showcase-ask .answer-chart > div > div{max-height:64px}
+:is(.hero-demo-note,.simulation-note){margin:10px 0 0;font-size:11px;line-height:1.5;text-align:center;color:#c2b9ad}
+/* One movement for each meaningful event: select, answer, read data, confirm. */
+@keyframes sr-panel-arrive{from{opacity:.35;transform:translateY(9px);filter:blur(2px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes sr-message-arrive{from{opacity:.2;transform:translateY(9px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes sr-chart-grow{from{transform:scaleY(.08)}to{transform:scaleY(1)}}
+@keyframes sr-status-breathe{0%,100%{opacity:.6;transform:scale(.85)}50%{opacity:1;transform:scale(1.2)}}
+@media(prefers-reduced-motion:no-preference){
+ .hero-live-demo--showcase [role=tabpanel]{animation:sr-panel-arrive 420ms cubic-bezier(.22,1,.36,1) both}
+ .hero-live-demo--showcase .demo-msg{animation:sr-message-arrive 440ms cubic-bezier(.22,1,.36,1) both}
+ .hero-live-demo--showcase .showcase-ask .answer-chart > div > div{transform-origin:bottom;animation:sr-chart-grow 650ms cubic-bezier(.16,1,.3,1) both}
+ .showcase-ask .answer-chart > div:nth-child(2)>div{animation-delay:60ms}.showcase-ask .answer-chart > div:nth-child(3)>div{animation-delay:120ms}.showcase-ask .answer-chart > div:nth-child(4)>div{animation-delay:180ms}.showcase-ask .answer-chart > div:nth-child(5)>div{animation-delay:240ms}
+ .showcase-tabs .demo-notification{animation:sr-status-breathe 2.6s ease-in-out infinite}
+ .hero-live-demo--showcase .demo-agenda > ul > li{animation:sr-message-arrive 380ms cubic-bezier(.22,1,.36,1) both}
+ .hero-live-demo--showcase .demo-agenda > ul > li:nth-child(2){animation-delay:60ms}.hero-live-demo--showcase .demo-agenda > ul > li:nth-child(3){animation-delay:120ms}
+}
+[data-motion=paused] .hero-live-demo--showcase *,[data-motion=paused] .hero-live-demo--showcase *::before,[data-motion=paused] .hero-live-demo--showcase *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+@media(prefers-reduced-motion:reduce){.hero-live-demo--showcase *,.hero-live-demo--showcase *::before,.hero-live-demo--showcase *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+@media(max-width:440px){.hero-live-demo--showcase .demo-window{height:540px}.showcase-tabs{padding:0 5px}.showcase-tabs button{font-size:12px;gap:5px}.showcase-tabs button svg{width:16px;height:16px}:is(.hero-demo-note,.simulation-note){max-width:31ch;margin:8px auto 0}}

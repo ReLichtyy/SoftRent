@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SoftRent — Canvas de ideas y flujos</title>
+    <style>
+      @font-face {
+        font-family: Figtree;
+        src: url("/src/assets/fonts/figtree-latin-wght-normal.woff2")
+          format("woff2");
+        font-display: swap;
+      }
+      :root {
+        color-scheme: dark;
+        font-family: Figtree, system-ui, sans-serif;
+        background: #100f0e;
+        color: #eeeae4;
+        --line: #ffffff20;
+        --muted: #aaa198;
+        --red: #ed1625;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+      }
+      a {
+        color: inherit;
+        text-underline-offset: 4px;
+      }
+      a:focus-visible,
+      summary:focus-visible {
+        outline: 2px solid var(--red);
+        outline-offset: 5px;
+      }
+      header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 20px;
+        padding: 22px 4vw;
+        border-bottom: 1px solid var(--line);
+      }
+      header b {
+        font-size: 17px;
+      }
+      nav {
+        display: flex;
+        gap: 24px;
+        font-size: 13px;
+      }
+      main {
+        max-width: 1460px;
+        padding: 54px 4vw 70px;
+        margin: auto;
+      }
+      h1 {
+        font-size: clamp(32px, 4.4vw, 58px);
+        letter-spacing: -0.04em;
+        font-weight: 600;
+        line-height: 1.04;
+        margin: 0 0 20px;
+        max-width: 950px;
+      }
+      h2 {
+        font-size: 23px;
+        letter-spacing: -0.025em;
+        margin: 0;
+      }
+      p {
+        line-height: 1.6;
+      }
+      strong {
+        font-weight: 600;
+      }
+      .lead {
+        color: var(--muted);
+        max-width: 730px;
+        font-size: 16px;
+      }
+      .eyebrow {
+        color: #b8afa4;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        font-size: 11px;
+        margin: 0 0 18px;
+      }
+      .entry {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex-wrap: wrap;
+        margin: 34px 0;
+        padding: 20px 0;
+        border-block: 1px solid var(--line);
+        font-size: 13px;
+      }
+      .entry strong {
+        color: white;
+      }
+      .entry span {
+        color: var(--muted);
+      }
+      .entry .arrow {
+        color: var(--red);
+      }
+      .board {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+        align-items: start;
+      }
+      .lane {
+        min-width: 0;
+      }
+      .lane-heading {
+        padding: 12px 0 21px;
+      }
+      .lane-heading small {
+        color: var(--red);
+        display: block;
+        font-size: 12px;
+        margin-bottom: 12px;
+      }
+      .lane-heading p {
+        font-size: 13px;
+        color: var(--muted);
+        margin-bottom: 0;
+      }
+      .step {
+        position: relative;
+        padding: 20px;
+        background: #1a1816;
+        border: 1px solid var(--line);
+        border-radius: 9px;
+        margin-bottom: 30px;
+        min-height: 125px;
+      }
+      .step:not(.last)::after {
+        content: "↓";
+        position: absolute;
+        bottom: -27px;
+        left: 20px;
+        color: #9d9388;
+        font-size: 19px;
+      }
+      .step small {
+        display: block;
+        font-size: 10px;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: #a59a8e;
+        margin-bottom: 10px;
+      }
+      .step h3 {
+        font-size: 16px;
+        font-weight: 550;
+        margin: 0;
+      }
+      .step p {
+        font-size: 13px;
+        color: #c0b8ae;
+        margin: 10px 0 0;
+      }
+      .step.result {
+        border-left: 3px solid #68a183;
+      }
+      .step.action {
+        border-left: 3px solid var(--red);
+      }
+      .tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-top: 12px;
+      }
+      .tags span {
+        padding: 5px 8px;
+        border: 1px solid var(--line);
+        border-radius: 5px;
+        color: #d3ccc3;
+        font-size: 11px;
+      }
+      details {
+        border-block: 1px solid var(--line);
+        padding: 15px 0;
+        font-size: 13px;
+        color: var(--muted);
+      }
+      summary {
+        cursor: pointer;
+        color: #e7e0d8;
+        font-weight: 500;
+      }
+      details ul {
+        padding-left: 19px;
+        line-height: 1.6;
+      }
+      details li + li {
+        margin-top: 10px;
+      }
+      .notes {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 40px;
+        border-top: 1px solid var(--line);
+        margin-top: 50px;
+        padding-top: 30px;
+      }
+      .notes h2 {
+        font-size: 20px;
+      }
+      .notes p,
+      .notes li {
+        color: var(--muted);
+        font-size: 13px;
+        line-height: 1.65;
+      }
+      .notes ul {
+        padding-left: 18px;
+      }
+      .status {
+        display: inline-block;
+        margin-bottom: 12px;
+        font-size: 10px;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: #d9ab83;
+      }
+      footer {
+        padding: 22px 4vw;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 12px;
+      }
+      @media (max-width: 850px) {
+        .board {
+          grid-template-columns: 1fr;
+          gap: 38px;
+        }
+        .lane {
+          max-width: 620px;
+        }
+        .step {
+          min-height: auto;
+        }
+        .notes {
+          grid-template-columns: 1fr;
+          gap: 20px;
+        }
+        header {
+          align-items: flex-start;
+        }
+        nav {
+          flex-direction: column;
+          gap: 9px;
+        }
+        main {
+          padding-top: 36px;
+        }
+        .entry {
+          gap: 10px;
+        }
+      }
+      @media print {
+        body {
+          background: white;
+          color: black;
+        }
+        .step {
+          break-inside: avoid;
+          background: white;
+        }
+        header nav {
+          display: none;
+        }
+        details {
+          display: block;
+        }
+        main {
+          padding: 20px;
+        }
+        .board {
+          gap: 14px;
+        }
+        p,
+        .lead,
+        .step p,
+        .notes p,
+        .notes li {
+          color: #444 !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <b>SoftRent / Canvas</b>
+      <nav aria-label="Vistas">
+        <a href="./index.html">Ver prototipo</a
+        ><a href="/">Ver página principal</a>
+      </nav>
+    </header>
+    <main>
+      <p class="eyebrow">Ideas y recorridos del hero</p>
+      <h1>Pregúntale a tu negocio.<br />Automatiza tareas.</h1>
+      <p class="lead">
+        Tres vistas de un mismo sistema: consultar los datos, atender una
+        conversación y comprobar la cita en la agenda. Este canvas documenta la
+        demo actual y las siguientes ideas.
+      </p>
+      <div class="entry" aria-label="Recorrido de entrada">
+        <strong>Inicio</strong><span class="arrow" aria-hidden="true">→</span
+        ><span>Título + dos usos principales</span
+        ><span class="arrow" aria-hidden="true">→</span
+        ><strong>Prueba tu sistema con IA</strong
+        ><span class="arrow" aria-hidden="true">→</span
+        ><span>Foco en la pestaña activa</span>
+      </div>
+      <div class="board">
+        <section class="lane" aria-labelledby="ask-title">
+          <div class="lane-heading">
+            <small>01 / Consultar</small>
+            <h2 id="ask-title">Preguntar a la IA</h2>
+            <p>Del dato a una decisión concreta.</p>
+          </div>
+          <div class="step">
+            <small>Entrada automática</small>
+            <h3>¿Cuántas citas tengo esta semana?</h3>
+            <p>
+              La primera consulta aparece al abrir la vista. El sistema muestra
+              que está preparando la respuesta.
+            </p>
+          </div>
+          <div class="step result">
+            <small>Respuesta</small>
+            <h3>14 citas, distribuidas por día</h3>
+            <p>
+              Gráfico con cifras visibles: lunes 4, martes 1, miércoles 3,
+              jueves 4 y viernes 2.
+            </p>
+          </div>
+          <div class="step">
+            <small>Elegir siguiente consulta</small>
+            <h3>Detectar una oportunidad</h3>
+            <div class="tags">
+              <span>Clientes que no han vuelto</span
+              ><span>Horas de mayor demanda</span>
+            </div>
+            <p>
+              Los clientes inactivos aparecen en una lista; la demanda por hora,
+              en un segundo gráfico.
+            </p>
+          </div>
+          <div class="step action last">
+            <small>Acción simulada</small>
+            <h3>Escribirles por WhatsApp</h3>
+            <p>
+              La lista de tres clientes ofrece una acción y una confirmación. En
+              la demo no se envía ningún mensaje real.
+            </p>
+          </div>
+          <details>
+            <summary>Estados y recuperación</summary>
+            <ul>
+              <li>
+                Mientras responde, se evita ejecutar consultas simultáneas.
+              </li>
+              <li>Las preguntas ya realizadas salen de las sugerencias.</li>
+              <li>
+                Al salir de esta pestaña, la conversación de consulta se
+                desmonta; al volver, empieza otra vez.
+              </li>
+            </ul>
+          </details>
+        </section>
+        <section class="lane" aria-labelledby="chat-title">
+          <div class="lane-heading">
+            <small>02 / Atender</small>
+            <h2 id="chat-title">Chat</h2>
+            <p>De una pregunta a una reserva confirmada.</p>
+          </div>
+          <div class="step">
+            <small>Entrada</small>
+            <h3>Una conversación en marcha</h3>
+            <p>
+              El guion saluda, consulta el servicio y confirma una cita inicial
+              para mañana a las 10:30.
+            </p>
+          </div>
+          <div class="step">
+            <small>Tomar el control</small>
+            <h3>Agendar otra cita</h3>
+            <p>
+              Se elige entre servicio principal de 45 minutos y servicio
+              adicional de 30 minutos.
+            </p>
+          </div>
+          <div class="step">
+            <small>Elegir disponibilidad</small>
+            <h3>Mañana, 10:30 o 15:00</h3>
+            <p>
+              El usuario pulsa una hora. La conversación refleja su elección y
+              el asistente prepara la confirmación.
+            </p>
+          </div>
+          <div class="step result last">
+            <small>Resultado compartido</small>
+            <h3>Cita confirmada → Agenda</h3>
+            <p>
+              «Ver en la agenda» abre mañana y muestra a Mariana Quesada con el
+              servicio y la hora elegidos. La nueva reserva sustituye la cita
+              simulada anterior.
+            </p>
+          </div>
+          <details>
+            <summary>Estados y recuperación</summary>
+            <ul>
+              <li>
+                «Ver horarios» permite consultar opciones antes de elegir un
+                servicio.
+              </li>
+              <li>
+                «Repetir demo» cancela los pasos pendientes y reinicia el guion.
+              </li>
+              <li>Los botones se bloquean mientras responde el asistente.</li>
+              <li>
+                El punto de Chat aparece cuando hay mensajes del asistente y la
+                pestaña no está activa; no es un contador de mensajes sin leer.
+              </li>
+            </ul>
+          </details>
+        </section>
+        <section class="lane" aria-labelledby="agenda-title">
+          <div class="lane-heading">
+            <small>03 / Organizar</small>
+            <h2 id="agenda-title">Agenda</h2>
+            <p>La conversación queda reflejada en la operación.</p>
+          </div>
+          <div class="step">
+            <small>Entrada</small>
+            <h3>Abrir la agenda</h3>
+            <p>
+              Se entra desde su pestaña o desde la confirmación del chat. Cuando
+              existe una cita simulada, se selecciona mañana.
+            </p>
+          </div>
+          <div class="step">
+            <small>Explorar</small>
+            <h3>Elegir un día</h3>
+            <div class="tags">
+              <span>Hoy</span><span>Mañana</span><span>Lun 5</span
+              ><span>Mar 6</span>
+            </div>
+            <p>Cada día muestra sus citas y el total correspondiente.</p>
+          </div>
+          <div class="step result">
+            <small>Comprobar</small>
+            <h3>Una nueva cita en su horario</h3>
+            <p>
+              La reserva del chat se incorpora a la lista ordenada por hora con
+              el indicador «Agendada por IA».
+            </p>
+          </div>
+          <div class="step last">
+            <small>Continuidad</small>
+            <h3>Volver al chat y seguir</h3>
+            <p>
+              La reserva permanece al cambiar de pestaña. Se puede probar otro
+              servicio u horario y comprobar el cambio en la agenda.
+            </p>
+          </div>
+          <details>
+            <summary>Estados y recuperación</summary>
+            <ul>
+              <li>
+                El punto de Agenda aparece cuando existe una reserva simulada y
+                esa pestaña no está activa.
+              </li>
+              <li>
+                Repetir el guion en Chat reinicia también la reserva compartida.
+              </li>
+              <li>
+                Recargar la página restaura los datos de ejemplo. No hay
+                persistencia en un servidor.
+              </li>
+            </ul>
+          </details>
+        </section>
+      </div>
+      <div class="notes">
+        <section>
+          <span class="status">Dirección aprobada</span>
+          <h2>Una ventana central, pocos elementos</h2>
+          <ul>
+            <li>
+              Fondo oscuro con cuadrícula y tarjetas de contexto a los lados.
+            </li>
+            <li>
+              Tres pestañas directamente visibles, sin encabezados ni etiquetas
+              repetidas.
+            </li>
+            <li>
+              Movimiento breve al cambiar de vista, responder y mostrar un
+              gráfico.
+            </li>
+            <li>
+              Pausa mediante icono, preferencia de movimiento reducido y
+              navegación por teclado.
+            </li>
+            <li>«Explorar demos» conduce a la página de demos.</li>
+          </ul>
+        </section>
+        <section>
+          <span class="status"
+            >Ideas siguientes · pendientes de implementar</span
+          >
+          <h2>Automatizar con una revisión previa</h2>
+          <p>
+            Detectar un hueco en la agenda → sugerir clientes interesados →
+            preparar el mensaje → revisar destinatarios y contenido → confirmar
+            el envío → mostrar estado y resultado.
+          </p>
+          <p>
+            Para un producto conectado: contemplar datos vacíos, falta de
+            permisos, horario ocupado y fallo de envío. Conservar el borrador y
+            ofrecer reintentar o escoger otra opción, sin dar una acción fallida
+            por completada.
+          </p>
+        </section>
+      </div>
+    </main>
+    <footer>
+      Documento de diseño. Las interacciones descritas como actuales usan datos
+      y acciones simulados.
+    </footer>
+  </body>
+</html>

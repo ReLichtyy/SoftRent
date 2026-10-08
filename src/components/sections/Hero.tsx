@@ -1,89 +1,96 @@
-import {
-  MapPin,
-  ChatsCircle,
-  PlugsConnected,
-  WhatsappLogo,
-} from '@phosphor-icons/react'
+﻿import { useEffect, useRef, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { ArrowRight, CalendarBlank, ChatCircleText, Check, Pause, Play } from '@phosphor-icons/react'
+import { Button } from '../ui/Button'
 import { LinkButton } from '../ui/LinkButton'
-import { Container } from '../layout/Container'
-import { useScrollReveal } from '../../lib/useScrollReveal'
 import { HeroLiveDemo } from './HeroLiveDemo'
+import '../../styles/hero-showcase.css'
 
-/* Franja de confianza (sección 3.4.2): señalales locales
- * debajo del hero, sin logos de terceros. */
-const confianzaItems = [
-  { icono: ChatsCircle, texto: 'Pregunte en lenguaje normal' },
-  { icono: WhatsappLogo, texto: 'Desde su chat de WhatsApp' },
-  { icono: PlugsConnected, texto: 'Conecta con sus otras herramientas' },
-  { icono: MapPin, texto: 'Hecho en Costa Rica' },
-]
-
-/** Hero dividido: propuesta de valor y dos CTA a la izquierda, un demo
- * interactivo del producto a la derecha (el visitante responde en el
- * chat y recorre las vistas). En pantallas angostas el texto va arriba
- * y el demo debajo. */
+/** The approved model hero, mounted directly with the site's real components. */
 export default function Hero() {
-  const scope = useScrollReveal<HTMLElement>({
-    selector: '[data-hero]',
-    stagger: 0.09,
-    y: 22,
-    immediate: true,
-  })
+  const [paused, setPaused] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(() =>
+    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+  )
+  const [visible, setVisible] = useState(true)
+  const previewRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const onPreference = () => setReducedMotion(preference.matches)
+    let inView = true
+    const onVisibility = () => setVisible(inView && !document.hidden)
+    const observer = new IntersectionObserver(([entry]) => {
+      inView = entry.isIntersecting
+      onVisibility()
+    })
+    if (previewRef.current) observer.observe(previewRef.current)
+    preference.addEventListener('change', onPreference)
+    document.addEventListener('visibilitychange', onVisibility)
+    onVisibility()
+    return () => {
+      observer.disconnect()
+      preference.removeEventListener('change', onPreference)
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+  }, [])
+
+  function focusDemo() {
+    const preview = previewRef.current
+    preview?.querySelector<HTMLButtonElement>('[role="tab"][aria-selected="true"]')?.focus({ preventScroll: true })
+    preview?.scrollIntoView({ block: 'center', behavior: reducedMotion || paused ? 'instant' : 'smooth' })
+  }
 
   return (
-    <section ref={scope} className="bg-surface-inverse text-ink-inverse">
-      <Container className="pt-16 pb-14 lg:pt-20 lg:pb-16">
-        <div className="grid items-center gap-14 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)] lg:gap-12">
-          <div>
-            <h1
-              data-hero
-              className="text-balance font-display text-display-md sm:text-display-lg"
-            >
-              Pregúntele a su negocio.{' '}
-              <span className="italic text-[#ff6b70]">Ya sabe la respuesta.</span>
-            </h1>
-            <p
-              data-hero
-              className="mt-6 max-w-lg text-lg leading-relaxed text-ink-inverse/75"
-            >
-              Un sistema con IA integrada: usted pregunta como hablaría con
-              un empleado, desde el panel o su chat de WhatsApp, y recibe la
-              respuesta con sus propios datos.
-            </p>
+    <section className="hero-showcase" data-theme="dark"
+      data-motion={paused || reducedMotion || !visible ? 'paused' : 'running'} aria-labelledby="home-hero-title">
+      <div className="hs-intro">
+        <h1 id="home-hero-title">Tu negocio, potenciado por IA.<br /><span>Pregunta. Agenda. Haz que avance.</span></h1>
+        <ul className="hs-use-cases" aria-label="Qué puedes hacer">
+          <li>Pregúntale a tu negocio</li>
+          <li>Automatiza tareas</li>
+        </ul>
+        <div className="hs-actions">
+          <Button onClick={focusDemo} className="hs-cta">Prueba tu sistema con IA <ArrowRight size={17} aria-hidden="true" /></Button>
+          <LinkButton to="/demos" variant="secondary" className="hs-cta"><CalendarBlank size={17} aria-hidden="true" />Explorar demos</LinkButton>
+        </div>
+        <Link to="/soluciones" className="hs-text-link">IA integrada, software a tu medida <ArrowRight size={13} aria-hidden="true" /></Link>
+      </div>
 
-            <div data-hero className="mt-9 flex flex-wrap items-center gap-4">
-              <LinkButton to="/comenzar" size="lg">
-                Comenzar
-              </LinkButton>
-              <LinkButton to="/demos" variant="secondary" size="lg">
-                Ver demos
-              </LinkButton>
+      <div className="hs-preview">
+        <div ref={previewRef} className="hs-workspace">
+          <div className="hs-scene">
+            <div className="hs-background" aria-hidden="true" />
+            <aside className="hs-context hs-agenda" aria-hidden="true">
+              <div className="hs-context-title"><CalendarBlank size={15} />Su agenda</div>
+              <p className="hs-context-date">Todo empieza con una cita.</p>
+              <div className="hs-calendar">{['L', 'M', 'M', 'J', 'V', '12', '13', '14', '15', '16'].map((day, i) => <span key={i} className={day === '14' ? 'is-selected' : undefined}>{day}</span>)}</div>
+              <div className="hs-appointment"><span className="hs-dot" /><div>Consulta inicial<small>09:00 · Confirmada</small></div></div>
+              <div className="hs-appointment"><span className="hs-dot hs-muted" /><div>Seguimiento<small>10:30 · Por confirmar</small></div></div>
+              <p className="hs-context-foot">Agenda de ejemplo</p>
+            </aside>
+            <div className="hs-live-demo">
+              <HeroLiveDemo showcase />
+              <p className="hero-demo-note">Demo con datos de ejemplo. Las acciones son simuladas.</p>
+            </div>
+            <aside className="hs-context hs-activity" aria-hidden="true">
+              <div className="hs-context-title"><Check size={15} />Todo conectado</div>
+              {[['Conversación atendida', 'Asistente de WhatsApp'], ['Cita confirmada', 'Agenda sincronizada'], ['Recordatorio preparado', 'Seguimiento automático']].map(([title, subtitle]) =>
+                <div className="hs-activity-row" key={title}><span className="hs-dot" /><div>{title}<small>{subtitle}</small></div></div>)}
+              <p className="hs-context-foot">Actividad de ejemplo</p>
+            </aside>
+            <div className="hs-dock">
+              <span><span className="hs-dot" />Tu negocio, conectado</span>
+              <button type="button" onClick={focusDemo}><ChatCircleText size={14} aria-hidden="true" />Probar IA</button>
+              <button type="button" className="hs-motion" disabled={reducedMotion}
+                aria-label={reducedMotion ? 'Animaciones reducidas' : paused ? 'Activar animaciones' : 'Pausar animaciones'}
+                title={reducedMotion ? 'Animaciones reducidas' : paused ? 'Activar animaciones' : 'Pausar animaciones'}
+                aria-pressed={paused || reducedMotion} onClick={() => setPaused(value => !value)}>
+                {paused || reducedMotion ? <Play size={14} aria-hidden="true" /> : <Pause size={14} aria-hidden="true" />}
+              </button>
             </div>
           </div>
-
-          <div data-hero>
-            <HeroLiveDemo />
-          </div>
         </div>
-      </Container>
-
-      <div className="border-t border-ink-inverse/15">
-        <Container>
-          <ul
-            data-hero
-            className="grid grid-cols-2 gap-x-6 gap-y-3 py-5 sm:grid-cols-4"
-          >
-            {confianzaItems.map((item) => (
-              <li
-                key={item.texto}
-                className="flex items-center gap-2 text-sm text-ink-inverse/70"
-              >
-                <item.icono className="h-4 w-4 shrink-0" aria-hidden="true" />
-                {item.texto}
-              </li>
-            ))}
-          </ul>
-        </Container>
       </div>
     </section>
   )
