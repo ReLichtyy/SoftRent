@@ -296,12 +296,12 @@ export function GalleryLightbox() {
 
                 <div className="flex items-center gap-3">
                   <a
-                    href="http://localhost:5174"
+                    href="https://reservas.softrent.dev/"
                     target="_blank"
                     rel="noreferrer"
                     className="flex items-center gap-1.5 rounded-full border border-ink/20 px-4 py-2 text-xs font-semibold text-ink hover:bg-surface-sunken"
                   >
-                    <span>Abrir en Local (5174)</span>
+                    <span>Abrir demo en vivo</span>
                     <ArrowSquareOut className="h-3.5 w-3.5" />
                   </a>
                   <a

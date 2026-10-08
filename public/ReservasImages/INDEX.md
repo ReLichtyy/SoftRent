@@ -1,6 +1,6 @@
 # Catálogo Completo de 75 Imágenes de Venta Visual — SoftRent Citas
 
-Activos visuales de alta resolución (1920x1080) basados en la web-app en vivo y el panel de administración local en **http://localhost:5174** (y https://mivps-217-77-11-250.sslip.io/).
+Activos visuales de alta resolución (1920x1080) basados en la web-app en vivo en **https://reservas.softrent.dev/**.
 
 Diseñados estratégicamente para venta comercial, captación de clientes y presentaciones ejecutivas a dueños de negocios en Costa Rica.
 

@@ -1,0 +1,1256 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SoftRent - Opciones de formulario para Comenzar</title>
+<style>
+/* Fuentes del proyecto (autoalojadas, mismas rutas relativas que tokens.css). */
+@font-face {
+  font-family: "Figtree";
+  font-style: normal;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("src/assets/fonts/figtree-latin-wght-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Figtree";
+  font-style: italic;
+  font-weight: 300 900;
+  font-display: swap;
+  src: url("src/assets/fonts/figtree-latin-wght-italic.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: normal;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("src/assets/fonts/newsreader-latin-opsz-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Newsreader";
+  font-style: italic;
+  font-weight: 200 800;
+  font-display: swap;
+  src: url("src/assets/fonts/newsreader-latin-opsz-italic.woff2") format("woff2");
+}
+
+/* Tokens: copiados de src/styles/tokens.css (tema claro). */
+:root {
+  --bg: #f8f6f3;
+  --surface: #ffffff;
+  --surface-sunken: #f1eee9;
+  --surface-inverse: #171513;
+  --border: #e5e0d9;
+  --border-strong: #8c847b;
+  --ink: #171513;
+  --ink-muted: #5f5952;
+  --ink-subtle: #6e675f;
+  --ink-inverse: #f3f0eb;
+  --brand: #ea1b25;
+  --accent: #d9161f;
+  --accent-hover: #c0121b;
+  --accent-active: #a80f17;
+  --on-accent: #ffffff;
+  --accent-text: #c8131c;
+  --accent-soft: #fdeceb;
+  --focus-ring: #d9161f;
+  --success: #1d7348;
+  --success-soft: #e5f1ea;
+  --danger: #b2410c;
+  --danger-soft: #fbeae1;
+  --elev-sm: 0 1px 2px rgba(23, 21, 19, 0.04), 0 4px 12px rgba(23, 21, 19, 0.06);
+  --elev-md: 0 2px 4px rgba(23, 21, 19, 0.04), 0 12px 32px rgba(23, 21, 19, 0.1);
+  --ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Figtree", system-ui, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 20px; }
+
+/* Tipografía: Newsreader para titulares, Figtree para todo lo demás. */
+h1, h2 { font-family: "Newsreader", Georgia, serif; font-weight: 400; text-wrap: balance; }
+h1 { font-size: 2.5rem; line-height: 1.1; letter-spacing: -0.018em; margin: 0 0 12px; }
+h2 { font-size: 1.75rem; line-height: 1.18; letter-spacing: -0.012em; margin: 0 0 8px; }
+.lede { color: var(--ink-muted); max-width: 62ch; margin: 0 0 28px; }
+
+:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 2px; }
+input, select, textarea, button { font-family: inherit; font-size: 16px; }
+
+/* Cabecera. */
+header { padding: 64px 0 8px; }
+.jumps { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0 0; padding: 0; list-style: none; }
+.jumps a {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink-muted);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 120ms var(--ease-out), border-color 120ms var(--ease-out);
+}
+.jumps a:hover { color: var(--ink); border-color: var(--border-strong); }
+
+/* Tabla comparativa. */
+.compara { width: 100%; border-collapse: collapse; margin: 36px 0 8px; font-size: 14px; }
+.compara caption { caption-side: top; text-align: left; font-weight: 600; font-size: 15px; padding-bottom: 10px; }
+.compara th, .compara td { text-align: left; padding: 10px 12px; border-top: 1px solid var(--border); vertical-align: top; }
+.compara thead th { border-top: 0; color: var(--ink-muted); font-weight: 500; font-size: 13px; }
+.compara td:first-child { font-weight: 600; white-space: nowrap; }
+.compara tbody tr:last-child td { border-bottom: 1px solid var(--border); }
+
+/* Bloque de opción. */
+.opcion {
+  margin: 56px 0;
+  padding: 28px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  box-shadow: var(--elev-sm);
+}
+.opcion > .cabecera { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.chip {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-text);
+  background: var(--accent-soft);
+  border-radius: 10px;
+  padding: 4px 12px;
+}
+.opcion .para { color: var(--ink-muted); margin: 0 0 24px; max-width: 68ch; }
+
+/* Pros y contras: columnas planas, sin tarjetas. */
+.balance { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 0 0 28px; }
+.balance h3 { font-size: 13px; font-weight: 600; margin: 0 0 8px; }
+.balance ul { margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--ink-muted); }
+.balance li { padding: 4px 0; }
+.balance .favor h3 { color: var(--success); }
+.balance .contra h3 { color: var(--danger); }
+
+/* Maqueta: la "pantalla" del formulario dentro de la opción. */
+.mock {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  overflow: hidden;
+}
+.mock-bar {
+  display: flex;
+  gap: 6px;
+  padding: 10px 14px;
+  background: var(--surface-sunken);
+  border-bottom: 1px solid var(--border);
+}
+.mock-bar::before, .mock-bar span {
+  content: "";
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--border);
+}
+.mock-bar span { background: var(--border-strong); }
+.mock-bar .titulo {
+  margin-left: auto;
+  color: var(--ink-subtle);
+  font-size: 12px;
+  background: none;
+  width: auto; height: auto; border-radius: 0;
+}
+.cuerpo { padding: 24px; }
+
+/* Componentes de formulario: etiqueta arriba, ayuda opcional, error abajo. */
+.campo { display: grid; gap: 6px; margin-bottom: 16px; }
+.campo label { font-size: 14px; font-weight: 500; }
+.campo .ayuda { font-size: 12.5px; color: var(--ink-subtle); }
+.campo .error { font-size: 12.5px; color: var(--danger); }
+.campo input, .campo select {
+  height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  color: var(--ink);
+  width: 100%;
+  transition: border-color 120ms var(--ease-out);
+}
+.campo input:hover, .campo select:hover { border-color: var(--border-strong); }
+.campo.con-error input { border-color: var(--danger); background: var(--danger-soft); }
+
+/* Botones: una intención por etiqueta, radio único de 10px. */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 44px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--accent);
+  color: var(--on-accent);
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 120ms var(--ease-out), transform 120ms var(--ease-out);
+}
+.btn:hover { background: var(--accent-hover); }
+.btn:active { background: var(--accent-active); transform: scale(0.98); }
+.btn.fantasma {
+  background: transparent;
+  color: var(--ink-muted);
+  border: 1px solid var(--border);
+}
+.btn.fantasma:hover { color: var(--ink); border-color: var(--border-strong); background: transparent; }
+
+/* Fichas de selección (industrias, dolores). */
+.fichas { display: grid; gap: 10px; }
+.fichas.dos { grid-template-columns: 1fr 1fr; }
+.ficha {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 14px;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  cursor: pointer;
+  transition: border-color 120ms var(--ease-out), background 120ms var(--ease-out), transform 120ms var(--ease-out);
+}
+.ficha:hover { border-color: var(--border-strong); }
+.ficha:active { transform: scale(0.98); }
+.ficha .titulo-linea { display: block; font-weight: 600; }
+.ficha .sub { display: block; font-size: 12.5px; color: var(--ink-muted); margin-top: 2px; }
+.ficha.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.ficha.is-on .titulo-linea { color: var(--accent-text); }
+/* Campo de texto libre que revela la ficha "Otro". */
+.campo-otro { display: none; margin: 10px 0 0; }
+.campo-otro.visible { display: block; }
+
+/* Pasos (indicadores). */
+.pasos { display: flex; align-items: center; gap: 8px; margin: 0 0 20px; padding: 0; list-style: none; }
+.pasos b {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--surface-sunken);
+  color: var(--ink-muted);
+}
+.pasos li.activo b { background: var(--accent); color: var(--on-accent); }
+.pasos li.hecho b { background: var(--accent-soft); color: var(--accent-text); }
+.pasos i { width: 16px; height: 1px; background: var(--border); }
+.pasos .nombre { font-size: 12.5px; color: var(--ink-muted); margin-left: 6px; }
+.pasos li.activo .nombre { color: var(--ink); }
+
+.panel { display: none; }
+.panel.visible { display: block; animation: entrar 240ms var(--ease-out); }
+@keyframes entrar { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+/* Chat (opción C). */
+.chat { display: flex; flex-direction: column; gap: 12px; padding: 24px; }
+.burbuja { max-width: 78%; padding: 10px 14px; border-radius: 14px; font-size: 14.5px; line-height: 1.45; }
+.burbuja.bot { align-self: flex-start; background: var(--surface-sunken); border: 1px solid var(--border); }
+.burbuja.cliente { align-self: flex-end; background: var(--accent-soft); color: var(--ink); border: 1px solid #f3c9c6; }
+.chat-opciones { display: flex; flex-wrap: wrap; gap: 8px; align-self: flex-start; }
+.pastilla {
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--surface);
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: border-color 120ms var(--ease-out), background 120ms var(--ease-out);
+}
+.pastilla:hover { border-color: var(--accent-text); }
+.pastilla.is-on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-text); font-weight: 600; }
+.escribiendo { align-self: flex-start; color: var(--ink-subtle); font-size: 12.5px; }
+
+/* Bloque de resumen (revisar antes de enviar). */
+.resumen { background: var(--surface-sunken); border: 1px solid var(--border); border-radius: 10px; padding: 18px; font-size: 14px; }
+.resumen dl { margin: 0; }
+.resumen div { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; }
+.resumen dt { color: var(--ink-muted); }
+.resumen dd { margin: 0; text-align: right; }
+.resumen dd.pendiente { color: var(--ink-subtle); font-style: italic; }
+
+/* Zona de archivos (no obligatoria). */
+.soltar {
+  border: 1px dashed var(--border-strong);
+  border-radius: 10px;
+  padding: 18px;
+  text-align: center;
+  font-size: 13.5px;
+  color: var(--ink-muted);
+  background: var(--surface-sunken);
+}
+
+.consentimiento { display: flex; gap: 10px; align-items: flex-start; font-size: 13.5px; color: var(--ink-muted); margin: 4px 0 16px; }
+.consentimiento input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--accent); }
+
+/* Opción E: vista previa en vivo, panel inverso que se arma mientras llena. */
+#paneles-e { display: grid; grid-template-columns: 1.5fr 1fr; gap: 20px; align-items: start; }
+.e-vista { position: sticky; top: 16px; background: var(--surface-inverse); color: var(--ink-inverse); border-radius: 10px; padding: 20px; }
+.e-vista .rotulo { margin: 0 0 6px; font-size: 12.5px; color: #c9c2b8; }
+.e-vista h3 { font-family: "Newsreader", Georgia, serif; font-weight: 400; font-size: 1.3rem; margin: 0 0 10px; }
+.e-vista dl { margin: 0; }
+.e-vista dl > div { display: flex; justify-content: space-between; gap: 12px; padding: 9px 0; border-top: 1px solid rgba(243, 240, 235, 0.16); }
+.e-vista dt { color: #c9c2b8; }
+.e-vista dd { margin: 0; text-align: right; }
+.e-vista dd.pend { color: #8a8378; font-style: italic; }
+
+/* Opción F: calendario de diagnóstico. */
+.f-semana { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+.f-dia { border: 1px solid var(--border); border-radius: 10px; background: var(--surface); padding: 10px 6px; cursor: pointer; font-size: 12.5px; color: var(--ink-muted); transition: border-color 120ms var(--ease-out), background 120ms var(--ease-out); }
+.f-dia b { display: block; font-size: 17px; color: var(--ink); }
+.f-dia.is-on { border-color: var(--accent); background: var(--accent-soft); }
+.f-dia.is-on b, .f-dia.is-on span { color: var(--accent-text); }
+.f-horas { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-top: 14px; }
+.f-slot { height: 40px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); font-size: 13px; cursor: pointer; color: var(--ink); transition: border-color 120ms var(--ease-out), background 120ms var(--ease-out); }
+.f-slot:hover { border-color: var(--border-strong); }
+.f-slot.is-on { border-color: var(--accent); background: var(--accent); color: var(--on-accent); font-weight: 600; }
+.f-slot[disabled] { color: #b3aca1; background: var(--surface-sunken); cursor: not-allowed; text-decoration: line-through; }
+.btn[disabled] { background: var(--border); color: var(--ink-muted); cursor: not-allowed; transform: none; }
+
+.nota-mock { font-size: 12.5px; color: var(--ink-subtle); margin: 12px 0 0; }
+
+/* Rejillas de dos columnas: colapsan a una en móvil (regla central, no inline). */
+.dos-paneles { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+#dos-paneles { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; }
+
+/* Guía final. */
+.guia { margin: 56px 0 72px; padding: 28px; background: var(--surface-inverse); color: var(--ink-inverse); border-radius: 14px; }
+.guia h2 { color: var(--ink-inverse); }
+.guia p { color: #c9c2b8; max-width: 68ch; }
+.guia strong { color: #ffffff; }
+
+@media (max-width: 720px) {
+  h1 { font-size: 1.9rem; }
+  .balance, .fichas.dos, .dos-paneles, #paneles-e { grid-template-columns: 1fr; }
+  .e-vista { position: static; }
+  #opcion-f .f-horas { grid-template-columns: repeat(3, 1fr); }
+  .compara { display: block; overflow-x: auto; }
+  .opcion { padding: 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  html { scroll-behavior: auto; }
+}
+</style>
+</head>
+<body>
+
+<header class="wrap">
+  <h1>Opciones de formulario para el flujo Comenzar</h1>
+  <p class="lede">
+    Los datos son los mismos de hoy: industria, dolores, nombre, negocio,
+    WhatsApp, correo, tamaño del equipo, catálogo opcional y consentimiento,
+    más tres agregados: la opción "Otro" con texto libre para la industria,
+    la opción "Otro" para los dolores, y la preferencia de contacto
+    (WhatsApp o correo). Cinco formas de pedirlos: tres reordenan el
+    formulario, la E arma la propuesta en vivo mientras llena y la F
+    cambia el formulario por una cita de 15 minutos.
+    Lo que cambia entre opciones es el orden y la forma de preguntar.
+    Cada maqueta funciona: toque las fichas, avance los pasos y abra los bloques.
+  </p>
+  <ul class="jumps">
+    <li><a href="#opcion-a">A. Una sola página</a></li>
+    <li><a href="#opcion-b">B. Contacto primero</a></li>
+    <li><a href="#opcion-c">C. Conversacional</a></li>
+    <li><a href="#opcion-e">E. Vista previa en vivo</a></li>
+    <li><a href="#opcion-f">F. Agende su demo</a></li>
+    <li><a href="#guia">Mi recomendación</a></li>
+  </ul>
+</header>
+
+<main class="wrap">
+
+  <table class="compara">
+    <caption>Comparación rápida</caption>
+    <thead>
+      <tr>
+        <th scope="col">Opción</th>
+        <th scope="col">Pantallas que ve el cliente</th>
+        <th scope="col">WhatsApp capturado si abandona a la mitad</th>
+        <th scope="col">Mejor para</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>A. Una sola página</td>
+        <td>1</td>
+        <td>Solo si llega al final</td>
+        <td>Escritorio, clientes que ya decidieron</td>
+      </tr>
+      <tr>
+        <td>B. Contacto primero</td>
+        <td>2</td>
+        <td>Sí, desde el paso 1</td>
+        <td>Conversión en móvil, seguimiento por WhatsApp</td>
+      </tr>
+      <tr>
+        <td>C. Conversacional</td>
+        <td>1 pregunta a la vez</td>
+        <td>Sí, pregunta por pregunta</td>
+        <td>Clientes que viven en WhatsApp, tono cercano</td>
+      </tr>
+      <tr>
+        <td>E. Vista previa en vivo</td>
+        <td>1 dividida en dos</td>
+        <td>Solo si llega a los campos de contacto</td>
+        <td>Detener el scroll: el valor se ve construirse</td>
+      </tr>
+      <tr>
+        <td>F. Agende su demo</td>
+        <td>1 más confirmación</td>
+        <td>Sí, al confirmar la cita</td>
+        <td>Clientes ya convencidos que prefieren hablar</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Opción A -->
+  <section class="opcion" id="opcion-a">
+    <div class="cabecera">
+      <span class="chip">Opción A</span>
+      <h2>Una sola página</h2>
+    </div>
+    <p class="para">
+      Todo en una pantalla, agrupado en tres bloques visuales: su negocio,
+      su contacto y el contexto extra. Sin pasos ni clics de navegación:
+      quien llega ya decidido llena y envía.
+    </p>
+    <div class="balance">
+      <div class="favor">
+        <h3>A favor</h3>
+        <ul>
+          <li>Cero fricción de navegación: una sola decisión, enviar.</li>
+          <li>Se ve todo de una vez; nadie se pregunta cuánto falta.</li>
+          <li>El catálogo opcional se ve temprano y sube su tasa de uso.</li>
+        </ul>
+      </div>
+      <div class="contra">
+        <h3>En contra</h3>
+        <ul>
+          <li>En móvil puede sentirse largo y espantar antes del primer campo.</li>
+          <li>Si abandonan a la mitad, no queda ningún dato rescatable.</li>
+          <li>Pierde el efecto compromiso de los pasos cortos.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-bar" aria-hidden="true"><span class="titulo">comenzar</span></div>
+      <div class="cuerpo">
+        <h2 style="font-size:1.4rem">Cuéntenos de su negocio</h2>
+        <p style="color:var(--ink-muted);font-size:14px;margin:4px 0 18px">
+          Toma menos de 90 segundos. Solo los dos primeros bloques son necesarios.
+        </p>
+
+        <h3 style="font-size:15px;margin:0 0 10px">1. Su negocio</h3>
+        <div class="fichas dos" data-grupo="a-industria" data-modo="single" data-extra="a-otro-industria" style="margin-bottom:20px">
+          <button type="button" class="ficha">
+            <span><span class="titulo-linea">Citas</span>
+            <span class="sub">Barberías, salones, veterinarias, tatuajes y consultorios</span></span>
+          </button>
+          <button type="button" class="ficha">
+            <span><span class="titulo-linea">Pedidos</span>
+            <span class="sub">Comercios pequeños que venden por WhatsApp</span></span>
+          </button>
+          <button type="button" class="ficha">
+            <span><span class="titulo-linea">Servicios</span>
+            <span class="sub">Talleres y técnicos a domicilio</span></span>
+          </button>
+          <button type="button" class="ficha" data-otro>
+            <span><span class="titulo-linea">Otro</span>
+            <span class="sub">Escriba a qué se dedica su negocio</span></span>
+          </button>
+        </div>
+        <div class="campo campo-otro" id="a-otro-industria">
+          <label for="a-otro-industria-input">¿A qué se dedica su negocio?</label>
+          <input id="a-otro-industria-input" placeholder="Ejemplo: veterinaria, taller de motos, asesoría">
+        </div>
+        <p style="font-size:14px;font-weight:600;margin:0 0 10px">¿Qué le gustaría resolver primero?</p>
+        <div class="fichas dos" data-grupo="a-dolores" data-modo="multi" data-extra="a-otro-dolores" style="margin-bottom:24px">
+          <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Los mensajes que llegan de noche esperan hasta el día siguiente.</span></button>
+          <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Los pedidos llegan por chat y alguien tiene que anotarlos y cobrarlos.</span></button>
+          <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Sabe que hay clientes que dejaron de venir, pero no cuáles.</span></button>
+          <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Si un día no puede abrir, toca llamar a cada cliente para moverle la cita.</span></button>
+          <button type="button" class="ficha" data-otro><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Otro</span></button>
+        </div>
+        <div class="campo campo-otro" id="a-otro-dolores">
+          <label for="a-otro-dolores-input">¿Qué otra cosa le gustaría resolver?</label>
+          <input id="a-otro-dolores-input" placeholder="Escríbala en una línea">
+        </div>
+
+        <h3 style="font-size:15px;margin:0 0 12px">2. Su contacto</h3>
+        <div class="dos-paneles">
+          <div class="campo">
+            <label for="a-nombre">Su nombre</label>
+            <input id="a-nombre" autocomplete="name" placeholder="">
+          </div>
+          <div class="campo">
+            <label for="a-negocio">Nombre del negocio</label>
+            <input id="a-negocio" autocomplete="organization" placeholder="">
+          </div>
+          <div class="campo con-error">
+            <label for="a-whatsapp">WhatsApp</label>
+            <input id="a-whatsapp" inputmode="tel" autocomplete="tel" placeholder="" value="8888">
+            <span class="error">Escriba un número válido, con código de país si es de fuera.</span>
+            <span class="ayuda">Ejemplo: +506 8888 8888. Este campo muestra el estado de error.</span>
+          </div>
+          <div class="campo">
+            <label for="a-correo">Correo</label>
+            <input id="a-correo" type="email" autocomplete="email" placeholder="">
+          </div>
+        </div>
+        <div class="campo" style="max-width:280px">
+          <label for="a-canal">¿Por dónde prefiere que le contactemos?</label>
+          <select id="a-canal">
+            <option value="">Elija una opción</option>
+            <option>WhatsApp</option>
+            <option>Correo</option>
+          </select>
+        </div>
+        <div class="campo" style="max-width:280px">
+          <label for="a-tamano">Tamaño del equipo</label>
+          <select id="a-tamano">
+            <option value="">Elija una opción</option>
+            <option>Solo yo</option>
+            <option>2 a 3 personas</option>
+            <option>4 a 9 personas</option>
+            <option>10 o más</option>
+          </select>
+        </div>
+
+        <h3 style="font-size:15px;margin:12px 0 12px">3. Contexto extra (opcional)</h3>
+        <p style="font-size:13.5px;color:var(--ink-muted);margin:0 0 10px">
+          ¿Tiene a la mano su menú, catálogo o lista de precios? Si lo comparte,
+          su propuesta llega más precisa y montamos su asistente más rápido.
+        </p>
+        <div class="soltar" style="margin-bottom:16px">Arrastre aquí su catálogo o tóquelo para elegirlo. No es obligatorio.</div>
+        <label class="consentimiento">
+          <input type="checkbox">
+          <span>Acepto que SoftRent use estos datos solo para responder mi consulta.</span>
+        </label>
+        <button type="button" class="btn">Enviar y recibir propuesta</button>
+        <p class="nota-mock">El error del campo WhatsApp es ilustrativo: así se ve la validación en esta opción.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opción B -->
+  <section class="opcion" id="opcion-b">
+    <div class="cabecera">
+      <span class="chip">Opción B</span>
+      <h2>Contacto primero, cualificación después</h2>
+    </div>
+    <p class="para">
+      Invierte el orden actual: primero los tres datos que valen oro
+      (nombre, negocio, WhatsApp) y después lo demás. Si alguien abandona en el
+      paso 2, ya tiene su WhatsApp para rescatar la conversación.
+    </p>
+    <div class="balance">
+      <div class="favor">
+        <h3>A favor</h3>
+        <ul>
+          <li>El dato rescatable (WhatsApp) se captura en los primeros 15 segundos.</li>
+          <li>Paso 1 de 3 campos: compromiso barato, la gente lo completa.</li>
+          <li>Los dolores se preguntan cuando ya hay una relación empezada.</li>
+        </ul>
+      </div>
+      <div class="contra">
+        <h3>En contra</h3>
+        <ul>
+          <li>Pedir datos antes de mostrar valor puede espantar a los desconfiados.</li>
+          <li>Dos pantallas de formulario: más navegación que la opción A.</li>
+          <li>El paso 2 queda largo (todo lo cualitativo junto).</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-bar" aria-hidden="true"><span class="titulo">comenzar</span></div>
+      <div class="cuerpo">
+        <ol class="pasos" data-fuente="b">
+          <li class="activo"><b>1</b><span class="nombre">Contacto</span><i></i></li>
+          <li><b>2</b><span class="nombre">Su negocio</span><i></i></li>
+          <li><b>3</b><span class="nombre">Listo</span></li>
+        </ol>
+
+        <div class="panel visible" data-panel="1">
+          <h2 style="font-size:1.3rem;margin:0 0 6px">¿Le armamos su propuesta?</h2>
+          <p style="color:var(--ink-muted);font-size:14px;margin:0 0 18px">
+            Tres datos y empezamos. El resto lo conversamos después.
+          </p>
+          <div class="campo" style="max-width:380px">
+            <label for="b-nombre">Su nombre</label>
+            <input id="b-nombre" autocomplete="name" placeholder="">
+          </div>
+          <div class="campo" style="max-width:380px">
+            <label for="b-negocio">Nombre del negocio</label>
+            <input id="b-negocio" autocomplete="organization" placeholder="">
+          </div>
+          <div class="campo" style="max-width:380px">
+            <label for="b-whatsapp">WhatsApp</label>
+            <input id="b-whatsapp" inputmode="tel" autocomplete="tel" placeholder="+506 8888 8888">
+            <span class="ayuda">Con código de país, por ejemplo +506 8888 8888.</span>
+          </div>
+          <div class="campo" style="max-width:380px">
+            <label for="b-canal">¿Cómo le escribimos?</label>
+            <select id="b-canal">
+              <option value="">Elija una opción</option>
+              <option>WhatsApp</option>
+              <option>Correo</option>
+            </select>
+            <span class="ayuda">Por el que elija le enviamos la propuesta.</span>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center">
+            <button type="button" class="btn" data-ir="2">Continuar</button>
+            <span style="font-size:12.5px;color:var(--ink-subtle)">Faltan 2 pasos</span>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="2">
+          <h2 style="font-size:1.3rem;margin:0 0 6px">Ahora, su negocio</h2>
+          <p style="color:var(--ink-muted);font-size:14px;margin:0 0 18px">Ya le escribimos si algo falta. Esto solo hace la propuesta mejor.</p>
+          <div class="fichas dos" data-grupo="b-industria" data-modo="single" data-extra="b-otro-industria" style="margin-bottom:18px">
+            <button type="button" class="ficha">
+              <span><span class="titulo-linea">Citas</span>
+              <span class="sub">Barberías, salones, veterinarias, tatuajes y consultorios</span></span>
+            </button>
+            <button type="button" class="ficha">
+              <span><span class="titulo-linea">Pedidos</span>
+              <span class="sub">Comercios pequeños que venden por WhatsApp</span></span>
+            </button>
+            <button type="button" class="ficha">
+              <span><span class="titulo-linea">Servicios</span>
+              <span class="sub">Talleres y técnicos a domicilio</span></span>
+            </button>
+            <button type="button" class="ficha" data-otro>
+              <span><span class="titulo-linea">Otro</span>
+              <span class="sub">Escriba a qué se dedica su negocio</span></span>
+            </button>
+          </div>
+          <div class="campo campo-otro" id="b-otro-industria">
+            <label for="b-otro-industria-input">¿A qué se dedica su negocio?</label>
+            <input id="b-otro-industria-input" placeholder="Ejemplo: veterinaria, taller de motos, asesoría">
+          </div>
+          <p style="font-size:14px;font-weight:600;margin:0 0 10px">¿Qué le gustaría resolver primero?</p>
+          <div class="fichas dos" data-grupo="b-dolores" data-modo="multi" data-extra="b-otro-dolores" style="margin-bottom:18px">
+            <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Los mensajes que llegan de noche esperan hasta el día siguiente.</span></button>
+            <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Su chatbot contesta lo básico, pero no puede agendar ni cobrar.</span></button>
+            <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Sabe que hay clientes que dejaron de venir, pero no cuáles.</span></button>
+            <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">El inventario está en el sistema, pero se entera cuando ya se acabó.</span></button>
+            <button type="button" class="ficha" data-otro><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Otro</span></button>
+          </div>
+          <div class="campo campo-otro" id="b-otro-dolores">
+            <label for="b-otro-dolores-input">¿Qué otra cosa le gustaría resolver?</label>
+            <input id="b-otro-dolores-input" placeholder="Escríbala en una línea">
+          </div>
+          <div class="campo" style="max-width:280px">
+            <label for="b-correo">Correo (opcional aquí)</label>
+            <input id="b-correo" type="email" autocomplete="email" placeholder="">
+            <span class="ayuda">Si prefiere la propuesta por correo. Si no, con el WhatsApp basta.</span>
+          </div>
+          <div class="soltar" style="margin-bottom:16px">¿Tiene su catálogo a la mano? Arrástrelo aquí o tóquelo para elegirlo.</div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <button type="button" class="btn" data-ir="3">Continuar</button>
+            <button type="button" class="btn fantasma" data-ir="1">Atrás</button>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="3">
+          <h2 style="font-size:1.3rem;margin:0 0 10px">Listo, su brief va en camino</h2>
+          <p style="color:var(--ink-muted);font-size:14px;margin:0 0 8px">
+            Su WhatsApp queda registrado desde el paso 1; esto de abajo es solo para revisar.
+          </p>
+          <div class="resumen">
+            <dl>
+              <div><dt>Nombre</dt><dd>María Fernández</dd></div>
+              <div><dt>Negocio</dt><dd>Salón Estrella</dd></div>
+              <div><dt>WhatsApp</dt><dd>+506 8888 7777</dd></div>
+              <div><dt>Industria</dt><dd>Citas</dd></div>
+              <div><dt>Quiere resolver</dt><dd>2 dolores marcados</dd></div>
+              <div><dt>Contexto</dt><dd class="pendiente">Sin catálogo todavía</dd></div>
+            </dl>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap">
+            <button type="button" class="btn">Enviar por correo</button>
+            <button type="button" class="btn fantasma" data-ir="2">Atrás</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opción C -->
+  <section class="opcion" id="opcion-c">
+    <div class="cabecera">
+      <span class="chip">Opción C</span>
+      <h2>Conversacional, como el WhatsApp que ya usan</h2>
+    </div>
+    <p class="para">
+      Una pregunta a la vez, en burbujas de chat. Es el formato que su cliente
+      final ya domina y anticipa el tono del asistente que les va a vender.
+      Cada respuesta ya enviada queda guardada aunque se abandone.
+    </p>
+    <div class="balance">
+      <div class="favor">
+        <h3>A favor</h3>
+        <ul>
+          <li>Cero sensación de "formulario": es una conversación.</li>
+          <li>Cada respuesta se guarda al instante: abandono casi sin pérdida.</li>
+          <li>Demuestra el producto (el asistente) antes de venderlo.</li>
+        </ul>
+      </div>
+      <div class="contra">
+        <h3>En contra</h3>
+        <ul>
+          <li>Es la más lenta de llenar: 8 o 9 interacciones para llegar al final.</li>
+          <li>Alguien que quiere terminar en 30 segundos se impacienta.</li>
+          <li>Más lógica que construir y más difícil de auditar que un formulario.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-bar" aria-hidden="true"><span class="titulo">asistente de softrent</span></div>
+      <div class="chat" id="chat">
+        <div class="burbuja bot">¡Buen día! Soy el asistente de SoftRent. Para armarle una propuesta a su medida, ¿a qué se dedica su negocio?</div>
+      </div>
+      <p class="nota-mock" style="padding:0 24px 18px;margin:0">Toque una opción para ver cómo avanza la conversación. "Otro" le deja escribir su respuesta.</p>
+    </div>
+  </section>
+
+    <!-- Opción E -->
+  <section class="opcion" id="opcion-e">
+    <div class="cabecera">
+      <span class="chip">Opción E</span>
+      <h2>Brief con vista previa en vivo</h2>
+    </div>
+    <p class="para">
+      Pantalla dividida: a la izquierda llena el formulario, a la derecha la
+      propuesta se arma sola, en vivo y en el mismo momento. Nadie llena a
+      ciegas: cada respuesta aparece al instante en el documento que va a
+      recibir, y eso convierte cada campo en un pequeño compromiso con el
+      resultado. Llene a la izquierda y mire el panel oscuro cambiar.
+    </p>
+    <div class="balance">
+      <div class="favor">
+        <h3>A favor</h3>
+        <ul>
+          <li>La propuesta se ve construirse: el valor es visible antes de enviar.</li>
+          <li>Cada campo llenado es un microcompromiso con el resultado.</li>
+          <li>Es la más memorable de todas; hecha para detener el scroll.</li>
+        </ul>
+      </div>
+      <div class="contra">
+        <h3>En contra</h3>
+        <ul>
+          <li>En móvil la vista previa vive abajo, no al lado: pierde parte del efecto.</li>
+          <li>Duplica la información en pantalla: es la más cargada de todas.</li>
+          <li>Construir la vista en vivo en producción toma más trabajo que las otras.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-bar" aria-hidden="true"><span class="titulo">comenzar</span></div>
+      <div class="cuerpo" id="paneles-e">
+        <div>
+          <p style="font-size:14px;font-weight:600;margin:0 0 10px">¿A qué se dedica su negocio?</p>
+          <div class="fichas dos" data-grupo="e-industria" data-modo="single" data-extra="e-otro-industria" style="margin-bottom:14px">
+            <button type="button" class="ficha"><span><span class="titulo-linea">Citas</span><span class="sub">Barberías, salones, veterinarias</span></span></button>
+            <button type="button" class="ficha"><span><span class="titulo-linea">Pedidos</span><span class="sub">Comercios por WhatsApp</span></span></button>
+            <button type="button" class="ficha"><span><span class="titulo-linea">Servicios</span><span class="sub">Talleres y técnicos a domicilio</span></span></button>
+            <button type="button" class="ficha" data-otro><span><span class="titulo-linea">Otro</span><span class="sub">Escríbalo usted</span></span></button>
+          </div>
+          <div class="campo campo-otro" id="e-otro-industria">
+            <label for="e-otro-industria-input">¿A qué se dedica su negocio?</label>
+            <input id="e-otro-industria-input" placeholder="Ejemplo: veterinaria, taller de motos">
+          </div>
+          <p style="font-size:14px;font-weight:600;margin:0 0 10px">¿Qué le gustaría resolver primero?</p>
+          <div class="fichas dos" data-grupo="e-dolores" data-modo="multi" data-extra="e-otro-dolores" style="margin-bottom:14px">
+            <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Los mensajes de noche esperan al día siguiente.</span></button>
+            <button type="button" class="ficha"><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Anotar y cobrar pedidos a mano.</span></button>
+            <button type="button" class="ficha" data-otro><span class="titulo-linea" style="font-weight:400;font-size:13.5px">Otro</span></button>
+          </div>
+          <div class="campo campo-otro" id="e-otro-dolores">
+            <label for="e-otro-dolores-input">¿Qué otra cosa le gustaría resolver?</label>
+            <input id="e-otro-dolores-input" placeholder="Escríbala en una línea">
+          </div>
+          <div class="campo"><label for="e-nombre">Su nombre</label><input id="e-nombre" autocomplete="name" placeholder=""></div>
+          <div class="campo"><label for="e-negocio">Nombre del negocio</label><input id="e-negocio" autocomplete="organization" placeholder=""></div>
+          <div class="campo" style="max-width:280px"><label for="e-whatsapp">WhatsApp</label><input id="e-whatsapp" inputmode="tel" placeholder="+506 8888 8888"></div>
+          <div class="campo" style="max-width:280px">
+            <label for="e-canal">¿Por dónde prefiere que le contactemos?</label>
+            <select id="e-canal">
+              <option value="">Elija una opción</option>
+              <option>WhatsApp</option>
+              <option>Correo</option>
+            </select>
+          </div>
+          <label class="consentimiento">
+            <input type="checkbox">
+            <span>Acepto que SoftRent use estos datos solo para responder mi consulta.</span>
+          </label>
+          <button type="button" class="btn">Enviar y recibir propuesta</button>
+        </div>
+        <aside class="e-vista" aria-label="Vista previa de la propuesta">
+          <p class="rotulo">Su propuesta, armándose en vivo</p>
+          <h3>Diagnóstico para <span data-vista="negocio">su negocio</span></h3>
+          <dl>
+            <div><dt>Industria</dt><dd data-vista="industria" data-vacio="Por elegir">Por elegir</dd></div>
+            <div><dt>Quiere resolver</dt><dd data-vista="dolores" data-vacio="Por elegir">Por elegir</dd></div>
+            <div><dt>Para</dt><dd data-vista="nombre" data-vacio="Su nombre">Su nombre</dd></div>
+            <div><dt>Le escribimos por</dt><dd data-vista="canal" data-vacio="Por elegir">Por elegir</dd></div>
+          </dl>
+          <p class="nota-mock" style="color:#8a8378">Esto es lo que SoftRent recibe. Llene a la izquierda y mírelo cambiar.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opción F -->
+  <section class="opcion" id="opcion-f">
+    <div class="cabecera">
+      <span class="chip">Opción F</span>
+      <h2>Agende su diagnóstico de 15 minutos</h2>
+    </div>
+    <p class="para">
+      Se acabó el formulario: aquí lo que se ofrece es una conversación corta
+      con una persona. El cliente escoge día y hora en un calendario real,
+      confirma con tres datos y la cita queda tomada. La meta no es "enviar un
+      formulario", es "una fecha en la agenda". Toque los días y las horas:
+      el calendario funciona.
+    </p>
+    <div class="balance">
+      <div class="favor">
+        <h3>A favor</h3>
+        <ul>
+          <li>La acción más concreta posible: una fecha y una hora, no un "le escribimos".</li>
+          <li>Los espacios ocupados hacen la cita valiosa de verdad.</li>
+          <li>La meta es medible de una: citas agendadas por semana.</li>
+        </ul>
+      </div>
+      <div class="contra">
+        <h3>En contra</h3>
+        <ul>
+          <li>Exige que alguien atienda esas llamadas: no funciona sin humano detrás.</li>
+          <li>Se pierde el brief escrito; la cualificación pasa a la llamada.</li>
+          <li>Solo encaja con clientes ya interesados; no sirve para curiosos.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="mock">
+      <div class="mock-bar" aria-hidden="true"><span class="titulo">diagnóstico con softrent</span></div>
+      <div class="cuerpo">
+        <ol class="pasos" id="f-pasos">
+          <li class="activo"><b>1</b><span class="nombre">Fecha y hora</span><i></i></li>
+          <li><b>2</b><span class="nombre">Sus datos</span><i></i></li>
+          <li><b>3</b><span class="nombre">Agendado</span></li>
+        </ol>
+
+        <div class="panel visible" data-panel="f1">
+          <h2 style="font-size:1.3rem;margin:0 0 6px">Escoja cuándo le viene bien</h2>
+          <p style="color:var(--ink-muted);font-size:14px;margin:0 0 16px">
+            Una llamada de 15 minutos. Sin compromiso, con una persona real.
+          </p>
+          <div class="f-semana" role="group" aria-label="Días disponibles">
+            <button type="button" class="f-dia" data-dia="Lunes 13"><span>Lun</span><b>13</b></button>
+            <button type="button" class="f-dia" data-dia="Martes 14"><span>Mar</span><b>14</b></button>
+            <button type="button" class="f-dia" data-dia="Miércoles 15"><span>Mié</span><b>15</b></button>
+            <button type="button" class="f-dia" data-dia="Jueves 16"><span>Jue</span><b>16</b></button>
+            <button type="button" class="f-dia" data-dia="Viernes 17"><span>Vie</span><b>17</b></button>
+          </div>
+          <div class="f-horas" id="f-horas" aria-label="Horas disponibles"></div>
+          <div style="display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap">
+            <button type="button" class="btn" id="f-continuar" disabled>Continuar</button>
+            <span id="f-elegido" style="font-size:12.5px;color:var(--ink-subtle)">Seleccione una hora</span>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="f2">
+          <h2 style="font-size:1.3rem;margin:0 0 6px">Confirmemos la cita</h2>
+          <p id="f-resumen-fecha" style="color:var(--ink-muted);font-size:14px;margin:0 0 16px"></p>
+          <div class="campo" style="max-width:380px"><label for="f-nombre">Su nombre</label><input id="f-nombre" autocomplete="name" placeholder=""></div>
+          <div class="campo" style="max-width:380px"><label for="f-whatsapp">WhatsApp</label><input id="f-whatsapp" inputmode="tel" placeholder="+506 8888 8888"></div>
+          <div class="campo" style="max-width:280px">
+            <label for="f-canal">¿Por dónde prefiere que le contactemos?</label>
+            <select id="f-canal">
+              <option value="">Elija una opción</option>
+              <option>WhatsApp</option>
+              <option>Correo</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+            <button type="button" class="btn" id="f-agendar">Agendar</button>
+            <button type="button" class="btn fantasma" data-fir="f1">Atrás</button>
+          </div>
+        </div>
+
+        <div class="panel" data-panel="f3">
+          <h2 style="font-size:1.3rem;margin:0 0 10px">Agendado</h2>
+          <p style="color:var(--ink-muted);font-size:14px;margin:0 0 16px">
+            Listo. Le escribimos antes de la cita para confirmar. Si necesita
+            cambiarla, se reagenda en un mensaje.
+          </p>
+          <div class="resumen">
+            <dl>
+              <div><dt>Cita</dt><dd id="f-final-fecha"></dd></div>
+              <div><dt>Duración</dt><dd>15 minutos</dd></div>
+              <div><dt>Le escribimos por</dt><dd id="f-final-canal"></dd></div>
+            </dl>
+          </div>
+          <button type="button" class="btn fantasma" style="margin-top:16px" data-fir="f1">Agendar otra</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<!-- Recomendación -->
+  <section class="guia" id="guia">
+    <h2>Cuál elegiría y por qué</h2>
+    <p>
+      Su cliente es costarricense, agenda por WhatsApp y hoy llena esto desde el
+      teléfono. Por el dato rescatable y la fricción, <strong>la opción B es la
+      apuesta más segura</strong>: captura el WhatsApp en los primeros segundos
+      y convierte un abandono en una conversación de seguimiento.
+    </p>
+    <p>
+      Si su tráfico viene mayormente de anuncios en WhatsApp o Instagram,
+      <strong>la opción C es el techo más alto y el riesgo más alto</strong>:
+      es la que mejor encarna el producto que venden, pero también la más lenta.
+      Un camino intermedio honesto es <strong>B con el tono de C</strong>:
+      la estructura de dos pasos y los textos conversando.
+    </p>
+    <p>
+      La opción A conviene solo si mide que la mayoría llega desde escritorio
+      con la decisión ya tomada. La E es la más memorable de todas: la
+      propuesta se ve construirse mientras se llena, y por eso es la mejor
+      para anuncios y campañas donde necesita detener el scroll. La F cambia
+      el trato: en vez de un formulario, una cita; es la más rápida de
+      probar con tráfico de pago porque la meta es concreta y medible
+      (citas agendadas por semana), aunque exige que alguien atienda esas
+      llamadas.
+    </p>
+  </section>
+
+</main>
+
+<script>
+/* Selección de fichas: un grupo por pregunta, modo simple o múltiple.
+   La ficha "Otro" revela el campo de texto libre del grupo (data-extra). */
+document.querySelectorAll("[data-grupo]").forEach(function (grupo) {
+  var modo = grupo.getAttribute("data-modo");
+  grupo.querySelectorAll(".ficha").forEach(function (ficha) {
+    ficha.addEventListener("click", function () {
+      if (modo === "single") {
+        grupo.querySelectorAll(".ficha").forEach(function (f) { f.classList.remove("is-on"); });
+        ficha.classList.add("is-on");
+      } else {
+        ficha.classList.toggle("is-on");
+      }
+      refrescarOtro(grupo);
+    });
+  });
+});
+
+/* Muestra u oculta el campo "Otro" según si su ficha está marcada. */
+function refrescarOtro(grupo) {
+  var extraId = grupo.getAttribute("data-extra");
+  if (!extraId) return;
+  var extra = document.getElementById(extraId);
+  if (!extra) return;
+  var otro = grupo.querySelector('.ficha[data-otro].is-on');
+  extra.classList.toggle("visible", !!otro);
+}
+
+/* Opción B: navegación entre pasos. */
+document.querySelectorAll('#opcion-b [data-ir]').forEach(function (boton) {
+  boton.addEventListener("click", function () {
+    irB(boton.getAttribute("data-ir"));
+  });
+});
+function irB(destino) {
+  document.querySelectorAll('#opcion-b .panel').forEach(function (p) {
+    p.classList.toggle("visible", p.getAttribute("data-panel") === destino);
+  });
+  var pasos = document.querySelectorAll('#opcion-b .pasos li');
+  pasos.forEach(function (li, i) {
+    li.classList.toggle("activo", String(i + 1) === destino);
+    li.classList.toggle("hecho", String(i + 1) < destino);
+  });
+}
+
+/* Opción C: conversación por escenas. "Otro" pide texto libre;
+   la preferencia de contacto cambia la pregunta siguiente. */
+var chat = document.getElementById("chat");
+var indice = 0;
+var escenas = [
+  { bot: "¡Buena! ¿Y qué le está quitando tiempo hoy? Toque la que más le suene.",
+    tipo: "chips",
+    opciones: ["Los mensajes de noche esperan al día siguiente", "Anotar y cobrar pedidos a mano", "No sé quiénes dejaron de venir", "Otro"],
+    otroPregunta: "¿Qué otra cosa le gustaría resolver? Escríbala en una línea" },
+  { bot: "Entendido. ¿Cómo se llama y cómo se llama su negocio?",
+    tipo: "campo",
+    etiqueta: "Escriba su nombre y su negocio" },
+  { bot: "Gracias. ¿Por dónde prefiere que le escribamos?",
+    tipo: "chips",
+    opciones: ["WhatsApp", "Correo"],
+    preguntar: {
+      "WhatsApp": "Déjenos su número de WhatsApp (ejemplo +506 8888 8888)",
+      "Correo": "Déjenos su correo"
+    } },
+  { bot: "Listo con esto alcanzamos para el diagnóstico. Si tiene su catálogo a la mano, compártalo cuando le escribamos y adelantamos el montaje. Le escribimos hoy mismo.",
+    tipo: "final" }
+];
+
+function agregarBurbuja(clase, texto) {
+  var b = document.createElement("div");
+  b.className = "burbuja " + clase;
+  b.textContent = texto;
+  chat.appendChild(b);
+}
+
+function pedirTextoLibre(etiqueta, prefijo, alTerminar) {
+  var campo = document.createElement("div");
+  campo.className = "campo";
+  campo.style.maxWidth = "360px";
+  var rotulo = document.createElement("label");
+  rotulo.textContent = etiqueta;
+  var input = document.createElement("input");
+  input.type = "text";
+  campo.appendChild(rotulo);
+  campo.appendChild(input);
+  var btn = document.createElement("button");
+  btn.type = "button";
+  btn.className = "btn";
+  btn.style.alignSelf = "flex-start";
+  btn.textContent = "Enviar";
+  btn.addEventListener("click", function () {
+    var valor = input.value.trim();
+    if (!valor) { input.focus(); return; }
+    agregarBurbuja("cliente", textoDe(prefijo, valor));
+    campo.remove();
+    btn.remove();
+    alTerminar();
+  });
+  chat.appendChild(campo);
+  chat.appendChild(btn);
+  input.focus();
+}
+
+function textoDe(prefijo, valor) {
+  return prefijo ? prefijo + ": " + valor : valor;
+}
+
+function agregarOpciones(escena) {
+  var cont = document.createElement("div");
+  cont.className = "chat-opciones";
+  escena.opciones.forEach(function (texto) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "pastilla";
+    b.textContent = texto;
+    b.addEventListener("click", function () {
+      cont.querySelectorAll(".pastilla").forEach(function (p) { p.classList.toggle("is-on", p === b); });
+      cont.remove();
+      agregarBurbuja("cliente", texto);
+      if (texto === "Otro") {
+        pedirTextoLibre(escena.otroPregunta || "Cuéntenos en una línea", null, avanzar);
+      } else if (escena.preguntar && escena.preguntar[texto]) {
+        pedirTextoLibre(escena.preguntar[texto], texto, avanzar);
+      } else {
+        avanzar();
+      }
+    });
+    cont.appendChild(b);
+  });
+  chat.appendChild(cont);
+}
+
+/* Pasa a la escena siguiente: burbuja del asistente y su pregunta. */
+function avanzar() {
+  var escena = escenas[indice];
+  indice += 1;
+  if (!escena) return;
+  var escribiendo = document.createElement("p");
+  escribiendo.className = "escribiendo";
+  escribiendo.textContent = "Escribiendo...";
+  chat.appendChild(escribiendo);
+  setTimeout(function () {
+    escribiendo.remove();
+    agregarBurbuja("bot", escena.bot);
+    if (escena.tipo === "final") return;
+    if (escena.tipo === "chips") agregarOpciones(escena);
+    else pedirTextoLibre(escena.etiqueta, null, avanzar);
+  }, 450);
+}
+
+/* Primera escena: industrias bajo el saludo ya visible. */
+agregarOpciones({
+  tipo: "chips",
+  opciones: ["Citas", "Pedidos", "Servicios", "Otro"],
+  otroPregunta: "¿A qué se dedica su negocio? Escríbalo en una línea"
+});
+
+/* Opción E: la propuesta se arma en vivo en el panel derecho. */
+function textoPendiente(el, valor) {
+  if (!el) return;
+  if (valor) {
+    el.textContent = valor;
+    el.classList.remove("pend");
+  } else {
+    el.textContent = el.getAttribute("data-vacio") || "Por elegir";
+    el.classList.add("pend");
+  }
+}
+
+function actualizarVista() {
+  var industria = document.querySelector('#opcion-e [data-grupo="e-industria"] .ficha.is-on');
+  var textoIndustria = null;
+  if (industria) {
+    textoIndustria = industria.querySelector(".titulo-linea").textContent.trim();
+    if (industria.hasAttribute("data-otro")) {
+      var otro = document.getElementById("e-otro-industria-input");
+      textoIndustria = (otro && otro.value.trim()) ? otro.value.trim() : "Otro";
+    }
+  }
+  textoPendiente(document.querySelector('[data-vista="industria"]'), textoIndustria);
+
+  var dolores = [];
+  document.querySelectorAll('#opcion-e [data-grupo="e-dolores"] .ficha.is-on').forEach(function (f) {
+    if (f.hasAttribute("data-otro")) {
+      var otroD = document.getElementById("e-otro-dolores-input");
+      dolores.push((otroD && otroD.value.trim()) ? otroD.value.trim() : "Otro");
+    } else {
+      dolores.push(f.textContent.trim());
+    }
+  });
+  textoPendiente(document.querySelector('[data-vista="dolores"]'), dolores.length ? dolores.join("; ") : null);
+
+  var nombre = document.getElementById("e-nombre");
+  textoPendiente(document.querySelector('[data-vista="nombre"]'), nombre.value.trim() || null);
+
+  var negocio = document.getElementById("e-negocio");
+  document.querySelector('[data-vista="negocio"]').textContent = negocio.value.trim() || "su negocio";
+
+  var canal = document.getElementById("e-canal");
+  textoPendiente(document.querySelector('[data-vista="canal"]'), canal.value || null);
+}
+
+["e-nombre", "e-negocio", "e-otro-industria-input", "e-otro-dolores-input"].forEach(function (id) {
+  var el = document.getElementById(id);
+  if (el) el.addEventListener("input", actualizarVista);
+});
+var eCanal = document.getElementById("e-canal");
+if (eCanal) eCanal.addEventListener("change", actualizarVista);
+document.querySelectorAll("#opcion-e [data-grupo]").forEach(function (g) {
+  g.addEventListener("click", actualizarVista);
+});
+actualizarVista();
+
+/* Opción F: calendario del diagnóstico. */
+var fDias = document.querySelectorAll("#opcion-f .f-dia");
+var fHorasCont = document.getElementById("f-horas");
+var fContinuar = document.getElementById("f-continuar");
+var fElegidoTxt = document.getElementById("f-elegido");
+var fSeleccion = { dia: "Martes 14", hora: null };
+var fHoras = ["9:00 a. m.", "9:30 a. m.", "10:00 a. m.", "10:30 a. m.", "11:00 a. m.",
+  "2:00 p. m.", "2:30 p. m.", "3:00 p. m.", "3:30 p. m.", "4:00 p. m."];
+
+function fIndiceDia() {
+  var i = 0;
+  fDias.forEach(function (d, idx) {
+    if (d.classList.contains("is-on")) i = idx;
+  });
+  return i;
+}
+
+function fRenderHoras() {
+  if (!fHorasCont) return;
+  fHorasCont.innerHTML = "";
+  var diaIdx = fIndiceDia();
+  fHoras.forEach(function (hora, i) {
+    var b = document.createElement("button");
+    b.type = "button";
+    b.className = "f-slot";
+    b.textContent = hora;
+    /* Espacios ocupados: hacen que los libres valgan. Patrón fijo por día. */
+    if ((i + diaIdx) % 4 === 1) {
+      b.disabled = true;
+      b.title = "Ocupado";
+    } else {
+      b.addEventListener("click", function () {
+        fHorasCont.querySelectorAll(".f-slot").forEach(function (s) { s.classList.remove("is-on"); });
+        b.classList.add("is-on");
+        fSeleccion.hora = hora;
+        fContinuar.disabled = false;
+        fElegidoTxt.textContent = fSeleccion.dia + " de octubre, " + hora;
+      });
+    }
+    fHorasCont.appendChild(b);
+  });
+}
+
+fDias.forEach(function (d) {
+  d.addEventListener("click", function () {
+    fDias.forEach(function (x) { x.classList.remove("is-on"); });
+    d.classList.add("is-on");
+    fSeleccion.dia = d.getAttribute("data-dia");
+    fSeleccion.hora = null;
+    fContinuar.disabled = true;
+    fElegidoTxt.textContent = "Seleccione una hora";
+    fRenderHoras();
+  });
+});
+
+/* Estado inicial: martes preseleccionado con sus horas visibles. */
+var martes = document.querySelector('#opcion-f .f-dia[data-dia="Martes 14"]');
+if (martes) martes.classList.add("is-on");
+fRenderHoras();
+
+function fIr(destino) {
+  document.querySelectorAll("#opcion-f .panel").forEach(function (p) {
+    p.classList.toggle("visible", p.getAttribute("data-panel") === destino);
+  });
+  document.querySelectorAll("#opcion-f .pasos li").forEach(function (li, i) {
+    li.classList.toggle("activo", "f" + (i + 1) === destino);
+    li.classList.toggle("hecho", i + 1 < Number(destino.slice(1)));
+  });
+}
+
+fContinuar.addEventListener("click", function () {
+  if (!fSeleccion.hora) return;
+  document.getElementById("f-resumen-fecha").textContent =
+    "Su cita: " + fSeleccion.dia + " de octubre, " + fSeleccion.hora + ".";
+  fIr("f2");
+});
+
+var fAgendar = document.getElementById("f-agendar");
+if (fAgendar) {
+  fAgendar.addEventListener("click", function () {
+    document.getElementById("f-final-fecha").textContent =
+      fSeleccion.dia + ", " + fSeleccion.hora;
+    var canal = document.getElementById("f-canal");
+    document.getElementById("f-final-canal").textContent = canal.value || "WhatsApp";
+    fIr("f3");
+  });
+}
+
+document.querySelectorAll('#opcion-f [data-fir]').forEach(function (boton) {
+  boton.addEventListener("click", function () { fIr(boton.getAttribute("data-fir")); });
+});
+
+</script>
+</body>
+</html>

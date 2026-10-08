@@ -445,7 +445,7 @@ export function BookingSimulator() {
 
           {/* Footer Informativo */}
           <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-ink/10 pt-4 text-[11px] text-ink-muted dark:border-white/10">
-            <span>✨ Simulación exacta de la web pública (https://mivps-217-77-11-250.sslip.io/)</span>
+            <span>✨ Simulación exacta de la web pública (https://reservas.softrent.dev/)</span>
             <span>Tecnología SoftRent · Hecho en Costa Rica 🇨🇷</span>
           </div>
 

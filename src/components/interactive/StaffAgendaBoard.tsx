@@ -135,7 +135,7 @@ export function StaffAgendaBoard() {
                 </Badge>
               </div>
               <p className="text-xs text-ink-muted">
-                Ruta activa: <code className="font-mono text-[11px] text-ink">http://localhost:5174/citas/agenda</code>
+                Ruta activa: <code className="font-mono text-[11px] text-ink">https://reservas.softrent.dev/citas/agenda</code>
               </p>
             </div>
           </div>

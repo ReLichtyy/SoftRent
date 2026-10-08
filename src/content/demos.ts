@@ -12,7 +12,7 @@ export const demos: Demo[] = [
     nombre: 'SoftRent Citas',
     industria: 'Barberías, salones, veterinarias, tatuajes y consultorios',
     estado: 'publicada',
-    demoUrl: 'https://mivps-217-77-11-250.sslip.io/',
+    demoUrl: 'https://reservas.softrent.dev/',
     captura: '/ReservasImages/37_dashboard_dueno_agenda_diaria.png',
     recorrido: [
       'Reserve una cita como si fuera cliente',
