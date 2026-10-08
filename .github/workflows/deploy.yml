@@ -55,12 +55,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Call Dokploy webhook
+        env:
+          WEBHOOK_URL: ${{ secrets.DOKPLOY_WEBHOOK_URL }}
         run: |
+          if [ -z "$WEBHOOK_URL" ]; then
+            echo "::error::El secret DOKPLOY_WEBHOOK_URL esta vacio o no existe."
+            echo "Verifica en Settings > Secrets and variables > Actions que el nombre sea exactamente DOKPLOY_WEBHOOK_URL y que el valor sea la URL completa (https://...)."
+            exit 1
+          fi
           response=$(curl -sS -X POST \
             -H "Content-Type: application/json" \
-            -d '{"message": "Deploy ${{ github.sha }} from ${{ github.ref_name }}"}' \
+            -d "{\"message\": \"Deploy ${{ github.sha }} from ${{ github.ref_name }}\"}" \
             -w "\n%{http_code}" \
-            "${{ secrets.DOKPLOY_WEBHOOK_URL }}")
+            "$WEBHOOK_URL")
           code=$(echo "$response" | tail -n1)
           if [ "$code" -lt 200 ] || [ "$code" -ge 300 ]; then
             echo "Dokploy webhook failed with HTTP $code"
