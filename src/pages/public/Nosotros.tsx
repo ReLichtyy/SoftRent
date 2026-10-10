@@ -64,7 +64,7 @@ export function Nosotros() {
           description="Hacemos software para las pymes de servicios de Costa Rica: simple, en su idioma y a la medida."
         />
 
-        <div className="grid gap-5 md:grid-cols-2">
+        <div id="quienes-somos" className="grid scroll-mt-24 gap-5 md:grid-cols-2">
           {blocks.map((block) => (
             <Card key={block.title} className="flex flex-col gap-3">
               <span className="text-accent-text">
@@ -78,7 +78,7 @@ export function Nosotros() {
           ))}
         </div>
 
-        <div>
+        <div id="como-trabajamos" className="scroll-mt-24">
           <h2 className="font-display text-display-sm text-ink">Cómo trabajamos</h2>
           <div className="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {steps.map((step) => (
@@ -93,6 +93,14 @@ export function Nosotros() {
               </Card>
             ))}
           </div>
+        </div>
+
+        {/* Pendiente: presentación real del creador (nombre, foto, historia). */}
+        <div id="creador" className="scroll-mt-24">
+          <h2 className="font-display text-display-sm text-ink">Creador</h2>
+          <p className="mt-4 max-w-xl text-sm leading-relaxed text-ink-muted">
+            Pronto: quién está detrás de SoftRent.
+          </p>
         </div>
 
         <Card className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

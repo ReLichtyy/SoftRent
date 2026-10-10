@@ -1,0 +1,26 @@
+{
+  "generator": "built-in image_gen",
+  "prompt": "Use case: lighting-weather. EDIT TARGET: the attached car cutout. Preserve the exact real car model, paint, camera angle, direction, proportions and realistic details. Add a very subtle photorealistic studio environment: warm near-black background #0f0e0d, matte graphite/taupe floor directly beneath tires, physically convincing soft contact shadows and barely perceptible warm bounced light. Car must visibly rest on the surface. Floor is subdued, fading into almost black on every outer edge; no horizon line, scenery, props, text, bright reflections, fog or dramatic spotlight. Wide 16:9 composition for a small image under website text; entire car clearly visible with modest margin, floor in lower quarter. Keep car dark and elegant with the existing rim lighting. Opaque atmospheric background requested to replace transparency.",
+  "assets": [
+    {
+      "source": "agenda-amg-izquierda-v3.png",
+      "output": "agenda-amg-izquierda-ambiente-v4.png",
+      "webAsset": "agenda-amg-izquierda-ambiente-v4.webp"
+    },
+    {
+      "source": "cobros-dbs-derecha-v3.png",
+      "output": "cobros-dbs-derecha-ambiente-v4.png",
+      "webAsset": "cobros-dbs-derecha-ambiente-v4.webp"
+    },
+    {
+      "source": "operacion-gtr-izquierda-v3.png",
+      "output": "operacion-gtr-izquierda-ambiente-v4.png",
+      "webAsset": "operacion-gtr-izquierda-ambiente-v4.webp"
+    },
+    {
+      "source": "clientes-supra-perfil-v3.png",
+      "output": "clientes-supra-perfil-ambiente-v4.png",
+      "webAsset": "clientes-supra-perfil-ambiente-v4.webp"
+    }
+  ]
+}

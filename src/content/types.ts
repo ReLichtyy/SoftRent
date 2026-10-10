@@ -39,9 +39,19 @@ export type Demo = {
   cta: string
 }
 
-/** A quién le resuelve el problema: al administrador del negocio o a
- * sus clientes. */
-export type SolucionArea = 'administracion' | 'clientes'
+/** Dónde se nota la solución: con los clientes, en la operación del
+ * negocio o al conseguir ventas nuevas. */
+export type SolucionArea = 'clientes' | 'administracion' | 'ventas'
+
+/** Categoría dentro de un área: agrupa soluciones afines. */
+export type SolucionCategoria =
+  | 'agenda'
+  | 'chat-y-web'
+  | 'cobros-y-caja'
+  | 'inventario-y-precios'
+  | 'dia-a-dia'
+  | 'clientes-nuevos'
+  | 'clientes-que-vuelven'
 
 /** Nichos (sistemas) que filtran la página de soluciones. */
 export type SolucionNicho =
@@ -52,17 +62,25 @@ export type SolucionNicho =
   | 'chatbot'
 
 /** "pregunta": el sistema responde con datos. "instruccion": el
- * sistema ejecuta un proceso completo a partir de un mensaje. */
-export type SolucionTipo = 'pregunta' | 'instruccion'
+ * sistema ejecuta un proceso completo a partir de un mensaje.
+ * "automatico": un evento (un correo, un formulario, una factura
+ * vencida) dispara el proceso sin que nadie escriba. */
+export type SolucionTipo = 'pregunta' | 'instruccion' | 'automatico'
 
 export type Solucion = {
   id: string
   area: SolucionArea
+  categoria: SolucionCategoria
   tipo: SolucionTipo
   /** Sistemas donde aplica; alimenta el filtro por nicho. */
   nichos: SolucionNicho[]
+  /** Para qué negocio aplica, p. ej. "Para negocios con citas". */
+  aplica: string
   /** Frase de dolor del cliente, tal como la diría. */
   dolor: string
+  /** Escena representativa: quién, cuándo y qué pasa, en una o dos
+   * oraciones. Personas y negocios ilustrativos. */
+  ejemplo: string
   /** Pasos que hoy exige un sistema moderno sin IA (2 a 3, cortos). */
   friccion: string[]
   /** Uno o más mensajes al sistema con su contestación y, si aplica,
@@ -70,6 +88,9 @@ export type Solucion = {
   conversacion: SolucionIntercambio[]
   /** Lo que el sistema deja hecho al final. */
   accion: string
+  /** Qué cuida el sistema para no equivocarse (revisión humana,
+   * límites, horarios). */
+  resguardo?: string
   /** Qué hace SoftRent, en una oración. */
   respuesta: string
   /** Beneficio en una línea, sin cifras inventadas. */
@@ -164,6 +185,17 @@ export type SolucionPieza =
       filas: { producto: string; cantidad: number; monto: string }[]
       total: string
       nota?: string
+    }
+  | {
+      /** Mensajes entrantes ordenados por el sistema. */
+      tipo: 'bandeja'
+      filas: { de: string; asunto: string; etiqueta: string }[]
+      nota?: string
+    }
+  | {
+      /** Lo que pasa en el tiempo: cuándo y qué hizo el sistema. */
+      tipo: 'linea'
+      filas: { momento: string; texto: string; alerta?: boolean }[]
     }
   | {
       /** Cambios aplicados: antes → después. */

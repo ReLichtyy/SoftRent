@@ -39,3 +39,17 @@ La base 04 está integrada después de `RubrosCarousel` en el main mediante `Hom
 La integración se comprobó en navegador a 320, 390, 768, 1024 y 1440 px: sin desbordamiento en el contenido nuevo, seis enlaces que desplazan a su solución, filtros por industria, CTA hacia Comenzar y Demos, y una sola instancia del footer. `ScrollRestoration` gestiona los destinos con fragmento y el desplazamiento al cambiar de página. Build, lint y revisiones React/TypeScript completos.
 
 Build y lint del sitio; revisión React y TypeScript; pruebas en navegador de las tres pestañas, consulta inicial, cita creada y reflejada en agenda, navegación por teclado, movimiento reducido y anchos de 320 y 390 px. La entrada de `model/` se sirve con Vite y no se incluye en el build de producción; la página principal monta los componentes directamente, sin iframe.
+
+## Soluciones (octubre 2026)
+
+- `soluciones-canvas.html`: canvas con dos iteraciones de lógica para `/soluciones` (01 Escenas, 02 Historias en filas), la tabla de decisión y el catálogo final. Se implementó la 02.
+- La página usa el lenguaje de la base 04 (`home-business.css`) más `src/styles/soluciones.css`, tuteo y una escena humana por solución (`ejemplo` en `src/content/soluciones.ts`).
+- Se sumaron nueve soluciones de `automationz.md` (correo, cobros, contenido, prospección, agente web, respuesta en menos de un minuto, contactos dormidos, voz y motor de ventas) con su resguardo, y un tercer tipo: `automatico` («Pasa solo»).
+- `legacy-soluciones/`: componentes de la versión anterior (escenas con GSAP), fuera del build.
+
+### Ajuste posterior
+
+- Cada solución es ahora título + la escena que la explica → flecha → artefacto (`SolucionFila`, `FlechaSolucion`, `ArtefactoSolucion`, recuperados de la versión anterior y adaptados al tuteo, al tipo «Pasa solo» y a las piezas `bandeja` y `linea`). Se quitaron «Cómo funciona», «Lo quiero en mi negocio», las etiquetas «Para negocios…», los rótulos en mayúsculas y la sección «Tres formas de que pase».
+- Hero con la imagen de identidad: `src/assets/soluciones/nave.webp` (original en `assets/soluciones-nave.png`, generada con IA).
+- La barra superior abre menús a pantalla completa para Soluciones y Nosotros (`src/components/nav/NavMegaMenu.tsx`).
+- `legacy-soluciones/MuestraSolucion.tsx`: la muestra compacta de la iteración 02, fuera del build.

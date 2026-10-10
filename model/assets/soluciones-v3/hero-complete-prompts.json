@@ -1,0 +1,13 @@
+{
+  "generator": "built-in image_gen",
+  "jobs": [
+    {
+      "name": "hero-bmw-completo-v5",
+      "prompt": "Edit the attached image as reference. Produce ONE standalone photorealistic car scene for one side of a website hero. Landscape 16:9. Reconstruct the missing rear of the selected car so the ENTIRE vehicle including both bumpers, rear wheel, roof and all contours is INSIDE frame with 10 percent empty margin left and right. Car occupies 80 percent canvas width and vertical region 28 to 78 percent. Preserve model identity, paint and original camera angle. Same restrained champagne rim lighting, dark studio near-black #0f0e0d background, subtle matte taupe floor with contact shadows. No second car, text or objects. Floor and atmosphere fade almost to black at ALL outer boundaries. Realistic aggressive luxury automotive photography, no cropping. Selected vehicle: ONLY the smoky champagne BMW M4 G82 from the LEFT of reference. Front three-quarter view, nose pointing RIGHT, complete rear on LEFT. Reconstruct authentic M4 rear quarter and rear wheel."
+    },
+    {
+      "name": "hero-aston-completo-v5",
+      "prompt": "Edit the attached image as reference. Produce ONE standalone photorealistic car scene for one side of a website hero. Landscape 16:9. Reconstruct the missing rear of the selected car so the ENTIRE vehicle including both bumpers, rear wheel, roof and all contours is INSIDE frame with 10 percent empty margin left and right. Car occupies 80 percent canvas width and vertical region 28 to 78 percent. Preserve model identity, paint and original camera angle. Same restrained champagne rim lighting, dark studio near-black #0f0e0d background, subtle matte taupe floor with contact shadows. No second car, text or objects. Floor and atmosphere fade almost to black at ALL outer boundaries. Realistic aggressive luxury automotive photography, no cropping. Selected vehicle: ONLY the dark olive Aston Martin DBS from the RIGHT of reference. Front three-quarter view, nose pointing LEFT, complete rear on RIGHT. Reconstruct authentic DBS rear quarter and rear wheel."
+    }
+  ]
+}

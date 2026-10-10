@@ -3,24 +3,19 @@ import {
   useId,
   useRef,
   useState,
-  type CSSProperties,
   type KeyboardEvent,
 } from 'react'
 import {
   ArrowClockwise,
-  ArrowRight,
   ArrowSquareOut,
   ChatsCircle,
   Check,
   Desktop,
   DeviceMobile,
   LockSimple,
-  ShieldCheck,
   Sparkle,
 } from '@phosphor-icons/react'
-import { Badge } from '../ui/Badge'
 import { Button } from '../ui/Button'
-import { LinkButton } from '../ui/LinkButton'
 import { demos } from '../../content/demos'
 import type { DemoId } from '../../content/types'
 import { demoIcon } from '../../lib/demo-icons'
@@ -93,12 +88,10 @@ export function DemoEnVivo({
   const [recargas, setRecargas] = useState(0)
   const [visible, setVisible] = useState(false)
   const [hechos, setHechos] = useState<number[]>([])
-  const [infoVista, setInfoVista] = useState(false)
   const [chat, setChat] = useState(false)
   /* Pestañas ya abiertas: las demás llevan un punto que invita a
    * tocarlas, y el punto se va en cuanto se muestran. */
   const [vistas, setVistas] = useState<Pestana[]>(() => [demoId])
-  const infoRef = useRef<HTMLDivElement>(null)
 
   const [rootRef, ancho] = useAncho<HTMLElement>(1152)
   const [stageRef, anchoStage] = useAncho<HTMLDivElement>(1088)
@@ -133,24 +126,6 @@ export function DemoEnVivo({
     io.observe(el)
     return () => io.disconnect()
   }, [stageRef])
-
-  /* El tachado de los dolores arranca cuando la información entra en
-   * vista, no al montar la página. */
-  useEffect(() => {
-    const el = infoRef.current
-    if (!el) return
-    const io = new IntersectionObserver(
-      ([e]) => {
-        if (e.isIntersecting) {
-          setInfoVista(true)
-          io.disconnect()
-        }
-      },
-      { threshold: 0.35 },
-    )
-    io.observe(el)
-    return () => io.disconnect()
-  }, [])
 
   useEffect(() => {
     if (visible && enVivo && !cargada) armarTimer()
@@ -564,123 +539,6 @@ export function DemoEnVivo({
           </div>
         </div>
 
-        {/* Información del sistema */}
-        <div
-          ref={infoRef}
-          data-visto={infoVista}
-          className={cn(
-            'mt-10 grid border-t border-border pt-8',
-            angosto
-              ? 'grid-cols-1 gap-7'
-              : 'grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)_minmax(0,1fr)] gap-10',
-          )}
-        >
-          <div>
-            <Badge tone={enVivo ? 'success' : 'neutral'} dot>
-              {enVivo ? 'En vivo' : 'Próximamente'}
-            </Badge>
-            <h2 className="mt-3 font-display text-display-sm text-ink">
-              {demo.nombre}
-            </h2>
-            {/* Antes → ahora: los dolores del cliente, en sus palabras,
-             * se tachan con la señal roja y el beneficio responde. */}
-            <h3 className="sr-only">Antes</h3>
-            <ul key={demo.id} className="mt-4 flex flex-col gap-1.5">
-              {demo.resuelve.map((dolor, i) => (
-                <li
-                  key={dolor}
-                  className="font-display text-lg italic leading-snug text-ink-muted"
-                >
-                  <span
-                    className="sr-tachado"
-                    style={{ '--sr-delay': `${200 + i * 260}ms` } as CSSProperties}
-                  >
-                    “{dolor}”
-                  </span>
-                </li>
-              ))}
-            </ul>
-            <h3 className="sr-only">Con {demo.nombre}</h3>
-            <p className="mt-3 flex gap-2 text-lg text-pretty text-ink">
-              <ArrowRight
-                className="mt-[5px] h-[18px] w-[18px] flex-none text-accent-text"
-                aria-hidden="true"
-              />
-              {demo.impacto}
-            </p>
-            <p className="mt-2 text-sm leading-relaxed text-pretty text-ink-muted">
-              {demo.resumen}
-            </p>
-            <div
-              className={cn(
-                'mt-6 flex flex-wrap gap-3',
-                angosto ? 'flex-col' : 'flex-row',
-              )}
-            >
-              {enVivo && demo.demoUrl ? (
-                <>
-                  <Button
-                    href={demo.demoUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    size="lg"
-                  >
-                    Abrir en pantalla completa
-                    <ArrowSquareOut className="h-[18px] w-[18px]" aria-hidden="true" />
-                  </Button>
-                  <LinkButton to={demo.cta} variant="secondary" size="lg">
-                    Quiero este sistema
-                  </LinkButton>
-                </>
-              ) : (
-                <LinkButton to={demo.cta} size="lg">
-                  Quiero este sistema
-                  <ArrowRight className="h-[18px] w-[18px]" aria-hidden="true" />
-                </LinkButton>
-              )}
-            </div>
-            {enVivo && (
-              <p className="mt-3 flex items-center gap-1.5 text-xs text-ink-muted">
-                <ShieldCheck className="h-4 w-4 flex-none text-success" aria-hidden="true" />
-                Sin registro ni tarjeta: la demo es la prueba.
-              </p>
-            )}
-          </div>
-
-          <div className="flex flex-col gap-6">
-            <div>
-              <h3 className="text-heading-sm text-ink">Para quién</h3>
-              <p className="mt-1.5 text-[15px] leading-normal text-ink-muted">
-                {demo.industria}
-              </p>
-            </div>
-            <div>
-              <h3 className="text-heading-sm text-ink">Qué hace</h3>
-              <ul className="mt-2.5 flex flex-col gap-2">
-                {demo.funciones.slice(0, 3).map((f) => (
-                  <li key={f} className="flex gap-2.5 text-[15px] leading-normal text-ink">
-                    <Check className="mt-[3px] h-4 w-4 flex-none text-success" aria-hidden="true" />
-                    {f}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-heading-sm text-ink">
-              La inteligencia que lleva dentro
-            </h3>
-            <ul className="mt-2.5 flex flex-col gap-2">
-              {demo.iaIncluida.map((f) => (
-                <li key={f} className="flex gap-2.5 text-[15px] leading-normal text-ink-muted">
-                  <Sparkle className="mt-[3px] h-4 w-4 flex-none text-info" aria-hidden="true" />
-                  {f}
-                </li>
-              ))}
-            </ul>
-          </div>
-        </div>
       </div>
 
       <div

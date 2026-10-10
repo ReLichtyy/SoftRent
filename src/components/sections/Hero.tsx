@@ -45,7 +45,7 @@ export default function Hero() {
     <section className="hero-showcase" data-theme="dark"
       data-motion={paused || reducedMotion || !visible ? 'paused' : 'running'} aria-labelledby="home-hero-title">
       <div className="hs-intro">
-        <h1 id="home-hero-title">Tu negocio, potenciado por IA.<br /><span>Pregunta. Agenda. Haz que avance.</span></h1>
+        <h1 id="home-hero-title">Tu negocio, potenciado por <span className="hs-title-ai">IA</span>.<br /><span>Pregunta. Agenda. Haz que avance.</span></h1>
         <ul className="hs-use-cases" aria-label="Qué puedes hacer">
           <li>Pregúntale a tu negocio</li>
           <li>Automatiza tareas</li>
@@ -67,7 +67,6 @@ export default function Hero() {
               <div className="hs-calendar">{['L', 'M', 'M', 'J', 'V', '12', '13', '14', '15', '16'].map((day, i) => <span key={i} className={day === '14' ? 'is-selected' : undefined}>{day}</span>)}</div>
               <div className="hs-appointment"><span className="hs-dot" /><div>Consulta inicial<small>09:00 · Confirmada</small></div></div>
               <div className="hs-appointment"><span className="hs-dot hs-muted" /><div>Seguimiento<small>10:30 · Por confirmar</small></div></div>
-              <p className="hs-context-foot">Agenda de ejemplo</p>
             </aside>
             <div className="hs-live-demo">
               <HeroLiveDemo showcase />
@@ -77,7 +76,6 @@ export default function Hero() {
               <div className="hs-context-title"><Check size={15} />Todo conectado</div>
               {[['Conversación atendida', 'Asistente de WhatsApp'], ['Cita confirmada', 'Agenda sincronizada'], ['Recordatorio preparado', 'Seguimiento automático']].map(([title, subtitle]) =>
                 <div className="hs-activity-row" key={title}><span className="hs-dot" /><div>{title}<small>{subtitle}</small></div></div>)}
-              <p className="hs-context-foot">Actividad de ejemplo</p>
             </aside>
             <div className="hs-dock">
               <span><span className="hs-dot" />Tu negocio, conectado</span>

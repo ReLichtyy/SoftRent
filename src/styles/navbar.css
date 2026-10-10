@@ -104,7 +104,8 @@
     font-weight: 500;
   }
   .nav-beam-link:focus-visible,
-  .nav-beam-link:active {
+  .nav-beam-link:active,
+  .nav-beam-link[aria-expanded="true"] {
     color: var(--ink);
   }
   .nav-beam-link:focus-visible::before,
@@ -147,6 +148,62 @@
       animation: none;
       opacity: 1;
     }
+  }
+
+  /* ---------- Aviso (Soluciones) ---------- */
+  /* Punto que parpadea sobre la esquina del texto. */
+  .nav-dot {
+    align-self: flex-start;
+    margin-top: 14px;
+    margin-left: 4px;
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--accent);
+    animation: nav-dot-blink 1.4s ease-in-out infinite;
+  }
+  .nav-dot-inline {
+    align-self: center;
+    margin: 0;
+  }
+
+  /* ---------- Menú a pantalla completa ---------- */
+  /* Cubre la vista bajo la barra; la página queda desenfocada detrás. */
+  .nav-mega {
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    -webkit-backdrop-filter: blur(22px) saturate(140%);
+    backdrop-filter: blur(22px) saturate(140%);
+  }
+  @media (prefers-reduced-transparency: reduce) {
+    .nav-mega {
+      background: var(--bg);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+  }
+  .nav-mega-link {
+    transition: border-color var(--duration-fast) var(--ease-out);
+  }
+  /* Número sigiloso: apenas visible hasta que la fila recibe el cursor. */
+  .nav-mega-num {
+    flex-shrink: 0;
+    width: 2ch;
+    font-size: 11px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-subtle);
+    opacity: 0.6;
+    transition:
+      color var(--duration-fast) var(--ease-out),
+      opacity var(--duration-fast) var(--ease-out);
+  }
+  .nav-mega-link:hover,
+  .nav-mega-link:focus-visible {
+    border-color: var(--border-strong);
+  }
+  .nav-mega-link:hover .nav-mega-num,
+  .nav-mega-link:focus-visible .nav-mega-num {
+    color: var(--accent-text);
+    opacity: 1;
   }
 
   /* ---------- Comenzar: atracción ---------- */
@@ -209,6 +266,7 @@
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .nav-dot,
     .nav-cta::before,
     .nav-cta-halo,
     .nav-beam-link[data-foco]::before,
@@ -221,6 +279,16 @@
     .nav-beam-link[data-foco]::after {
       opacity: 0.8;
     }
+  }
+}
+
+@keyframes nav-dot-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.2;
   }
 }
 

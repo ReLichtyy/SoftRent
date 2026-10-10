@@ -1,17 +1,18 @@
-import { ChatCircleText } from '@phosphor-icons/react'
+import { ChatCircleText, Lightning } from '@phosphor-icons/react'
 
-/** Flecha problema → solución con la etiqueta del mensaje
- * ("Una pregunta" o "Una instrucción").
+/** Flecha escena → artefacto con la etiqueta de cómo ocurre
+ * ("Le preguntas", "Se lo pides" o "Pasa solo").
  * Horizontal en escritorio y vertical en móvil; los trazos llevan
  * [data-trazo] y pathLength=1 para que la escena los dibuje. */
-export function FlechaSolucion({ etiqueta }: { etiqueta: string }) {
+export function FlechaSolucion({ etiqueta, solo = false }: { etiqueta: string; solo?: boolean }) {
+  const Icono = solo ? Lightning : ChatCircleText
   return (
     <div
       aria-hidden="true"
       className="flex flex-col items-center justify-center gap-2 text-accent"
     >
       <span className="flex items-center gap-1.5 whitespace-nowrap rounded-full border border-accent/30 bg-accent-soft px-3 py-1 text-xs font-medium text-accent-text">
-        <ChatCircleText className="h-3.5 w-3.5" aria-hidden="true" />
+        <Icono className="h-3.5 w-3.5" weight={solo ? 'fill' : 'regular'} aria-hidden="true" />
         {etiqueta}
       </span>
 

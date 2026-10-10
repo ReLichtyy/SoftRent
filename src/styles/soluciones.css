@@ -1,0 +1,413 @@
+/* Soluciones: extends the approved base 04 (home-business.css) with the
+ * pieces only this page needs. Selectors start with
+ * `.home-business.sol` so they win over the base without !important. */
+
+.home-business.sol ::selection {
+  background: #a41d29;
+  color: #fff;
+}
+.home-business.sol h1 {
+  margin: 0;
+  font-weight: 580;
+  /* Cabe entre los dos autos de la foto. */
+  max-width: 11em;
+  font-size: clamp(38px, 4.2vw, 56px);
+  letter-spacing: -0.04em;
+  line-height: 1.04;
+  text-wrap: balance;
+}
+
+/* The car scene follows the copy and demo button in normal flow. */
+.home-business.sol .sol-hero {
+  position: relative;
+  isolation: isolate;
+  background: #0f0e0d;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+}
+.home-business.sol .sol-hero-cars {
+  position: relative;
+  flex: none;
+  width: 100%;
+  height: clamp(220px, 25.9vw, 439px);
+  overflow: hidden;
+}
+.home-business.sol .sol-hero-image {
+  position: absolute;
+  bottom: 0;
+  width: min(46%, 780px);
+  height: auto;
+  opacity: 0.78;
+  mix-blend-mode: lighten;
+  pointer-events: none;
+}
+.home-business.sol .sol-hero-image-left {
+  left: 0;
+}
+.home-business.sol .sol-hero-image-right {
+  right: 0;
+}
+
+/* Feather every edge; intersecting masks keep corners soft as well. */
+.home-business.sol .sol-hero-image,
+.home-business.sol .sol-silueta,
+.home-business.sol .sol-row-car {
+  --sol-edge-fade:
+    linear-gradient(to right, transparent, #00000020 2%, #00000080 6%, #000000e6 11%, #000 16%, #000 84%, #000000e6 89%, #00000080 94%, #00000020 98%, transparent),
+    linear-gradient(to bottom, transparent, #00000020 4%, #00000080 10%, #000000e6 17%, #000 24%, #000 66%, #000000e6 75%, #00000080 86%, #00000020 95%, transparent);
+  -webkit-mask-image: var(--sol-edge-fade);
+  -webkit-mask-composite: source-in;
+  mask-image: var(--sol-edge-fade);
+  mask-composite: intersect;
+  mask-repeat: no-repeat;
+}
+.home-business.sol .sol-hero-copy {
+  position: relative;
+  align-self: flex-start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding-top: 64px;
+  padding-bottom: 0;
+  text-align: center;
+}
+.home-business.sol .sol-hero-copy p {
+  margin-top: 22px;
+  max-width: 400px;
+  font-size: 17px;
+  color: #cfc5ba;
+}
+.home-business.sol .sol-hero-copy .hb-actions {
+  justify-content: center;
+  margin-top: 34px;
+}
+
+/* Business filter, sticky under the floating nav (72px). */
+.home-business.sol .sol-filter {
+  position: sticky;
+  top: 72px;
+  z-index: 20;
+  background: #0f0e0d;
+  border-bottom: 1px solid var(--hb-line);
+}
+/* Pegada: tapa también la franja de la barra superior, para que el
+ * contenido no asome cortado entre las dos barras. */
+.home-business.sol .sol-filter[data-pegado]::before {
+  content: '';
+  position: absolute;
+  inset: -72px 0 100%;
+  background: #0f0e0d;
+}
+.home-business.sol .sol-filter-row {
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+.home-business.sol .sol-chips {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.home-business.sol .sol-chips::-webkit-scrollbar {
+  display: none;
+}
+.home-business.sol .sol-chip {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border: 1px solid var(--hb-line);
+  border-radius: 100px;
+  background: #1c1916;
+  color: #cfc5ba;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 550;
+  cursor: pointer;
+}
+.home-business.sol .sol-chip:hover {
+  border-color: #a8917d;
+  color: #f1eeea;
+}
+.home-business.sol .sol-chip[aria-pressed='true'] {
+  background: var(--hb-red);
+  border-color: var(--hb-red);
+  color: #fff;
+}
+.home-business.sol .sol-chip:focus-visible {
+  outline: 2px solid #ff5f66;
+  outline-offset: 3px;
+}
+.home-business.sol .sol-chip-count {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: #a99d90;
+}
+.home-business.sol .sol-chip[aria-pressed='true'] .sol-chip-count {
+  color: #ffffffcc;
+}
+
+/* Low-key floor and car on the left; the closing copy stays on the right. */
+.home-business.sol .sol-silueta {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: min(72%, 1100px);
+  height: 100%;
+  object-fit: contain;
+  object-position: 50% 50%;
+  pointer-events: none;
+  opacity: 0.78;
+  mix-blend-mode: lighten;
+}
+
+/* Area chapters: one continuous black, no background switch or rule. */
+.home-business.sol .sol-area {
+  padding: 92px 0 40px;
+}
+.home-business.sol .sol-area-title {
+  margin-bottom: 28px;
+}
+
+/* Mobile reading order puts cars after the panel; desktop restores the left column. */
+.home-business.sol .sol-row-car {
+  display: block;
+  grid-column: 1;
+  justify-self: center;
+  width: min(100%, 470px);
+  height: auto;
+  margin-top: 0;
+  pointer-events: none;
+  opacity: 0.76;
+  mix-blend-mode: lighten;
+}
+
+/* Closing band: car on the left, copy on the right. */
+.home-business.sol .sol-band {
+  position: relative;
+  display: flex;
+  align-items: center;
+  min-height: clamp(340px, 40vw, 520px);
+}
+.home-business.sol .sol-band .hb-wrap {
+  position: relative;
+  width: 100%;
+}
+.home-business.sol .sol-band-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  width: min(420px, 100%);
+  margin-left: auto;
+}
+.home-business.sol .sol-band-copy > p {
+  font-size: 15px;
+  color: var(--hb-muted);
+}
+.home-business.sol .sol-closing {
+  isolation: isolate;
+  background: #0f0e0d;
+  min-height: clamp(420px, 46vw, 600px);
+  padding-bottom: 40px;
+}
+.home-business.sol .sol-closing h2 {
+  font-size: clamp(36px, 4.7vw, 62px);
+}
+.home-business.sol .sol-closing .hb-actions {
+  margin-top: 6px;
+}
+
+/* Catalog anchor: lands below the nav and the sticky filter. */
+.home-business.sol .sol-catalog {
+  scroll-margin-top: 72px;
+}
+
+/* Category inside an area: number + name, the same pair the nav shows. */
+.home-business.sol .sol-cat {
+  border-top: 1px solid var(--hb-line);
+  scroll-margin-top: 130px;
+}
+.home-business.sol .sol-cat-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  padding: 36px 0 28px;
+}
+.home-business.sol .sol-cat-head h3 {
+  font-size: clamp(22px, 2.2vw, 28px);
+  letter-spacing: -0.025em;
+}
+.home-business.sol .sol-cat-num {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  color: #c79a7e;
+}
+
+/* A solution: title + scene → arrow → artifact. */
+.home-business.sol .sol-row {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) auto minmax(0, 6fr);
+  align-items: start;
+  gap: 28px;
+  padding: 64px 0;
+  border-top: 1px solid var(--hb-line);
+  scroll-margin-top: 130px;
+}
+.home-business.sol .sol-row > * {
+  min-width: 0;
+}
+.home-business.sol .sol-row-copy {
+  padding-top: 8px;
+}
+.home-business.sol .sol-row-copy h4 {
+  margin: 0;
+  font-weight: 550;
+  font-size: clamp(24px, 2.4vw, 32px);
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-wrap: balance;
+}
+.home-business.sol .sol-row-copy p {
+  margin-top: 18px;
+  max-width: 42ch;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--hb-muted);
+}
+.home-business.sol .sol-row-arrow {
+  padding-top: 76px;
+}
+/* El artefacto usa las utilidades del sitio; el main no debe pisarlas. */
+.home-business.sol .sol-row-art {
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (min-width: 1024px) {
+  .home-business.sol .sol-row:has(> .sol-row-car) {
+    grid-template-areas:
+      'copy arrow art'
+      'car arrow art';
+    grid-template-rows: min-content 1fr;
+    row-gap: 12px;
+  }
+  .home-business.sol .sol-row:has(> .sol-row-car) .sol-row-copy {
+    grid-area: copy;
+  }
+  .home-business.sol .sol-row:has(> .sol-row-car) .sol-row-arrow {
+    grid-area: arrow;
+  }
+  .home-business.sol .sol-row:has(> .sol-row-car) .sol-row-art {
+    grid-area: art;
+  }
+  .home-business.sol .sol-row-car {
+    grid-area: car;
+    justify-self: start;
+  }
+}
+
+@media (max-width: 1023px) {
+  .home-business.sol .sol-row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+    padding: 48px 0;
+  }
+  .home-business.sol .sol-row-copy {
+    padding-top: 0;
+  }
+  .home-business.sol .sol-row-car {
+    grid-column: 1;
+    width: min(100%, 420px);
+  }
+  .home-business.sol .sol-row-arrow {
+    padding-top: 0;
+  }
+}
+@media (max-width: 700px) {
+  /* Keep the fronts large; crop the rear quarters at the viewport edges. */
+  .home-business.sol .sol-hero-cars {
+    height: clamp(220px, 50.625vw, 315px);
+  }
+  .home-business.sol .sol-hero-image {
+    width: clamp(360px, 90vw, 560px);
+  }
+  .home-business.sol .sol-hero-image-left {
+    left: auto;
+    right: calc(50% - 24px);
+  }
+  .home-business.sol .sol-hero-image-right {
+    right: auto;
+    left: calc(50% - 24px);
+  }
+  .home-business.sol .sol-hero-copy {
+    padding-top: 48px;
+    padding-bottom: 0;
+  }
+  .home-business.sol h1 {
+    font-size: 32px;
+    line-height: 1.07;
+  }
+  .home-business.sol .sol-hero-copy p {
+    font-size: 14px;
+  }
+  .home-business.sol .sol-cat-head h3 {
+    font-size: 20px;
+  }
+  .home-business.sol .sol-row-copy h4 {
+    font-size: 21px;
+    line-height: 1.2;
+  }
+  .home-business.sol .sol-row-copy p {
+    margin-top: 14px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .home-business.sol .sol-filter-row {
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .home-business.sol .sol-chips {
+    margin: 0 -21px;
+    padding: 0 21px;
+  }
+  .home-business.sol .sol-row {
+    padding: 40px 0;
+  }
+  /* Closing car gets its own space below the mobile call to action. */
+  .home-business.sol .sol-band .sol-silueta {
+    inset: auto 0 20px;
+    width: 100%;
+    height: 220px;
+    object-position: 50% 100%;
+  }
+  .home-business.sol .sol-band {
+    min-height: 340px;
+  }
+  .home-business.sol .sol-closing {
+    align-items: flex-start;
+    min-height: 580px;
+    padding-top: 48px;
+    padding-bottom: 240px;
+  }
+  .home-business.sol .sol-band-copy {
+    margin-left: 0;
+  }
+  .home-business.sol .sol-area {
+    padding: 56px 0 24px;
+  }
+}
+@media (max-width: 360px) {
+  .home-business.sol h1 {
+    font-size: 30px;
+  }
+  .home-business.sol .sol-chips {
+    margin: 0 -16px;
+    padding: 0 16px;
+  }
+}

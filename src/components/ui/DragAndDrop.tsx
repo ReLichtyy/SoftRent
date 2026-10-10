@@ -27,6 +27,12 @@ export type DragAndDropProps = {
   maxArchivos?: number
   /** Tamaño máximo por archivo, en bytes. @default 10485760 (10 MB) */
   maxBytes?: number
+  /** Versión compacta: solo el botón y la lista, sin zona de arrastre.
+   * @default false */
+  compacto?: boolean
+  /** Texto del botón en la versión compacta.
+   * @default "Agregar archivo" */
+  textoBoton?: string
   className?: string
 }
 
@@ -65,6 +71,8 @@ export function DragAndDrop({
   onQuitar,
   maxArchivos = 5,
   maxBytes = 10 * 1024 * 1024,
+  compacto = false,
+  textoBoton = 'Agregar archivo',
   className,
 }: DragAndDropProps) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -121,6 +129,29 @@ export function DragAndDrop({
 
   return (
     <div className={cn('flex flex-col gap-3', className)}>
+      {compacto ? (
+        <div>
+          <button
+            type="button"
+            onClick={() => inputRef.current?.click()}
+            disabled={restantes <= 0}
+            className="inline-flex h-10 items-center gap-2 rounded-sm border border-border-strong bg-surface px-4 text-sm font-medium text-ink outline-none transition-[color,background-color,border-color,transform] duration-200 ease-[var(--ease-out)] hover:bg-surface-sunken active:scale-[0.97] focus-visible:ring-2 focus-visible:ring-focus focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--bg)] disabled:pointer-events-none disabled:opacity-45"
+          >
+            <UploadSimple className="size-4" aria-hidden="true" weight="bold" />
+            {textoBoton}
+          </button>
+          <input
+            ref={inputRef}
+            id={inputId}
+            type="file"
+            accept={ACEPTADOS}
+            multiple
+            onChange={alElegir}
+            className="sr-only"
+            aria-label="Subir archivos de contexto del negocio"
+          />
+        </div>
+      ) : (
       <div
         onDragOver={(e) => {
           e.preventDefault()
@@ -170,6 +201,7 @@ export function DragAndDrop({
           aria-label="Subir archivos de contexto del negocio"
         />
       </div>
+      )}
 
       {error && (
         <p id={errorId} role="alert" className="text-xs text-danger">

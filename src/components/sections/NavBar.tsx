@@ -1,9 +1,12 @@
 import { useEffect, useId, useRef, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
-import { List, X } from '@phosphor-icons/react'
+import { CaretDown, List, X } from '@phosphor-icons/react'
 import { Logo } from '../brand/Logo'
 import { Container } from '../layout/Container'
 import { cn } from '../../lib/cn'
+import { soluciones, solucionesPorArea } from '../../content/soluciones'
+import { NosotrosMenu } from '../nav/NosotrosMenu'
+import { SolucionesMenu } from '../nav/SolucionesMenu'
 import { LinkButton } from '../ui/LinkButton'
 
 /* `foco`: enlace con la lámpara siempre encendida. Demos y Precios
@@ -22,7 +25,10 @@ const links = [
  * footer. */
 export default function NavBar() {
   const [open, setOpen] = useState(false)
+  /* Lista de soluciones dentro del menú móvil. */
+  const [lista, setLista] = useState(false)
   const menuId = useId()
+  const listaId = useId()
   const pillRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
   const sheetRef = useRef<HTMLDivElement>(null)
@@ -95,16 +101,22 @@ export default function NavBar() {
               aria-label="Principal"
               className="hidden h-full items-center gap-1 text-sm md:flex"
             >
-              {links.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  data-foco={link.foco || undefined}
-                  className="nav-beam-link"
-                >
-                  {link.label}
-                </NavLink>
-              ))}
+              {links.map((link) =>
+                link.to === '/soluciones' ? (
+                  <SolucionesMenu key={link.to} />
+                ) : link.to === '/nosotros' ? (
+                  <NosotrosMenu key={link.to} />
+                ) : (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    data-foco={link.foco || undefined}
+                    className="nav-beam-link"
+                  >
+                    {link.label}
+                  </NavLink>
+                ),
+              )}
             </nav>
           </div>
 
@@ -114,7 +126,7 @@ export default function NavBar() {
             ref={sheetRef}
             inert={!open}
             className={cn(
-              'nav-glass nav-glass-strong absolute top-[calc(100%+10px)] left-0 w-[min(20rem,calc(100vw-2.5rem))] rounded-lg px-5 pt-2 pb-3 md:hidden',
+              'nav-glass nav-glass-strong absolute top-[calc(100%+10px)] left-0 max-h-[calc(100dvh-6rem)] w-[min(20rem,calc(100vw-2.5rem))] overflow-y-auto overscroll-contain rounded-lg px-5 pt-2 pb-3 md:hidden',
               'transition-[opacity,translate] duration-200 ease-[var(--ease-out)]',
               open
                 ? 'visible translate-y-0 opacity-100'
@@ -122,21 +134,76 @@ export default function NavBar() {
             )}
           >
             <nav aria-label="Principal, móvil">
-              {links.map((link) => (
-                <NavLink
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setOpen(false)}
-                  className={({ isActive }) =>
-                    cn(
-                      'flex min-h-[52px] items-center border-b border-border text-lg font-medium last:border-b-0',
-                      isActive ? 'text-accent-text' : 'text-ink',
-                    )
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
+              {links.map((link) => {
+                const enlace = (
+                  <NavLink
+                    key={link.to}
+                    to={link.to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      cn(
+                        'flex min-h-[52px] flex-1 items-center gap-2 text-lg font-medium',
+                        isActive ? 'text-accent-text' : 'text-ink',
+                      )
+                    }
+                  >
+                    {link.label}
+                    {link.to === '/soluciones' && (
+                      <>
+                        <span className="nav-dot nav-dot-inline" aria-hidden="true" />
+                        <span className="sr-only">, {soluciones.length} soluciones</span>
+                      </>
+                    )}
+                  </NavLink>
+                )
+                if (link.to !== '/soluciones') {
+                  return (
+                    <div key={link.to} className="flex border-b border-border last:border-b-0">
+                      {enlace}
+                    </div>
+                  )
+                }
+                return (
+                  <div key={link.to} className="border-b border-border">
+                    <div className="flex items-center">
+                      {enlace}
+                      <button
+                        type="button"
+                        onClick={() => setLista((v) => !v)}
+                        aria-expanded={lista}
+                        aria-controls={listaId}
+                        aria-label={lista ? 'Ocultar la lista de soluciones' : 'Ver la lista de soluciones'}
+                        className="inline-flex size-10 shrink-0 items-center justify-center rounded-full text-ink transition-colors hover:bg-surface-sunken"
+                      >
+                        <CaretDown
+                          className={cn('size-4 transition-transform duration-200', lista && 'rotate-180')}
+                          aria-hidden="true"
+                        />
+                      </button>
+                    </div>
+                    <div id={listaId} hidden={!lista} className="pb-3">
+                      {solucionesPorArea.map((area) => (
+                        <div key={area.area} className="mt-2 first:mt-0">
+                          <p className="py-1.5 text-xs font-medium text-ink-muted">{area.titulo}</p>
+                          <ul>
+                            {area.categorias.map((c) => (
+                              <li key={c.id}>
+                                <Link
+                                  to={`/soluciones/${c.id}`}
+                                  onClick={() => setOpen(false)}
+                                  className="flex min-h-11 items-center text-sm leading-snug text-ink"
+                                >
+                                  {c.titulo}
+                                </Link>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )
+              })}
             </nav>
           </div>
         </div>

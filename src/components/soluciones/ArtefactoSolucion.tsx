@@ -7,6 +7,7 @@ import {
   CheckCircle,
   Desktop,
   Globe,
+  Lightning,
   Receipt,
   Sparkle,
   type Icon,
@@ -32,7 +33,8 @@ const iconosNodo: Record<'factura' | 'contabilidad' | 'web', Icon> = {
  * entran en secuencia. */
 export function ArtefactoSolucion({ item }: { item: Solucion }) {
   const canal = canales[item.canal]
-  const habla = item.area === 'clientes' ? 'Su cliente' : 'Usted'
+  const habla = item.area === 'clientes' ? 'Tu cliente' : 'Tú'
+  const solo = item.tipo === 'automatico'
 
   return (
     <div className="relative">
@@ -59,20 +61,28 @@ export function ArtefactoSolucion({ item }: { item: Solucion }) {
           <Fragment key={intercambio.pregunta}>
             {i > 0 && <div aria-hidden="true" className="mx-5 border-t border-dashed border-border" />}
             <div className="space-y-2 px-5 pt-5">
-              <div className="ms-auto w-fit max-w-[85%]">
-                <p className="mb-1 text-end text-[11px] text-ink-subtle">{habla}</p>
-                <p className="rounded-sm rounded-br-xs bg-accent px-3 py-2 text-sm leading-relaxed text-on-accent">
+              {solo ? (
+                /* Sin mensaje: un evento pone el proceso en marcha. */
+                <div className="flex items-start gap-2 rounded-sm border border-dashed border-border-strong/60 px-3 py-2 text-sm leading-relaxed text-ink-muted">
+                  <Lightning className="mt-1 h-3.5 w-3.5 shrink-0 text-accent-text" weight="fill" aria-hidden="true" />
                   {intercambio.pregunta}
-                </p>
-              </div>
+                </div>
+              ) : (
+                <div className="ms-auto w-fit max-w-[85%]">
+                  <div className="mb-1 text-end text-[11px] text-ink-subtle">{habla}</div>
+                  <div className="rounded-sm rounded-br-xs bg-accent px-3 py-2 text-sm leading-relaxed text-on-accent">
+                    {intercambio.pregunta}
+                  </div>
+                </div>
+              )}
               <div className="w-fit max-w-[90%]">
-                <p className="mb-1 flex items-center gap-1 text-[11px] text-ink-subtle">
+                <div className="mb-1 flex items-center gap-1 text-[11px] text-ink-subtle">
                   <Sparkle className="h-3 w-3" weight="fill" aria-hidden="true" />
                   IA de SoftRent
-                </p>
-                <p className="rounded-sm rounded-bl-xs bg-surface-sunken px-3 py-2 text-sm leading-relaxed text-ink">
+                </div>
+                <div className="rounded-sm rounded-bl-xs bg-surface-sunken px-3 py-2 text-sm leading-relaxed text-ink">
                   {intercambio.contestacion}
-                </p>
+                </div>
               </div>
             </div>
             <div className="px-5 pb-5 pt-4">
@@ -81,10 +91,10 @@ export function ArtefactoSolucion({ item }: { item: Solucion }) {
           </Fragment>
         ))}
 
-        <p className="flex items-center gap-2 border-t border-border bg-success-soft px-5 py-3 text-sm font-medium text-success">
+        <div className="flex items-center gap-2 border-t border-border bg-success-soft px-5 py-3 text-sm font-medium text-success">
           <CheckCircle className="h-4 w-4 shrink-0" weight="fill" aria-hidden="true" />
           {item.accion}
-        </p>
+        </div>
       </figure>
     </div>
   )
@@ -208,8 +218,8 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
           </div>
           {pieza.nota && (
             <div className="rounded-sm border border-dashed border-border-strong/60 px-4 py-3">
-              <p className={rotulo}>{pieza.nota.titulo}</p>
-              <p className="mt-1 text-sm text-ink">{pieza.nota.texto}</p>
+              <div className={rotulo}>{pieza.nota.titulo}</div>
+              <div className="mt-1 text-sm text-ink">{pieza.nota.texto}</div>
             </div>
           )}
         </div>
@@ -222,7 +232,7 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
           {pieza.filas.map((f) => (
             <div key={f.etiqueta} className="rounded-sm bg-surface-sunken px-3 py-3">
               <dt className="text-[11px] leading-tight text-ink-muted">{f.etiqueta}</dt>
-              <dd className="mt-1 font-display text-display-sm text-ink">{f.valor}</dd>
+              <dd className="mt-1 text-2xl font-semibold tracking-tight tabular-nums text-ink">{f.valor}</dd>
             </div>
           ))}
         </dl>
@@ -236,7 +246,7 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
               <span className="block text-xs font-semibold">{pieza.origen.titulo}</span>
               <span className="block text-[11px] text-ink-inverse/70">{pieza.origen.detalle}</span>
             </span>
-            <span className="font-display text-xl">{pieza.origen.total}</span>
+            <span className="text-xl font-semibold tabular-nums">{pieza.origen.total}</span>
           </div>
 
           {/* Tronco y bus que reparten la venta a cada sistema. */}
@@ -253,12 +263,12 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
                 <li key={n.nombre} data-nodo className="flex flex-col">
                   <span aria-hidden="true" className="mx-auto block h-4 w-px bg-border-strong/60" />
                   <div className="flex-1 rounded-sm border border-border bg-surface p-3">
-                    <p className="flex items-center gap-2 text-xs font-semibold text-ink">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-ink">
                       <span className="flex h-6 w-6 items-center justify-center rounded-xs bg-surface-sunken text-ink-muted">
                         <IconoNodo className="h-3.5 w-3.5" aria-hidden="true" />
                       </span>
                       {n.nombre}
-                    </p>
+                    </div>
                     <dl className="mt-2.5 space-y-1">
                       {n.filas.map((f) => (
                         <div key={f.etiqueta} className="flex items-baseline justify-between gap-2 text-[11px]">
@@ -267,10 +277,10 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
                         </div>
                       ))}
                     </dl>
-                    <p className="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-success">
+                    <div className="mt-2.5 flex items-center gap-1 text-[11px] font-medium text-success">
                       <Check className="h-3 w-3" weight="bold" aria-hidden="true" />
                       {n.estado}
-                    </p>
+                    </div>
                   </div>
                 </li>
               )
@@ -282,7 +292,7 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
     case 'agenda':
       return (
         <div className="rounded-sm border border-border p-4">
-          <p className={rotulo}>{pieza.dia}</p>
+          <div className={rotulo}>{pieza.dia}</div>
           <ul className="mt-3 space-y-2">
             {pieza.slots.map((s) => (
               <li key={s.hora} className="flex items-center gap-3">
@@ -311,20 +321,20 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
       return (
         <div className="rounded-sm border border-border">
           <div className="px-4 py-4">
-            <p className="text-xs text-ink-muted">{pieza.concepto}</p>
-            <p className="mt-1 font-display text-display-md text-ink">{pieza.monto}</p>
+            <div className="text-xs text-ink-muted">{pieza.concepto}</div>
+            <div className="mt-1 text-3xl font-semibold tracking-tight tabular-nums text-ink">{pieza.monto}</div>
           </div>
-          <p className="flex items-center justify-between border-t border-dashed border-border-strong/50 px-4 py-2.5 text-xs text-ink-muted">
+          <div className="flex items-center justify-between border-t border-dashed border-border-strong/50 px-4 py-2.5 text-xs text-ink-muted">
             {pieza.detalle}
             <span className="font-medium text-success">Datos enviados</span>
-          </p>
+          </div>
         </div>
       )
 
     case 'proceso':
       return (
         <div className="rounded-sm border border-border p-4">
-          <p className={rotulo}>Lo que hizo el sistema</p>
+          <div className={rotulo}>Lo que hizo el sistema</div>
           <ol className="mt-3">
             {pieza.pasos.map((paso, i) => (
               <li key={paso} data-check className="relative flex gap-3 pb-3 last:pb-0">
@@ -360,10 +370,58 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
             <span className="text-xs text-ink-muted">{pieza.nota}</span>
             <span className="text-end">
               <span className="block text-[11px] text-ink-subtle">Total</span>
-              <span className="font-display text-display-sm text-ink">{pieza.total}</span>
+              <span className="text-2xl font-semibold tracking-tight tabular-nums text-ink">{pieza.total}</span>
             </span>
           </div>
         </div>
+      )
+
+    case 'bandeja':
+      return (
+        <div className="rounded-sm border border-border">
+          <ul className="divide-y divide-border">
+            {pieza.filas.map((f) => (
+              <li key={f.de} data-nodo className="flex items-center gap-3 px-4 py-3">
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-medium text-ink">{f.de}</span>
+                  <span className="block truncate text-xs text-ink-subtle">{f.asunto}</span>
+                </span>
+                <span className="shrink-0 rounded-full bg-accent-soft px-2 py-0.5 text-[11px] font-medium text-accent-text">
+                  {f.etiqueta}
+                </span>
+              </li>
+            ))}
+          </ul>
+          {pieza.nota && (
+            <div className="border-t border-dashed border-border px-4 py-2.5 text-xs text-ink-muted">
+              {pieza.nota}
+            </div>
+          )}
+        </div>
+      )
+
+    case 'linea':
+      return (
+        <ol className="rounded-sm border border-border p-4">
+          {pieza.filas.map((f, i) => (
+            <li key={f.momento} data-check className="relative flex gap-3 pb-3 last:pb-0">
+              {i < pieza.filas.length - 1 && (
+                <span aria-hidden="true" className="absolute bottom-0 left-[4px] top-4 w-px bg-border-strong/50" />
+              )}
+              <span
+                aria-hidden="true"
+                className={cn(
+                  'mt-1.5 h-[9px] w-[9px] shrink-0 rounded-full',
+                  f.alerta ? 'bg-warning' : 'bg-accent',
+                )}
+              />
+              <span className="w-12 shrink-0 text-xs leading-5 tabular-nums text-ink-subtle">{f.momento}</span>
+              <span className={cn('text-sm leading-snug', f.alerta ? 'font-medium text-warning' : 'text-ink')}>
+                {f.texto}
+              </span>
+            </li>
+          ))}
+        </ol>
       )
 
     case 'cambios':
@@ -380,9 +438,9 @@ function Pieza({ pieza }: { pieza: SolucionPieza }) {
             ))}
           </ul>
           {pieza.nota && (
-            <p className="border-t border-dashed border-border px-4 py-2.5 text-xs text-ink-muted">
+            <div className="border-t border-dashed border-border px-4 py-2.5 text-xs text-ink-muted">
               {pieza.nota}
-            </p>
+            </div>
           )}
         </div>
       )

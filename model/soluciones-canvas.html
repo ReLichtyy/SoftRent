@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f0e0d" />
+    <title>Soluciones · canvas</title>
+    <link rel="icon" href="/softrent-symbol.png" />
+    <style>
+      :root {
+        --bg: #0f0e0d;
+        --soft: #13110f;
+        --card: #1b1815;
+        --sample: #211c17;
+        --ink: #f1eeea;
+        --muted: #aaa39b;
+        --line: #ffffff1b;
+        --red: #e81120;
+        --bubble: #a41d29;
+        --ok-bg: #25342a;
+        --ok-ink: #bdd5c2;
+        --ok-line: #455e48;
+        --warn: #e9b872;
+      }
+      * { box-sizing: border-box; }
+      html { color-scheme: dark; }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font: 15px/1.6 Figtree, system-ui, sans-serif;
+      }
+      ::selection { background: var(--bubble); color: #fff; }
+      a { color: inherit; }
+      h1, h2, h3, h4, p { margin: 0; }
+      h1, h2 { font-weight: 580; letter-spacing: -0.035em; line-height: 1.06; text-wrap: balance; }
+      .wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+      .toolbar {
+        position: sticky; top: 0; z-index: 2;
+        display: flex; justify-content: space-between; align-items: center; gap: 16px;
+        padding: 14px 24px; border-bottom: 1px solid var(--line);
+        background: #0f0e0de6; backdrop-filter: blur(10px);
+      }
+      .toolbar .brand { display: flex; align-items: center; gap: 12px; }
+      .toolbar img { width: 26px; height: 27px; }
+      .toolbar h1 { font-size: 15px; letter-spacing: -0.01em; }
+      .toolbar small { color: var(--muted); font-size: 12px; }
+      .toolbar nav { display: flex; gap: 18px; font-size: 13px; color: #e3dcd3; }
+      .toolbar nav a { text-decoration: none; }
+      .toolbar nav a:hover { text-decoration: underline; text-underline-offset: 5px; }
+      section { padding: 72px 0; border-bottom: 1px solid var(--line); }
+      .lead h2 { font-size: clamp(32px, 4vw, 52px); max-width: 820px; }
+      .lead p { margin-top: 18px; color: var(--muted); max-width: 620px; }
+      .brief {
+        margin-top: 36px; display: grid; gap: 0 40px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .brief div { padding: 16px 0; border-top: 1px solid var(--line); }
+      .brief b { display: block; font-size: 13px; font-weight: 550; }
+      .brief span { font-size: 13px; color: var(--muted); }
+
+      .iterations { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+      .iteration { border: 1px solid #ffffff24; border-radius: 12px; background: var(--card); padding: 24px; }
+      .iteration.chosen { border-color: #a8917d; }
+      .iteration header { display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+      .iteration h3 { font-size: 22px; font-weight: 550; letter-spacing: -0.02em; }
+      .iteration header p { color: var(--muted); font-size: 13px; margin-top: 8px; max-width: 380px; }
+      .tag {
+        font-size: 11px; white-space: nowrap; padding: 5px 9px; border-radius: 5px;
+        border: 1px solid var(--line); color: var(--muted);
+      }
+      .tag.ok { color: var(--ok-ink); background: var(--ok-bg); border-color: var(--ok-line); }
+
+      /* Mini maquetas: proporción de página real, escala reducida. */
+      .frame {
+        margin-top: 22px; border: 1px solid var(--line); border-radius: 8px;
+        background: var(--bg); overflow: hidden; font-size: 10px; line-height: 1.5;
+      }
+      .frame .nav { display: flex; justify-content: space-between; padding: 8px 12px; border-bottom: 1px solid var(--line); color: var(--muted); }
+      .frame .nav b { color: var(--ink); font-weight: 600; }
+      .frame .pill { background: var(--red); color: #fff; padding: 2px 8px; border-radius: 99px; }
+      .frame .blk { padding: 14px 12px; border-bottom: 1px solid var(--line); }
+      .frame .blk.soft { background: var(--soft); }
+      .frame .blk.inverse { background: #f1eeea; color: #1d1a17; }
+      .frame .h { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; }
+      .frame .m { color: var(--muted); }
+      .frame .chips { display: flex; gap: 5px; flex-wrap: wrap; }
+      .frame .chips span { border: 1px solid var(--line); border-radius: 99px; padding: 1px 7px; color: var(--muted); }
+      .frame .chips span.on { background: var(--red); border-color: var(--red); color: #fff; }
+      .frame .split { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; align-items: start; }
+      .frame .three { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+      .frame .box { border: 1px solid #ffffff17; border-radius: 6px; background: var(--sample); padding: 8px; }
+      .frame .box.dash { border-style: dashed; background: transparent; }
+      .frame .bub { padding: 4px 6px; border-radius: 6px; background: #2b2621; width: fit-content; max-width: 90%; margin: 4px 0; }
+      .frame .bub.c { margin-left: auto; background: var(--bubble); color: #fff; }
+      .frame .row { display: grid; grid-template-columns: 16px 1fr 1.1fr; gap: 8px; padding: 10px 0; border-top: 1px solid var(--line); }
+      .frame .row .n { color: #a9806a; }
+      .frame .row .t { font-weight: 600; font-size: 11px; }
+      .frame .story { color: #d9cbbd; font-style: italic; }
+      .frame .arrow { text-align: center; color: var(--muted); padding-top: 18px; }
+      .frame .ok { color: var(--ok-ink); }
+      .frame .more { color: var(--muted); text-align: center; padding: 6px 0; }
+
+      .notes { margin-top: 18px; display: grid; gap: 8px; font-size: 13px; }
+      .notes p { display: grid; grid-template-columns: 60px 1fr; gap: 10px; color: #d9cbbd; }
+      .notes p b { font-weight: 550; color: var(--muted); }
+
+      table { width: 100%; border-collapse: collapse; margin-top: 34px; font-size: 13px; }
+      th, td { text-align: left; padding: 13px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+      th { color: var(--muted); font-weight: 500; }
+      td.score { font-variant-numeric: tabular-nums; white-space: nowrap; }
+      tr.total td { font-weight: 600; border-bottom: 0; }
+      .win { color: var(--ok-ink); }
+
+      .decision { margin-top: 34px; padding: 24px; border: 1px solid var(--ok-line); border-radius: 12px; background: #182019; }
+      .decision h3 { font-size: 20px; font-weight: 550; }
+      .decision p { margin-top: 10px; color: #cfdccf; max-width: 860px; }
+
+      .catalog { margin-top: 36px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+      .catalog h3 { font-size: 17px; font-weight: 550; padding-bottom: 12px; border-bottom: 1px solid var(--line); }
+      .catalog ul { list-style: none; margin: 0; padding: 0; }
+      .catalog li { padding: 11px 0; border-bottom: 1px solid var(--line); font-size: 13px; }
+      .catalog li small { display: block; color: var(--muted); font-size: 12px; margin-top: 3px; }
+      .new { font-size: 10px; color: var(--ok-ink); background: var(--ok-bg); border: 1px solid var(--ok-line); padding: 1px 6px; border-radius: 4px; margin-left: 6px; }
+
+      .voice { margin-top: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+      .voice div { padding: 20px; border-radius: 10px; border: 1px solid var(--line); }
+      .voice h4 { font-size: 12px; color: var(--muted); font-weight: 500; }
+      .voice p { margin-top: 10px; font-size: 14px; }
+      .voice .before p { color: var(--muted); }
+
+      @media (max-width: 900px) {
+        .iterations, .voice, .brief { grid-template-columns: 1fr; }
+        .catalog { grid-template-columns: 1fr; }
+        .toolbar nav { display: none; }
+      }
+      @media (max-width: 520px) {
+        .wrap { padding: 0 16px; }
+        .iteration { padding: 16px; }
+        table { font-size: 12px; }
+        th, td { padding: 10px 6px; }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="toolbar">
+      <div class="brand">
+        <img src="/src/assets/brand/softrent-symbol.png" alt="" />
+        <div>
+          <h1>Soluciones · canvas</h1>
+          <small>2 iteraciones de lógica · elegida la 02</small>
+        </div>
+      </div>
+      <nav aria-label="Secciones del canvas">
+        <a href="#brief">Brief</a><a href="#iteraciones">Iteraciones</a
+        ><a href="#decision">Decisión</a><a href="#catalogo">Catálogo</a
+        ><a href="/soluciones">Ver página ↗</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="brief" class="lead">
+        <div class="wrap">
+          <h2>Arreglar Soluciones sin perder lo que ya explica.</h2>
+          <p>
+            La página actual compara cada problema de hoy con su solución,
+            pero usa otro lenguaje visual que el main, trata de usted y
+            repite trece escenas de pantalla completa. Hay que sumar nueve
+            automatizaciones nuevas sin que se vuelva un muro.
+          </p>
+          <div class="brief">
+            <div><b>Conceptos que se mantienen</b><span>Problema de hoy frente a solución con SoftRent · pasos a mano frente a un mensaje · filtro por tipo de negocio · índice de problemas · el mismo camino para todos · cierre hacia Comenzar con el problema elegido.</span></div>
+            <div><b>Diseño</b><span>El de la base 04 del main: fondo #0f0e0d, Figtree, filas numeradas con muestra a la derecha, rojo #e81120 en una sola acción, botones en píldora.</span></div>
+            <div><b>Tono</b><span>Tuteo, como el main. Cada solución abre con una escena real de un negocio: quién, a qué hora, qué pasó.</span></div>
+            <div><b>Nuevas soluciones</b><span>Las nueve de automationz.md, traducidas del lenguaje técnico (n8n, OAuth, RAG, E.164) a lo que vive el dueño del negocio.</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="iteraciones">
+        <div class="wrap">
+          <div class="lead">
+            <h2>Dos lógicas para 22 soluciones.</h2>
+          </div>
+          <div class="iterations">
+            <article class="iteration">
+              <header>
+                <div>
+                  <h3>01 · Escenas</h3>
+                  <p>La lógica actual con la piel del main. Cada solución es una sección completa: problema, flecha, artefacto.</p>
+                </div>
+                <span class="tag">Descartada</span>
+              </header>
+              <div class="frame" aria-hidden="true">
+                <div class="nav"><b>SoftRent</b><span class="pill">Comenzar</span></div>
+                <div class="blk">
+                  <p class="h">Tu sistema ya hace mucho. Falta que te responda.</p>
+                  <p class="m">Compara cómo lo resuelves hoy y con SoftRent.</p>
+                </div>
+                <div class="blk"><div class="chips"><span class="on">Todos 22</span><span>Reservas</span><span>Pedidos</span><span>Servicios</span></div></div>
+                <div class="blk soft"><p class="h">Con tus clientes</p></div>
+                <div class="blk">
+                  <p class="t" style="font-weight:600">Atiende y agenda a cualquier hora</p>
+                  <div class="split" style="grid-template-columns:1fr 20px 1.2fr;margin-top:8px">
+                    <div class="box dash">Hoy: 3 pasos<br /><span class="m">1 · 2 · 3</span></div>
+                    <div class="arrow">→</div>
+                    <div class="box"><div class="bub c">¿Tienen espacio mañana?</div><div class="bub">Sí: 9:00 o 10:30.</div><span class="ok">Cita agendada</span></div>
+                  </div>
+                </div>
+                <div class="blk">
+                  <p class="t" style="font-weight:600">Reprograma desde el recordatorio</p>
+                  <div class="split" style="grid-template-columns:1fr 20px 1.2fr;margin-top:8px">
+                    <div class="box dash">Hoy: 3 pasos</div><div class="arrow">→</div><div class="box">Agenda · Jue 4:00</div>
+                  </div>
+                </div>
+                <p class="more">… 20 escenas más, una pantalla cada una</p>
+              </div>
+              <div class="notes">
+                <p><b>A favor</b>Cada escena tiene espacio para el artefacto grande y la animación.</p>
+                <p><b>En contra</b>Con 22 soluciones son unas 22 pantallas del mismo patrón; el zigzag cansa y el filtro se pierde lejos.</p>
+                <p><b>Tono</b>El ejemplo humano queda arriba, separado de la muestra que lo prueba.</p>
+              </div>
+            </article>
+
+            <article class="iteration chosen">
+              <header>
+                <div>
+                  <h3>02 · Historias en filas</h3>
+                  <p>La lógica del main. Cada solución es una fila: para quién, la escena real, el ahorro y una muestra. El detalle se abre si lo pides.</p>
+                </div>
+                <span class="tag ok">Elegida</span>
+              </header>
+              <div class="frame" aria-hidden="true">
+                <div class="nav"><b>SoftRent</b><span class="pill">Comenzar</span></div>
+                <div class="blk">
+                  <div class="split">
+                    <div>
+                      <p class="h">Lo que haces a mano, resuelto con un mensaje.</p>
+                      <p class="m">Ejemplos reales de negocios como el tuyo.</p>
+                    </div>
+                    <div class="box"><span class="m">20:00 · Minisúper</span><div class="bub c">Cierra la caja de hoy.</div><div class="bub">Caja cerrada. Todo cuadra.</div></div>
+                  </div>
+                </div>
+                <div class="blk"><div class="chips"><span class="on">Todos 22</span><span>Reservas</span><span>Pedidos</span><span>Servicios</span></div></div>
+                <div class="blk">
+                  <p class="h">¿Cuál te suena?</p>
+                  <div class="three m" style="margin-top:6px"><span>Con tus clientes · 6</span><span>En tu operación · 9</span><span>Para vender más · 7</span></div>
+                </div>
+                <div class="blk soft">
+                  <p class="h">Atiende, confirma y da seguimiento.</p>
+                  <div class="row"><span class="n">01</span><div><span class="m">Para negocios con citas</span><p class="t">Responde y agenda a cualquier hora.</p><p class="story">A las 10:48 p. m. le escriben a Lucía…</p><span class="m">Hoy 3 pasos · Con SoftRent 1 mensaje</span></div><div class="box"><div class="bub c">¿Tienen espacio?</div><div class="bub">9:00 o 10:30</div><span class="ok">Agendada</span></div></div>
+                  <div class="row"><span class="n">02</span><div><span class="m">Para negocios que reciben llamadas</span><p class="t">Contesta el teléfono por ti.</p><p class="story">Andrés está cortando pelo…</p></div><div class="box">Llamada · cita creada</div></div>
+                </div>
+                <div class="blk"><p class="m">Así se lo pides: pregunta · instrucción · pasa solo</p></div>
+                <div class="blk"><p class="h">Elige los que te suenan.</p></div>
+              </div>
+              <div class="notes">
+                <p><b>A favor</b>Mismo ritmo que el main; 22 filas se recorren rápido y el filtro las reduce a 5 u 8.</p>
+                <p><b>En contra</b>Menos espacio para la muestra: se compacta y el detalle vive en un desplegable.</p>
+                <p><b>Tono</b>La escena humana, el ahorro y la muestra quedan juntos en la misma fila.</p>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="decision">
+        <div class="wrap">
+          <div class="lead"><h2>Cómo se eligió.</h2></div>
+          <table>
+            <thead>
+              <tr><th>Criterio</th><th>Peso</th><th>01 · Escenas</th><th>02 · Historias</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Se ve igual que el main</td><td>3</td><td class="score">3 / 5</td><td class="score win">5 / 5</td></tr>
+              <tr><td>Escala a 22 soluciones sin cansar</td><td>3</td><td class="score">2 / 5</td><td class="score win">5 / 5</td></tr>
+              <tr><td>Ejemplo humano junto a su prueba</td><td>2</td><td class="score">3 / 5</td><td class="score win">5 / 5</td></tr>
+              <tr><td>Mantiene problema frente a solución</td><td>2</td><td class="score win">5 / 5</td><td class="score">4 / 5</td></tr>
+              <tr><td>Móvil a 320 px</td><td>1</td><td class="score">3 / 5</td><td class="score win">5 / 5</td></tr>
+              <tr class="total"><td>Total ponderado</td><td></td><td class="score">34 / 55</td><td class="score win">53 / 55</td></tr>
+            </tbody>
+          </table>
+          <div class="decision">
+            <h3>Se implementa la 02.</h3>
+            <p>
+              La comparación de hoy frente a SoftRent no se pierde: cada fila
+              dice cuántos pasos se ahorran, y el desplegable «Cómo
+              funciona» muestra los pasos a mano, la conversación completa y
+              lo que el sistema cuida. Las 22 soluciones se agrupan como en
+              el main: con tus clientes, en tu operación y para vender más.
+            </p>
+          </div>
+
+          <div class="voice">
+            <div class="before">
+              <h4>Antes</h4>
+              <p>«Compare cómo se resuelve cada situación hoy, con un sistema moderno sin IA, y cómo se resuelve con SoftRent: con una pregunta o con una instrucción que el sistema ejecuta de principio a fin.»</p>
+            </div>
+            <div>
+              <h4>Después</h4>
+              <p>«Son las 10:48 p. m. y Lucía ya cerró la veterinaria. Un cliente pregunta si hay espacio mañana; la IA le ofrece las 9:00 o las 10:30 y deja la cita en la agenda.»</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="catalogo">
+        <div class="wrap">
+          <div class="lead">
+            <h2>Catálogo final: 13 que ya estaban, 9 nuevas.</h2>
+            <p>Cada nueva viene de automationz.md. Se conserva su lógica y su resguardo, sin nombres de herramientas.</p>
+          </div>
+          <div class="catalog">
+            <div>
+              <h3>Con tus clientes</h3>
+              <ul>
+                <li>Responde y agenda a cualquier hora</li>
+                <li>Contesta el teléfono por ti <span class="new">Nueva</span><small>Recepcionista de voz IA</small></li>
+                <li>Reprograma desde el recordatorio</li>
+                <li>Convierte los mensajes en pedidos</li>
+                <li>Un chat que agenda y cobra</li>
+                <li>Tu web responde con tu información <span class="new">Nueva</span><small>Agente web con RAG</small></li>
+              </ul>
+            </div>
+            <div>
+              <h3>En tu operación</h3>
+              <ul>
+                <li>Tu correo, ordenado y con borradores <span class="new">Nueva</span><small>Gestión de email inteligente</small></li>
+                <li>Cobra sin perseguir a nadie <span class="new">Nueva</span><small>Seguimiento de facturas</small></li>
+                <li>Una venta, tres sistemas al día</li>
+                <li>Cierra la caja con un mensaje</li>
+                <li>Sabe qué se acaba antes de que se acabe</li>
+                <li>Pregunta y responde con tus números</li>
+                <li>Cambia tus precios con una línea</li>
+                <li>Cierra un día sin hacer llamadas</li>
+                <li>Tu negocio, desde tu WhatsApp</li>
+              </ul>
+            </div>
+            <div>
+              <h3>Para vender más</h3>
+              <ul>
+                <li>Contesta en menos de un minuto <span class="new">Nueva</span><small>Speed to lead</small></li>
+                <li>Recupera a los clientes que no vuelven</li>
+                <li>Reactiva a quienes preguntaron y no compraron <span class="new">Nueva</span><small>Reactivación de leads</small></li>
+                <li>Promociones a la persona correcta</li>
+                <li>Un video, una semana de publicaciones <span class="new">Nueva</span><small>Reutilización de contenido</small></li>
+                <li>Prospecta sin escribir correo por correo <span class="new">Nueva</span><small>Cold email personalizado</small></li>
+                <li>Todo tu proceso de venta, conectado <span class="new">Nueva</span><small>Motor de ventas integral</small></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -37,6 +37,8 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <Home /> },
       { path: 'soluciones', element: <Soluciones /> },
+      /* Una ruta por solución: abre la página en su fila. */
+      { path: 'soluciones/:id', element: <Soluciones /> },
       { path: 'industrias', element: <Industrias /> },
       { path: 'precios', element: <Precios /> },
       { path: 'comenzar', element: <Comenzar /> },

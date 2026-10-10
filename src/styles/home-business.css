@@ -170,12 +170,6 @@
 .home-business .hb-section.hb-soft {
   background: #13110f;
 }
-.home-business .hb-eyebrow {
-  font-size: 11px;
-  color: #a99d90;
-  letter-spacing: 0.09em;
-  margin-bottom: 22px;
-}
 .home-business .hb-section-intro {
   margin-bottom: 45px;
   display: flex;
@@ -281,7 +275,6 @@
   display: grid;
   grid-template-columns: 0.64fr 1.36fr;
   gap: 55px;
-  margin-top: 45px;
 }
 .home-business .hb-business-feature {
   padding: 27px;
@@ -330,16 +323,11 @@
 }
 .home-business .hb-task-row {
   display: grid;
-  grid-template-columns: 50px 1fr 1.1fr;
+  grid-template-columns: 1fr 1.1fr;
   align-items: start;
   gap: 27px;
   padding: 33px 0;
   border-top: 1px solid var(--hb-line);
-}
-.home-business .hb-task-row .hb-number {
-  font-size: 12px;
-  color: #a9806a;
-  padding-top: 4px;
 }
 .home-business .hb-task-row h3 {
   font-size: 25px;
@@ -445,9 +433,6 @@
     max-width: 100%;
     font-size: 14px;
   }
-  .home-business .hb-eyebrow {
-    margin-bottom: 17px;
-  }
   .home-business h2 {
     font-size: 37px;
     line-height: 1.07;
@@ -489,7 +474,7 @@
     line-height: 1.5;
   }
   .home-business .hb-task-row {
-    grid-template-columns: 25px 1fr;
+    grid-template-columns: 1fr;
     gap: 18px;
     padding: 28px 0;
   }
@@ -497,7 +482,7 @@
     font-size: 23px;
   }
   .home-business .hb-task-row .hb-sample {
-    grid-column: 2;
+    grid-column: 1;
   }
   .home-business .hb-setup h2 {
     font-size: 37px;
@@ -524,11 +509,6 @@
     padding: 11px 14px;
     font-size: 11px;
   }
-}
-.home-business .hb-function-copy .hb-function-applies {
-  margin: 0 0 11px;
-  color: #b5a18c;
-  font-size: 11px;
 }
 .home-business .hb-function-copy .hb-text-link {
   margin-top: 20px;
@@ -645,7 +625,7 @@
 }
 @media (max-width: 700px) {
   .home-business .hb-task-row {
-    grid-template-columns: 25px 1fr;
+    grid-template-columns: 1fr;
   }
   .home-business .hb-task-row .hb-function-preview {
     grid-column: 1 / -1;
@@ -684,3 +664,183 @@
   letter-spacing: normal;
 }
 .home-business .hb-receipt-status { display: inline-flex; align-items: center; gap: 6px; }
+
+/* Ejemplos de funciones como conversaciones. */
+.home-business .hb-chat {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 16px;
+}
+.home-business .hb-bubble {
+  max-width: 86%;
+  padding: 10px 13px;
+  border-radius: 12px;
+  background: #302a24;
+  color: #e6dccf;
+  font-size: 12px;
+  line-height: 1.5;
+  align-self: flex-start;
+  border-bottom-left-radius: 4px;
+}
+.home-business .hb-bubble.hb-cliente {
+  align-self: flex-end;
+  background: #a71d27;
+  color: #fff;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 4px;
+}
+.home-business .hb-bubble-list {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+  min-width: 210px;
+}
+.home-business .hb-bubble-list li {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 6px 0;
+  border-top: 1px solid var(--hb-line);
+}
+.home-business .hb-bubble-list small {
+  color: #c9b9a7;
+  font-size: 11px;
+}
+.home-business .hb-bubble-total {
+  font-weight: 600;
+}
+.home-business .hb-bubble-steps li {
+  justify-content: flex-start;
+  align-items: center;
+  gap: 8px;
+  color: #d9cbbd;
+}
+.home-business .hb-bubble-steps svg {
+  flex: none;
+  color: #6fcf97;
+}
+.home-business .hb-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+}
+.home-business .hb-chat-action {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 4px;
+  padding: 9px 14px;
+  border: 1px solid transparent;
+  border-radius: 7px;
+  background: var(--hb-red);
+  color: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+.home-business .hb-chat-action:hover:not(:disabled) {
+  background: #c90e1b;
+}
+.home-business .hb-chat-action:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+.home-business .hb-chat-action[data-sent='true'] {
+  background: #1f3a2b;
+  border-color: #2f6b4a;
+  color: #bfe8d0;
+  cursor: default;
+}
+
+/* Sección con fotografía: el coche queda centrado bajo el contenido y se
+ * desvanece hacia el fondo en todos sus bordes. El coche ocupa ~26% del
+ * ancho de la imagen (relación 16:9), de ahí el desplazamiento. */
+.home-business .hb-section.hb-photo {
+  --hb-car-h: clamp(440px, 64vw, 900px);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  padding-bottom: calc(var(--hb-car-h) * 0.58 + clamp(70px, 9vw, 140px));
+  border-bottom: 0;
+}
+.home-business .hb-photo::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  bottom: clamp(10px, 2vw, 30px);
+  left: calc(50% - var(--hb-car-h) * 1.7767 * var(--hb-car-x, 0.26));
+  width: calc(var(--hb-car-h) * 1.7767);
+  height: var(--hb-car-h);
+  background: var(--hb-photo) center / 100% 100% no-repeat;
+  -webkit-mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 26%, #000 74%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to bottom, transparent 0%, #000 26%, #000 74%, transparent 100%),
+    linear-gradient(to right, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-composite: intersect;
+}
+.home-business .hb-photo::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: clamp(120px, 14vw, 200px);
+  background: linear-gradient(to bottom, transparent, var(--hb-photo-next, #13110f));
+}
+/* La lista de industrias llega hasta donde termina la tarjeta de la demo. */
+.home-business .hb-business-side {
+  display: flex;
+  flex-direction: column;
+}
+.home-business .hb-business-side .hb-industry-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.home-business .hb-business-side .hb-industry-link {
+  flex: 1 1 0;
+  align-items: center;
+}
+@media (max-width: 700px) {
+  .home-business .hb-business-side .hb-industry-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 20px;
+  }
+  .home-business .hb-business-side .hb-industry-link {
+    align-items: flex-start;
+  }
+}
+/* Variante: la fotografía abarca toda la sección. */
+.home-business .hb-section.hb-photo.hb-photo-fill {
+  padding-bottom: clamp(140px, 14vw, 190px);
+}
+.home-business .hb-photo-fill::before {
+  inset: 70px 0 0 0;
+  width: auto;
+  height: auto;
+  background: var(--hb-photo) center / cover no-repeat;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
+}
+.home-business .hb-photo-fill::after {
+  display: none;
+}
+@media (max-width: 700px) {
+  .home-business .hb-section.hb-photo.hb-photo-fill {
+    padding-bottom: 310px;
+  }
+  .home-business .hb-photo-fill::before {
+    inset: auto 0 0 0;
+    height: 112.5vw;
+    background: var(--hb-photo) left bottom / 200% 100% no-repeat;
+  }
+}

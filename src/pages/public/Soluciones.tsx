@@ -1,58 +1,48 @@
-import { Fragment, useEffect, useRef } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react'
+import { useParams, useSearchParams } from 'react-router-dom'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   ArrowDown,
-  ArrowsClockwise,
+  ArrowUpRight,
   CalendarCheck,
-  CalendarX,
-  CashRegister,
-  ChartLine,
-  DeviceMobile,
-  Gear,
-  Megaphone,
-  Moon,
-  Package,
-  PlugsConnected,
   Robot,
   ShoppingCart,
   SquaresFour,
   Storefront,
-  Tag,
-  UserMinus,
   Wrench,
   type Icon,
 } from '@phosphor-icons/react'
+import heroBmw from '../../assets/soluciones/vehiculos/hero-bmw-completo-v5.webp'
+import heroAston from '../../assets/soluciones/vehiculos/hero-aston-completo-v5.webp'
+import siluetaAmg from '../../assets/soluciones/vehiculos/agenda-amg-izquierda-ambiente-v4.webp'
+import siluetaDbs from '../../assets/soluciones/vehiculos/cobros-dbs-derecha-ambiente-v4.webp'
+import siluetaGtr from '../../assets/soluciones/vehiculos/operacion-gtr-izquierda-ambiente-v4.webp'
+import siluetaSupra from '../../assets/soluciones/vehiculos/clientes-supra-perfil-ambiente-v4.webp'
+import siluetaVantage from '../../assets/soluciones/vehiculos/cierre-ambiente-v4.webp'
 import { Container } from '../../components/layout/Container'
-import { Section } from '../../components/layout/Section'
 import { LinkButton } from '../../components/ui/LinkButton'
-import { FlujoPregunta } from '../../components/soluciones/FlujoPregunta'
-import { SolucionEscena } from '../../components/soluciones/SolucionEscena'
-import { areas, areasIntro, nichos, soluciones } from '../../content/soluciones'
-import type { SolucionArea, SolucionNicho } from '../../content/types'
-import { cn } from '../../lib/cn'
-import { useScrollReveal } from '../../lib/useScrollReveal'
+import { SolucionFila } from '../../components/soluciones/SolucionFila'
+import {
+  areas,
+  categorias,
+  nichos,
+  numeroCategoria,
+  soluciones,
+  solucionesOrdenadas,
+} from '../../content/soluciones'
+import type { SolucionArea, SolucionCategoria, SolucionNicho } from '../../content/types'
+import '../../styles/home-business.css'
+import '../../styles/soluciones.css'
 
-const iconos: Record<string, Icon> = {
-  'inventario-tarde': Package,
-  'reportes-sin-conclusion': ChartLine,
-  'cierre-de-caja': CashRegister,
-  'precios-uno-por-uno': Tag,
-  'herramientas-sueltas': PlugsConnected,
-  'promociones-a-mano': Megaphone,
-  'clientes-que-no-vuelven': UserMinus,
-  'cerrar-un-dia': CalendarX,
-  'atado-a-la-computadora': DeviceMobile,
-  'pedidos-por-chat': ShoppingCart,
-  'mensajes-fuera-de-horario': Moon,
-  'chatbot-limitado': Robot,
-  'recordatorios-sin-salida': ArrowsClockwise,
+const ordenAreas: SolucionArea[] = ['clientes', 'administracion', 'ventas']
+
+/* Cada carro acompaña el primer texto de su categoría. */
+const siluetasFondo: Partial<Record<SolucionCategoria, string>> = {
+  agenda: siluetaAmg,
+  'cobros-y-caja': siluetaDbs,
+  'dia-a-dia': siluetaGtr,
+  'clientes-nuevos': siluetaSupra,
 }
-
-/* Ícono de respaldo para soluciones nuevas. */
-const iconoDefault: Icon = Gear
-
-const ordenAreas: SolucionArea[] = ['administracion', 'clientes']
 
 type Filtro = 'todos' | SolucionNicho
 
@@ -83,28 +73,41 @@ function contar(id: Filtro): number {
     : soluciones.filter((s) => s.nichos.includes(id)).length
 }
 
-/** Soluciones: cada problema de un sistema moderno sin IA frente a su
- * solución con SoftRent, por pregunta o por instrucción. Intro → filtro
- * por sistema (fijo bajo la barra, en ?nicho) → índice de problemas →
- * un capítulo por área, con una sección por solución (problema →
- * flecha → artefacto) → el camino común → cierre hacia /comenzar. */
+/** Soluciones: cada una con su título, la escena que la explica y el
+ * artefacto de lo que SoftRent deja hecho. Mismo lenguaje visual que
+ * el main (base 04), siempre en tema oscuro. Hero con la foto de los autos →
+ * filtro por negocio (fijo bajo la barra, en ?nicho) → un capítulo
+ * por área con sus categorías, algunas con un carro bajo el primer
+ * texto → cierre hacia /comenzar con la última silueta.
+ * Todos los carros añaden una superficie y ambiente que se funden
+ * con el fondo oscuro mediante máscaras suaves.
+ * /soluciones/<id> abre la misma página en esa categoría o solución. */
 export function Soluciones() {
   const [searchParams, setSearchParams] = useSearchParams()
   const param = searchParams.get('nicho')
   const filtro: Filtro = esFiltro(param) ? param : 'todos'
-  const indiceRef = useRef<HTMLElement>(null)
+  const catalogoRef = useRef<HTMLDivElement>(null)
+  const { id } = useParams()
 
-  const intro = useScrollReveal<HTMLElement>({
-    selector: '[data-intro]',
-    stagger: 0.09,
-    y: 22,
-    immediate: true,
-  })
+  /* La barra de filtros fija tapa también la franja de la barra superior
+   * solo mientras está pegada; un centinela avisa cuándo. */
+  const centinelaRef = useRef<HTMLDivElement>(null)
+  const [pegado, setPegado] = useState(false)
+  useEffect(() => {
+    const centinela = centinelaRef.current
+    if (!centinela) return
+    const observador = new IntersectionObserver(
+      ([entrada]) => setPegado(!entrada.isIntersecting && entrada.boundingClientRect.top < 73),
+      { rootMargin: '-73px 0px 0px 0px' },
+    )
+    observador.observe(centinela)
+    return () => observador.disconnect()
+  }, [])
 
   const visibles =
     filtro === 'todos'
-      ? soluciones
-      : soluciones.filter((s) => s.nichos.includes(filtro))
+      ? solucionesOrdenadas
+      : solucionesOrdenadas.filter((s) => s.nichos.includes(filtro))
   const grupos = ordenAreas
     .map((area) => ({
       area,
@@ -117,95 +120,88 @@ export function Soluciones() {
       replace: true,
       preventScrollReset: true,
     })
-    /* Si el filtro se cambia más abajo, vuelve al índice para que el
-     * contenido nuevo no aparezca a mitad de una sección. */
-    const indice = indiceRef.current
-    if (indice && indice.getBoundingClientRect().top < 0) {
-      indice.scrollIntoView({ behavior: 'smooth' })
+    /* Si el filtro se cambia más abajo, vuelve al inicio del catálogo
+     * para que el contenido nuevo no aparezca a mitad de una fila. */
+    const catalogo = catalogoRef.current
+    if (catalogo && catalogo.getBoundingClientRect().top < 0) {
+      catalogo.scrollIntoView({ behavior: 'smooth' })
     }
   }
 
-  /* Las secciones cambian de altura y de orden: recalcular disparadores. */
+  /* Al cambiar el filtro las filas cambian de altura y de orden:
+   * recalcular disparadores. No al montar: refresh() devuelve el scroll
+   * a donde estaba y anularía el salto de la ruta. */
+  const montado = useRef(false)
   useEffect(() => {
-    ScrollTrigger.refresh()
+    if (montado.current) ScrollTrigger.refresh()
+    montado.current = true
   }, [filtro])
 
+  /* Ruta /soluciones/<id>: baja hasta esa categoría o hasta la fila de
+   * esa solución (ambas llevan su id).
+   * El salto es instantáneo y se sostiene unos cuadros: justo después
+   * de montar, el router y el refresh() de las filas vuelven a mover el
+   * scroll, en un orden que no es fijo. Se suelta antes si el visitante
+   * usa la rueda, el dedo o el teclado. */
+  useEffect(() => {
+    const destino = id ? document.getElementById(id) : null
+    if (!destino) return
+    const hasta = performance.now() + 600
+    let cuadro = 0
+    const fijar = () => {
+      destino.scrollIntoView({ behavior: 'instant' })
+      if (performance.now() < hasta) cuadro = requestAnimationFrame(fijar)
+    }
+    const soltar = () => cancelAnimationFrame(cuadro)
+    fijar()
+    const eventos = ['wheel', 'touchstart', 'keydown'] as const
+    eventos.forEach((e) => window.addEventListener(e, soltar, { once: true, passive: true }))
+    return () => {
+      soltar()
+      eventos.forEach((e) => window.removeEventListener(e, soltar))
+    }
+  }, [id])
+
   return (
-    <>
-      <section
-        ref={intro}
-        className="bg-surface-inverse pb-16 pt-16 text-ink-inverse sm:pb-20 sm:pt-24"
-      >
-        <Container>
-          <h1
-            data-intro
-            className="max-w-4xl text-balance font-display text-display-md sm:text-display-lg"
-          >
-            Su sistema ya hace mucho.{' '}
-            <span className="italic text-[#ff6b70]">
-              Lo que falta es que le responda.
-            </span>
-          </h1>
-          <p
-            data-intro
-            className="mt-6 max-w-xl text-lg leading-relaxed text-ink-inverse/75"
-          >
-            Compare cómo se resuelve cada situación hoy, con un sistema
-            moderno sin IA, y cómo se resuelve con SoftRent: con una pregunta
-            o con una instrucción que el sistema ejecuta de principio a fin.
-          </p>
-          <div data-intro className="mt-9 flex flex-wrap items-center gap-4">
-            <a
-              href="#problemas"
-              className="inline-flex h-12 items-center rounded-sm bg-accent px-5 text-base font-medium text-on-accent transition-colors duration-[var(--duration-fast)] hover:bg-accent-hover"
-            >
-              Ver los problemas
+    /* data-theme: los artefactos usan los tokens del sitio y esta página
+     * es oscura aunque el visitante tenga el tema claro. */
+    <div className="home-business sol" data-theme="dark">
+      <section className="sol-hero" aria-labelledby="soluciones-title">
+        <Container className="hb-wrap sol-hero-copy">
+          <h1 id="soluciones-title">Lo que haces a mano,<br />resuelto con un mensaje.</h1>
+          <p>Tú llevas el negocio. SoftRent se encarga de lo que se repite.</p>
+          <div className="hb-actions">
+            <a className="hb-button hb-primary" href="#catalogo">
+              Ver soluciones <ArrowDown size={16} aria-hidden="true" />
             </a>
-            <LinkButton to="/demos" variant="secondary" size="lg">
-              Probar una demo
-            </LinkButton>
+            <LinkButton to="/demos" variant="secondary" className="hb-button">Explorar demos</LinkButton>
           </div>
         </Container>
+        <div className="sol-hero-cars" aria-hidden="true">
+          <img className="sol-hero-image sol-hero-image-left" src={heroBmw} alt="" width={1672} height={940} />
+          <img className="sol-hero-image sol-hero-image-right" src={heroAston} alt="" width={1672} height={941} />
+        </div>
       </section>
 
-      {/* El filtro queda fijo bajo la barra mientras dure este bloque. */}
-      <div>
-        <div className="sticky top-16 z-30 border-b border-border bg-bg/90 backdrop-blur">
-          <Container className="flex items-center gap-4 py-3">
-            <span className="hidden shrink-0 text-xs font-medium text-ink-muted sm:block">
-              Su negocio
-            </span>
-            <div
-              role="group"
-              aria-label="Filtrar por sistema"
-              className="-mx-5 flex gap-2 overflow-x-auto px-5 [scrollbar-width:none] sm:mx-0 sm:px-0"
-            >
+      {/* El filtro queda fijo bajo la barra mientras dure el catálogo. */}
+      <div ref={catalogoRef} id="catalogo" className="sol-catalog">
+        <div ref={centinelaRef} aria-hidden="true" />
+        <div className="sol-filter" data-pegado={pegado || undefined}>
+          <Container className="hb-wrap sol-filter-row">
+            <div role="group" aria-label="Filtrar por tipo de negocio" className="sol-chips">
               {filtros.map((f) => {
-                const activo = filtro === f.id
                 const IconoNicho = iconosNicho[f.id]
                 return (
                   <button
                     key={f.id}
                     type="button"
-                    aria-pressed={activo}
+                    aria-pressed={filtro === f.id}
                     onClick={() => elegir(f.id)}
-                    className={cn(
-                      'flex shrink-0 items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-sm font-medium outline-none transition-colors duration-[var(--duration-base)] focus-visible:ring-2 focus-visible:ring-focus',
-                      activo
-                        ? 'border-accent bg-accent text-on-accent'
-                        : 'border-border bg-surface text-ink-muted hover:border-border-strong hover:text-ink',
-                    )}
+                    className="sol-chip"
                   >
-                    <IconoNicho className="h-4 w-4" aria-hidden="true" />
+                    <IconoNicho size={15} aria-hidden="true" />
                     {f.etiqueta}
-                    <span
-                      className={cn(
-                        'text-xs tabular-nums',
-                        activo ? 'text-on-accent/80' : 'text-ink-subtle',
-                      )}
-                    >
-                      {contar(f.id)}
-                    </span>
+                    <span className="sol-chip-count">{contar(f.id)}</span>
                   </button>
                 )
               })}
@@ -213,107 +209,59 @@ export function Soluciones() {
           </Container>
         </div>
 
-        <section
-          ref={indiceRef}
-          id="problemas"
-          className="scroll-mt-32 py-20 sm:py-28"
-        >
-          <Container>
-            <h2 className="max-w-xl text-balance font-display text-display-sm text-ink sm:text-display-md">
-              ¿Cuál de estos le pasa?
-            </h2>
-            <p className="mt-3 max-w-lg text-base leading-relaxed text-ink-muted">
-              Elija uno y vea cómo pasa de varios pasos a mano a un solo
-              mensaje: una pregunta, o una instrucción que el sistema ejecuta.
-            </p>
-
-            <div className="mt-12 grid gap-10 md:grid-cols-2">
-              {grupos.map((g) => (
-                <div key={g.area}>
-                  <p className="text-eyebrow uppercase text-ink-subtle">
-                    {areas[g.area]}
-                  </p>
-                  <ul className="mt-4 divide-y divide-border border-y border-border">
-                    {g.items.map((s) => {
-                      const Icono = iconos[s.id] ?? iconoDefault
-                      return (
-                        <li key={s.id} className="demo-enter">
-                          <a
-                            href={`#${s.id}`}
-                            className="group flex items-center gap-4 py-4 outline-none focus-visible:ring-2 focus-visible:ring-focus"
-                          >
-                            <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-sm bg-surface-sunken text-ink-muted transition-colors duration-[var(--duration-base)] group-hover:bg-accent-soft group-hover:text-accent-text">
-                              <Icono className="h-4 w-4" aria-hidden="true" />
-                            </span>
-                            <span className="flex-1 text-sm leading-relaxed text-ink">
-                              {s.dolor}
-                            </span>
-                            <ArrowDown
-                              className="h-4 w-4 shrink-0 text-ink-subtle transition-transform duration-[var(--duration-base)] group-hover:translate-y-0.5 group-hover:text-accent-text"
-                              aria-hidden="true"
-                            />
-                          </a>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
-              ))}
-            </div>
-          </Container>
-        </section>
-
-        {grupos.map((g) => (
-          <Fragment key={g.area}>
-            <Section tone="deep" className="py-16 sm:py-20">
-              <Container className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <h2 className="font-display text-display-md sm:text-display-lg">
-                  {areas[g.area]}
-                </h2>
-                <p className="max-w-sm text-base leading-relaxed text-ink-inverse/75">
-                  {areasIntro[g.area]}
-                </p>
+        {grupos.map((g) => {
+          const cats = categorias
+            .filter((c) => c.area === g.area)
+            .map((c) => ({ ...c, items: g.items.filter((s) => s.categoria === c.id) }))
+            .filter((c) => c.items.length > 0)
+          return (
+            <section key={g.area} className="sol-area" aria-labelledby={`area-${g.area}`}>
+              <Container className="hb-wrap">
+                <h2 id={`area-${g.area}`} className="sol-area-title">{areas[g.area]}</h2>
+                {cats.map((c) => {
+                  return (
+                    <section key={c.id} id={c.id} className="sol-cat" aria-labelledby={`cat-${c.id}`}>
+                      <header className="sol-cat-head">
+                        <span className="sol-cat-num" aria-hidden="true">
+                          {String(numeroCategoria.get(c.id) ?? 0).padStart(2, '0')}
+                        </span>
+                        <h3 id={`cat-${c.id}`}>{c.titulo}</h3>
+                      </header>
+                      {c.items.map((item, index) => (
+                        <SolucionFila key={item.id} item={item} imagen={index === 0 ? siluetasFondo[c.id] : undefined} />
+                      ))}
+                    </section>
+                  )
+                })}
               </Container>
-            </Section>
-
-            {g.items.map((item, i) => (
-              <SolucionEscena
-                key={item.id}
-                item={item}
-                icono={iconos[item.id] ?? iconoDefault}
-                tono={i % 2 === 0 ? 'bg' : 'surface'}
-              />
-            ))}
-          </Fragment>
-        ))}
+            </section>
+          )
+        })}
       </div>
 
-      {/* key: reinicia el recorrido al cambiar el filtro. */}
-      <FlujoPregunta key={filtro} items={visibles} />
-
-      <section className="py-20 sm:py-28">
-        <Container>
-          <div className="flex flex-col gap-8 rounded-lg border border-border bg-surface p-8 sm:p-12 lg:flex-row lg:items-center lg:justify-between">
-            <div className="max-w-xl">
-              <h2 className="text-balance font-display text-display-sm text-ink">
-                Elija los problemas que le suenan.
-              </h2>
-              <p className="mt-3 text-base leading-relaxed text-ink-muted">
-                Los mismos aparecen al comenzar: marque los suyos y armamos su
-                sistema alrededor de ellos.
-              </p>
-            </div>
-            <div className="flex shrink-0 flex-wrap gap-3">
-              <LinkButton to="/comenzar" size="lg">
-                Comenzar
-              </LinkButton>
-              <LinkButton to="/demos" variant="secondary" size="lg">
-                Ver demos
-              </LinkButton>
-            </div>
+      <section className="sol-band sol-closing" aria-labelledby="soluciones-closing-title">
+        <img
+          className="sol-silueta"
+          src={siluetaVantage}
+          alt=""
+          width={1672}
+          height={941}
+          loading="lazy"
+          decoding="async"
+        />
+        <Container className="hb-wrap">
+          <div className="sol-band-copy">
+            <h2 id="soluciones-closing-title">Empieza<br />por una.</h2>
+            <p>Cuéntanos cuál quieres resolver primero y armamos tu sistema alrededor de ella.</p>
+          <div className="hb-actions">
+            <LinkButton to="/comenzar" className="hb-button hb-primary">
+              Comenzar <ArrowUpRight size={16} aria-hidden="true" />
+            </LinkButton>
+            <LinkButton to="/demos" variant="secondary" className="hb-button">Explorar demos</LinkButton>
+          </div>
           </div>
         </Container>
       </section>
-    </>
+    </div>
   )
 }
