@@ -63,6 +63,8 @@ jobs:
             echo "Verifica en Settings > Secrets and variables > Actions que el nombre sea exactamente DOKPLOY_WEBHOOK_URL y que el valor sea la URL completa (https://...)."
             exit 1
           fi
+          # Quita espacios, saltos de linea y comillas pegados por error en el secret.
+          WEBHOOK_URL=$(printf '%s' "$WEBHOOK_URL" | tr -d '[:space:]"'"'")
           response=$(curl -sS -X POST \
             -H "Content-Type: application/json" \
             -d "{\"message\": \"Deploy ${{ github.sha }} from ${{ github.ref_name }}\"}" \
