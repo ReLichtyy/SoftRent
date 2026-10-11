@@ -67,7 +67,8 @@ jobs:
           WEBHOOK_URL=$(printf '%s' "$WEBHOOK_URL" | tr -d '[:space:]"'"'")
           response=$(curl -sS -X POST \
             -H "Content-Type: application/json" \
-            -d "{\"message\": \"Deploy ${{ github.sha }} from ${{ github.ref_name }}\"}" \
+            -H "X-GitHub-Event: push" \
+            -d "{\"ref\": \"refs/heads/${{ github.ref_name }}\", \"after\": \"${{ github.sha }}\", \"head_commit\": {\"message\": \"Deploy ${{ github.sha }}\"}}" \
             -w "\n%{http_code}" \
             "$WEBHOOK_URL")
           code=$(echo "$response" | tail -n1)
