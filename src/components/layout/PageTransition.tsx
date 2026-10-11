@@ -14,7 +14,7 @@ export function PageTransition({ children }: { children: ReactNode }) {
     gsap.fromTo(
       el,
       { opacity: 0, y: 10 },
-      { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out' },
+      { opacity: 1, y: 0, duration: 0.4, ease: 'power3.out', clearProps: 'transform' },
     )
   }, [children])
 

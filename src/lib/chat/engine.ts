@@ -52,7 +52,7 @@ function resumenPlanes(): string {
     .map((plan) => {
       const precio =
         plan.precioMensual === null
-          ? 'a cotizar'
+          ? (plan.precioUsd !== undefined ? `US$${plan.precioUsd}` : 'a cotizar')
           : (plan.desde ? 'desde ' : '') + colones(plan.precioMensual)
       return `${plan.nombre}: ${precio} al mes`
     })

@@ -207,8 +207,10 @@ export type SolucionPieza =
 export type Plan = {
   id: PlanId
   nombre: string
-  /** Precio mensual en colones, IVA aparte. Null para "desde". */
+  /** Precio fijo mensual en colones; null si depende de conversión o cotización. */
   precioMensual: number | null
+  precioUsd?: number
+  servicios?: 1 | 2 | 3
   /** true cuando el precio es un "desde ...". */
   desde?: boolean
   /** Para quién es este plan. */

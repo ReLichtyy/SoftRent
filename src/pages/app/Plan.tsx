@@ -34,7 +34,7 @@ export function AppPlan() {
           </Badge>
         </div>
         <p className="font-display text-display-sm text-ink">
-          {plan.precioMensual !== null ? colones(plan.precioMensual) : 'A cotizar'}
+          {plan.precioMensual !== null ? colones(plan.precioMensual) : plan.precioUsd !== undefined ? `US$${plan.precioUsd}` : 'A cotizar'}
           <span className="ms-1 text-sm font-normal text-ink-muted">
             por mes, {reglas.iva.toLowerCase()}
           </span>
@@ -61,7 +61,7 @@ export function AppPlan() {
             ¿Necesita más espacio?
           </h2>
           <p className="mt-1 text-sm leading-relaxed text-ink-muted">
-            Cambie a Pro cuando quiera. El cambio se refleja desde el
+            Cambie a 3 servicios cuando quiera. El cambio se refleja desde el
             siguiente mes.
           </p>
         </div>

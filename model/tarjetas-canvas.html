@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#11100f" />
+    <title>Exploración de tarjetas · SoftRent</title>
+    <link rel="stylesheet" href="./tarjetas-canvas.css" />
+    <script src="./tarjetas-canvas.js" defer></script>
+  </head>
+  <body>
+    <header class="topbar">
+      <a class="brand" href="./precios-canvas.html"><img src="/src/assets/brand/softrent-symbol.png" width="25" height="25" alt="" />SoftRent</a>
+      <a class="back-link" href="./precios-canvas.html">Volver a precios <span aria-hidden="true">↗</span></a>
+    </header>
+    <main>
+      <div class="intro">
+        <div><h1>Otra forma de<br /><span>poner las cartas sobre la mesa.</span></h1></div>
+        <p>Cuatro direcciones. Una tarjeta por estilo.<br />Pase el cursor para ver el movimiento y marque su favorita. En móvil, toque para elegir.</p>
+      </div>
+      <div class="options" aria-label="Opciones de diseño de tarjetas">
+        <section class="option" aria-labelledby="graphite-title">
+          <div class="stage stage-graphite">
+            <button class="card card-graphite" type="button" data-style="Grafito" aria-pressed="false" aria-label="Marcar Grafito como favorita">
+              <span class="card-top"><span class="card-brand">SoftRent</span><span class="card-category">Servicios</span></span>
+              <img class="card-monogram" src="/src/assets/brand/softrent-symbol.png" width="140" height="140" alt="" />
+              <span class="card-title">A su<br />elección.</span>
+              <span class="card-bottom"><span>Un servicio. Usted elige.</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+            </button>
+          </div>
+          <div class="option-caption"><div><span class="option-number">01</span><h2 id="graphite-title">Grafito</h2><p>Mate, sobria y con relieve discreto.</p></div><span class="selection-label" aria-hidden="true">Elegir <span>↗</span></span></div>
+        </section>
+        <section class="option" aria-labelledby="glass-title">
+          <div class="stage stage-glass">
+            <div class="glass-underlay" aria-hidden="true"></div>
+            <button class="card card-glass" type="button" data-style="Cristal" aria-pressed="false" aria-label="Marcar Cristal como favorita">
+              <span class="card-top"><span class="card-brand">SoftRent</span><span class="card-category">Servicios</span></span>
+              <img class="card-monogram" src="/src/assets/brand/softrent-symbol.png" width="140" height="140" alt="" />
+              <span class="card-title">A su elección.</span>
+              <span class="service-tags"><span>Web</span><span>Agenda</span><span>Cobros</span><span>Facturas</span></span>
+              <span class="card-bottom"><span>Una parte de su próximo paso.</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+            </button>
+          </div>
+          <div class="option-caption"><div><span class="option-number">02</span><h2 id="glass-title">Cristal</h2><p>Capas ahumadas, luz suave y profundidad.</p></div><span class="selection-label" aria-hidden="true">Elegir <span>↗</span></span></div>
+        </section>
+        <section class="option" aria-labelledby="coral-title">
+          <div class="stage stage-coral">
+            <button class="card card-coral" type="button" data-style="Coral" aria-pressed="false" aria-label="Marcar Coral como favorita">
+              <span class="card-top"><span class="card-brand">SoftRent</span><span class="card-category">Servicios</span></span>
+              <img class="card-monogram" src="/src/assets/brand/softrent-symbol.png" width="140" height="140" alt="" />
+              <span class="card-title">A su<br />elección.</span>
+              <span class="card-bottom"><span>Su negocio, su combinación.</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+            </button>
+          </div>
+          <div class="option-caption"><div><span class="option-number">03</span><h2 id="coral-title">Coral</h2><p>Más cercana, expresiva y con color de marca.</p></div><span class="selection-label" aria-hidden="true">Elegir <span>↗</span></span></div>
+        </section>
+        <section class="option" aria-labelledby="editorial-title">
+          <div class="stage stage-editorial">
+            <button class="card card-editorial" type="button" data-style="Editorial" aria-pressed="false" aria-label="Marcar Editorial como favorita">
+              <span class="card-top"><span class="card-brand">SoftRent</span><span class="card-category">Servicios</span></span>
+              <span class="card-title">A su<br /><em>elección.</em></span>
+              <img class="card-monogram" src="/src/assets/brand/softrent-symbol.png" width="140" height="140" alt="" />
+              <span class="card-bottom"><span>Lo que necesita. A su manera.</span><span class="card-arrow" aria-hidden="true">↗</span></span>
+            </button>
+          </div>
+          <div class="option-caption"><div><span class="option-number">04</span><h2 id="editorial-title">Editorial</h2><p>Papel cálido, tinta y una señal roja.</p></div><span class="selection-label" aria-hidden="true">Elegir <span>↗</span></span></div>
+        </section>
+      </div>
+      <div class="selection-summary"><p role="status" data-selection>Elija una dirección para seguir explorando.</p><span>Exploración visual · No modifica los planes</span></div>
+    </main>
+  </body>
+</html>

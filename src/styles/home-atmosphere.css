@@ -1,0 +1,113 @@
+/* Floating haze alternates with the low reflections at the closing section. */
+.home-atmosphere .hero-showcase,
+.home-atmosphere .hb-ambient-customers,
+.home-atmosphere .hb-ambient-operations,
+.home-atmosphere .hb-closing {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-atmosphere .hero-showcase::before,
+.home-atmosphere .hb-ambient-customers::before,
+.home-atmosphere .hb-ambient-operations::before,
+.home-atmosphere .hb-closing::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  inset-inline: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 72%, transparent);
+}
+
+/* Haze starts under the heading, before the demo card. */
+.home-atmosphere .hero-showcase::before {
+  top: 75px;
+  height: min(85%, 850px);
+  background-image: url('../assets/home/ambient-floating-smoke.webp');
+  background-position: center top;
+  opacity: .42;
+}
+
+/* The R8 stays in place; its near-black backdrop blends with surrounding light. */
+.home-atmosphere .hb-car-atmosphere {
+  position: absolute;
+  z-index: -2;
+  pointer-events: none;
+  inset-inline: 0;
+  bottom: 0;
+  height: calc(var(--hb-car-h) * .78);
+  background: url('../assets/home/ambient-floating-smoke.webp') center / cover no-repeat;
+  opacity: .48;
+  mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 70%, transparent);
+}
+
+.home-atmosphere .hb-ambient-garage::before {
+  mix-blend-mode: lighten;
+}
+
+/* A low side wisp interrupts the long customer section without adding a floor. */
+.home-atmosphere .hb-ambient-customers::before {
+  top: 24%;
+  height: 760px;
+  max-height: 70%;
+  background-image: url('../assets/home/ambient-floating-smoke.webp');
+  background-position: 30% top;
+  opacity: .2;
+  transform: scaleX(-1);
+}
+
+/* Softer copper haze marks the operations heading and dissipates below it. */
+.home-atmosphere .hb-ambient-operations::before {
+  top: 0;
+  height: 780px;
+  max-height: 70%;
+  background-image: url('../assets/home/ambient-floating-smoke.webp');
+  background-position: center top;
+  opacity: .28;
+}
+
+/* The final invitation gets a low reflection, fading before the footer. */
+.home-atmosphere .hb-closing::before {
+  inset-block: 0;
+  background-image: url('../assets/home/ambient-red-amber.webp');
+  background-position: center 72%;
+  opacity: .4;
+}
+
+@media (max-width: 700px) {
+  .home-atmosphere .hero-showcase::before {
+    top: 60px;
+    height: 620px;
+    max-height: calc(100% - 60px);
+    background-size: auto 100%;
+    background-position: 28% top;
+    opacity: .52;
+    mask-image: linear-gradient(to bottom, transparent, #000 16%, #000 65%, transparent);
+  }
+
+  .home-atmosphere .hb-car-atmosphere {
+    height: calc(var(--hb-car-h) * .95);
+    background-position: 40% center;
+    opacity: .46;
+  }
+
+  .home-atmosphere .hb-ambient-customers::before {
+    top: 30%;
+    height: 650px;
+    background-position: 82% top;
+    opacity: .22;
+  }
+
+  .home-atmosphere .hb-ambient-operations::before {
+    height: 700px;
+    background-position: 85% top;
+    opacity: .3;
+  }
+
+  .home-atmosphere .hb-closing::before {
+    background-position: 20% 70%;
+    opacity: .32;
+  }
+}

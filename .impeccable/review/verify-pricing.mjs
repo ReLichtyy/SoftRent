@@ -1,0 +1,31 @@
+﻿import { chromium } from 'file:///C:/Users/Joshua/AppData/Local/npm-cache/_npx/e41f203b7505f1fb/node_modules/playwright/index.mjs';
+import assert from 'node:assert/strict';
+const browser = await chromium.launch({headless:true});
+const page = await browser.newPage({ viewport: {width:1440,height:1000}, timezoneId:'America/Costa_Rica' });
+const errors=[];
+page.on('pageerror', e=>errors.push(e.message));
+await page.route('https://api.country.is/', r=>r.fulfill({json:{country:'CR'}}));
+await page.route('https://open.er-api.com/**', r=>r.fulfill({json:{result:'success',base_code:'USD', rates:{CRC:500},time_last_update_unix:Math.floor(Date.now()/1000)-3600,time_next_update_unix:Math.floor(Date.now()/1000)+3600}}));
+await page.goto('http://127.0.0.1:5174/model/precios-canvas.html');
+await page.locator('[data-exchange-status]').filter({hasText:'convertido'}).waitFor();
+await page.evaluate(()=>document.fonts.ready);
+assert.equal(await page.locator('.plan').count(),3);
+assert.match(await page.locator('.plan-1 .price').innerText(), /39.000/);
+await page.getByRole('button',{name:'Anual'}).click();
+assert.match(await page.locator('.plan-1 .price').innerText(), /32.500/);
+assert.match(await page.locator('.plan-2 .bill-note').innerText(), /649.000/);
+await page.getByRole('button',{name:'USD'}).click();
+assert.match(await page.locator('.plan-1 .price').innerText(), /US\$65/);
+assert.match(await page.locator('.plan-3 .bill-note').innerText(), /US\$2,590/);
+await page.getByRole('button',{name:'Mensual'}).click();
+assert.match(await page.locator('.plan-2 .price').innerText(), /US\$129/);
+await page.getByRole('button',{name:'CRC'}).click();
+for (const [name,width] of [['desktop',1440],['reference',1121],['mobile',390],['small',320]]) {
+  await page.setViewportSize({width,height:1000});
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth > innerWidth), false, `Overflow at ${width}`);
+  await page.screenshot({path:`.impeccable/review/${name}.png`,fullPage:true});
+}
+assert.deepEqual(errors,[]);
+console.log('PASS: 3 plans, CRC/USD and monthly/annual totals; no overflow at 1440/1121/390/320px; no runtime errors.');
+console.log('Services:',await page.locator('.plan-1 .service-stack').innerText());
+await browser.close();

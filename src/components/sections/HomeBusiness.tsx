@@ -145,10 +145,11 @@ export default function HomeBusiness() {
   return (
     <div className="home-business">
       <section
-        className="hb-section hb-photo"
+        className="hb-section hb-photo hb-ambient-garage"
         aria-labelledby="home-business-title"
         style={{ '--hb-photo': `url(${garageBackdrop})` } as CSSProperties}
       >
+        <div className="hb-car-atmosphere" aria-hidden="true" />
         <Container className="hb-wrap">
           <div className="hb-business-layout">
             <div className="hb-business-side">
@@ -169,7 +170,7 @@ export default function HomeBusiness() {
         </Container>
       </section>
 
-      <section className="hb-section hb-soft" aria-labelledby="home-customers-title">
+      <section className="hb-section hb-soft hb-ambient-customers" aria-labelledby="home-customers-title">
         <Container className="hb-wrap">
           <div className="hb-stack-heading">
             <h2 id="home-customers-title">Atiende, confirma<br />y da seguimiento.</h2>
@@ -178,7 +179,7 @@ export default function HomeBusiness() {
         </Container>
       </section>
 
-      <section className="hb-section" aria-labelledby="home-operations-title">
+      <section className="hb-section hb-ambient-operations" aria-labelledby="home-operations-title">
         <Container className="hb-wrap">
           <div className="hb-stack-heading">
             <h2 id="home-operations-title">Cobros y comprobantes,<br />sin perseguirlos.</h2>

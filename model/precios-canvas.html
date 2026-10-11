@@ -1,0 +1,84 @@
+﻿<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#0f0e0d" />
+    <title>Precios · SoftRent Canvas</title>
+    <link rel="stylesheet" href="./precios-canvas.css" />
+    <script src="./precios-canvas.js" defer></script>
+  </head>
+  <body>
+    <a class="skip" href="#planes">Ir a los planes</a>
+    <div class="pricing-scene" aria-hidden="true">
+      <img src="./assets/precios-ferrari/hero-ferrari-dark.png" alt="" width="1672" height="941" fetchpriority="high" />
+      <div class="scene-light scene-light-red"></div>
+      <div class="scene-light scene-light-amber"></div>
+    </div>
+    <header class="canvas-bar">
+      <a class="wordmark" href="/" aria-label="SoftRent, inicio"><img src="/src/assets/brand/softrent-symbol.png" width="27" height="27" alt="" />SoftRent<span>Canvas de precios</span></a>
+      <a class="header-link" href="#planes">Explorar planes <span aria-hidden="true">↗</span></a>
+    </header>
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <h1 id="hero-title">Un plan para cada<br /><span>etapa de su negocio.</span></h1>
+        <p>Empiece con lo que necesita hoy. Combine sus servicios en un solo sistema y sume más cuando su negocio lo necesite.</p>
+      </section>
+      <section class="pricing" id="planes" aria-labelledby="plans-title">
+        <div class="section-heading"><div><h2 id="plans-title">Elija su punto de partida</h2><p>Sus servicios, a su ritmo.</p></div><div class="billing"><div class="seg" role="group" aria-label="Periodo de pago"><button type="button" data-period="mensual" aria-pressed="true">Mensual</button><button type="button" data-period="anual" aria-pressed="false">Anual <span>2 meses gratis</span></button></div><div class="seg currency" role="group" aria-label="Moneda"><button type="button" data-cur="CRC" aria-pressed="true">CRC ₡</button><button type="button" data-cur="USD" aria-pressed="false">USD $</button></div></div></div>
+        <div class="plan-grid" data-plans></div>
+        <noscript><p>Active JavaScript para explorar los planes y cambiar la moneda. Planes mensuales ilustrativos: 1 servicio, US$78 (conversión a colones disponible con JavaScript); 2 servicios, ₡64.900; 3 servicios, ₡129.900.</p></noscript>
+        <p class="sr-only" role="status" data-announcement></p>
+      </section>
+      <section class="custom" aria-labelledby="custom-title">
+        <div class="custom-copy"><span class="custom-type">A la medida</span><h2 id="custom-title">Su negocio no cabe<br />en un plan. <em>Lo entendemos.</em></h2><p>Una solución empresarial diseñada alrededor de sus procesos, su equipo y sus objetivos.</p><a class="button proposal-button" href="/comenzar?plan=medida">Diseñemos su solución <span aria-hidden="true">↗</span></a></div>
+        <div class="premium-art" aria-hidden="true">
+          <div class="premium-card">
+            <span class="premium-brand">SoftRent <span>Premium</span></span>
+            <img src="/src/assets/brand/softrent-symbol.png" width="80" height="80" alt="" />
+            <span class="premium-signature">A la medida<span>Diseñado para su negocio</span></span>
+          </div>
+        </div>
+        <div class="custom-details"><p>Una propuesta personalizada.</p><ul><li>Todos sus servicios en un solo sistema</li><li>Integraciones especiales</li><li>Varios departamentos o sucursales</li><li>Acompañamiento dedicado</li></ul><span>Conversaciones · Agenda · Cobros · Facturación</span></div>
+      </section>
+      <section class="service-catalog" id="servicios" aria-labelledby="services-title">
+        <div class="catalog-heading">
+          <h2 id="services-title">Elija sus servicios.<br /><span>Combine lo que necesita.</span></h2>
+          <p>Cada tarjeta representa un servicio. Elija uno, combine dos o reúna tres según su plan. Página Web + Chatbot cuenta como un solo servicio.</p>
+        </div>
+        <div class="catalog-grid">
+          <article class="catalog-card catalog-web" aria-labelledby="service-web-title">
+            <div class="catalog-visual" aria-hidden="true"><div class="graphite-face"><span class="graphite-top"><span>SoftRent</span><span>Presencia</span></span><img class="graphite-mark" src="/src/assets/brand/softrent-symbol.png" width="116" height="116" alt="" /><span class="graphite-title">Web<br />+ Chatbot.</span><span class="graphite-foot">Su negocio. Siempre disponible.</span></div></div>
+            <h3 id="service-web-title">Página Web<br />+ Chatbot</h3>
+            <p>Su presencia en línea y un asistente para atender a sus clientes, en un mismo servicio.</p>
+            <ul><li>Página para su negocio</li><li>Respuestas a preguntas frecuentes</li><li>Registro de datos de sus clientes</li></ul>
+            <span class="catalog-card-bottom">Presencia y atención</span>
+          </article>
+          <article class="catalog-card catalog-booking" aria-labelledby="service-booking-title">
+            <div class="catalog-visual" aria-hidden="true"><div class="graphite-face"><span class="graphite-top"><span>SoftRent</span><span>Agenda</span></span><img class="graphite-mark" src="/src/assets/brand/softrent-symbol.png" width="116" height="116" alt="" /><span class="graphite-title">Reservas.</span><span class="graphite-foot">Cada cita, en su lugar.</span></div></div>
+            <h3 id="service-booking-title">Reservas</h3>
+            <p>Cada cita en su lugar. Sus clientes eligen un horario y usted mantiene su agenda organizada.</p>
+            <ul><li>Reservas según disponibilidad</li><li>Agenda centralizada</li><li>Confirmaciones y recordatorios</li></ul>
+            <span class="catalog-card-bottom">Agenda y organización</span>
+          </article>
+          <article class="catalog-card catalog-payments" aria-labelledby="service-payments-title">
+            <div class="catalog-visual" aria-hidden="true"><div class="graphite-face"><span class="graphite-top"><span>SoftRent</span><span>Pagos</span></span><img class="graphite-mark" src="/src/assets/brand/softrent-symbol.png" width="116" height="116" alt="" /><span class="graphite-title">Cobros.</span><span class="graphite-foot">El siguiente paso, resuelto.</span></div></div>
+            <h3 id="service-payments-title">Cobros</h3>
+            <p>Dé seguimiento a sus pagos y pendientes desde un solo lugar, con menos tareas manuales.</p>
+            <ul><li>Gestión de cobros por SINPE</li><li>Recordatorios de pago</li><li>Seguimiento de comprobantes</li></ul>
+            <span class="catalog-card-bottom">Pagos y seguimiento</span>
+          </article>
+          <article class="catalog-card catalog-invoicing" aria-labelledby="service-invoicing-title">
+            <div class="catalog-visual" aria-hidden="true"><div class="graphite-face"><span class="graphite-top"><span>SoftRent</span><span>Control</span></span><img class="graphite-mark" src="/src/assets/brand/softrent-symbol.png" width="116" height="116" alt="" /><span class="graphite-title">Facturación.</span><span class="graphite-foot">Todo en orden.</span></div></div>
+            <h3 id="service-invoicing-title">Facturación</h3>
+            <p>Conecte sus ventas y servicios con la emisión de facturas electrónicas para su negocio.</p>
+            <ul><li>Facturación electrónica</li><li>Facturas de sus ventas y visitas</li><li>Integración con su operación</li></ul>
+            <span class="catalog-card-bottom">Facturas y control</span>
+          </article>
+        </div>
+        <a class="catalog-back" href="#planes">Volver a elegir mi plan <span aria-hidden="true">↑</span></a>
+      </section>
+    </main>
+    <footer><a class="wordmark" href="/">SoftRent</a><p>Menos tareas. Más negocio.</p><span>Canvas conceptual · Precios ilustrativos</span></footer>
+  </body>
+</html>

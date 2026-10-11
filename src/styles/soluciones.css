@@ -2,6 +2,82 @@
  * pieces only this page needs. Selectors start with
  * `.home-business.sol` so they win over the base without !important. */
 
+/* Defocused light and a trace of haze, confined to chapter transitions.
+ * No extra motion or floor: the existing car scenes supply their own setting. */
+.home-business.sol .sol-area {
+  position: relative;
+  isolation: isolate;
+}
+
+.home-business.sol .sol-hero::before,
+.home-business.sol .sol-area::before,
+.home-business.sol .sol-area:nth-of-type(2)::after,
+.home-business.sol .sol-closing::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  pointer-events: none;
+  inset-inline: 0;
+  background: url('../assets/soluciones/ambient-light-halos.webp') center / cover no-repeat;
+  mask-image: linear-gradient(to bottom, transparent, #000 20%, #000 70%, transparent);
+}
+
+.home-business.sol .sol-hero::before {
+  top: 20px;
+  height: calc(100% - 20px);
+  opacity: .32;
+}
+
+.home-business.sol .sol-area::before {
+  top: 0;
+  height: min(900px, 100%);
+  opacity: .23;
+}
+
+.home-business.sol .sol-area:nth-of-type(2)::before {
+  transform: scaleX(-1);
+  opacity: .2;
+}
+
+/* A quiet light patch also breaks up the longest chapter. */
+.home-business.sol .sol-area:nth-of-type(2)::after {
+  top: 55%;
+  height: min(850px, 40%);
+  opacity: .15;
+}
+
+.home-business.sol .sol-closing::before {
+  inset-block: 0;
+  opacity: .25;
+  transform: scaleX(-1);
+}
+
+@media (max-width: 700px) {
+  .home-business.sol .sol-hero::before {
+    top: 40px;
+    height: calc(100% - 40px);
+    background-position: 24% center;
+    opacity: .3;
+  }
+
+  .home-business.sol .sol-area::before {
+    height: min(680px, 100%);
+    background-position: 18% center;
+    opacity: .2;
+  }
+
+  .home-business.sol .sol-area:nth-of-type(2)::after {
+    height: min(640px, 40%);
+    background-position: 86% center;
+    opacity: .18;
+  }
+
+  .home-business.sol .sol-closing::before {
+    background-position: 82% center;
+    opacity: .2;
+  }
+}
+
 .home-business.sol ::selection {
   background: #a41d29;
   color: #fff;

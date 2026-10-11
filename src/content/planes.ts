@@ -3,57 +3,30 @@ import type { Plan, PlanId } from './types'
 /*
  * Planes y reglas comerciales (sección 1.4 del Notion).
  * Los precios son una hipótesis para validar con los primeros clientes.
- * Precios en colones, IVA aparte.
+ * Precios fijos en CRC y USD; el primer plan convierte su base USD a CRC.
  */
 
 export const planes: Plan[] = [
   {
-    id: 'arranque',
-    nombre: 'Arranque',
-    precioMensual: 29900,
-    paraQuien: 'Negocio de 1 a 3 personas que solo quiere dejar de perder mensajes.',
-    incluye: [
-      'Chatbot de WhatsApp o web',
-      'Registro básico de clientes',
-      '1 automatización incluida',
-      'Hasta 500 conversaciones con IA al mes',
-      'Soporte por chat',
-    ],
-    cta: 'Comenzar',
-    ctaRuta: '/comenzar?plan=arranque',
+    id: 'arranque', nombre: '1 servicio', servicios: 1,
+    precioMensual: null, precioUsd: 78,
+    paraQuien: 'Una sola cosa, bien resuelta.',
+    incluye: ['Elija 1: Web + Chatbot, reservas, cobros o facturación', 'Hasta 500 conversaciones con IA al mes', '1 automatización incluida', 'Soporte por chat'],
+    cta: 'Comenzar con 1 servicio', ctaRuta: '/comenzar?plan=arranque',
   },
   {
-    id: 'crecimiento',
-    nombre: 'Crecimiento',
-    precioMensual: 64900,
-    destacado: true,
-    paraQuien: 'El plan recomendado para la mayoría de pymes de servicios.',
-    incluye: [
-      'Todo lo de Arranque',
-      'Agenda con citas y recordatorios',
-      'Cobros con recordatorio de SINPE',
-      '3 automatizaciones incluidas',
-      'Hasta 1.500 conversaciones con IA al mes',
-      'Resumen semanal del negocio',
-    ],
-    cta: 'Comenzar',
-    ctaRuta: '/comenzar?plan=crecimiento',
+    id: 'crecimiento', nombre: '2 servicios', servicios: 2,
+    precioMensual: 64900, precioUsd: 129, destacado: true,
+    paraQuien: 'El punto medio de la mayoría de negocios.',
+    incluye: ['Elija 2 de los 4 servicios', 'Hasta 1.500 conversaciones con IA al mes', '3 automatizaciones incluidas', 'Resumen semanal del negocio'],
+    cta: 'Comenzar con 2 servicios', ctaRuta: '/comenzar?plan=crecimiento',
   },
   {
-    id: 'pro',
-    nombre: 'Pro',
-    precioMensual: 129900,
-    paraQuien: 'Negocios con varias sucursales o mucho volumen de clientes.',
-    incluye: [
-      'Todo lo de Crecimiento',
-      'Facturación electrónica integrada',
-      'Panel de impacto con sus números',
-      '6 automatizaciones incluidas',
-      'Hasta 4.000 conversaciones con IA al mes',
-      'Soporte prioritario y ajustes mensuales',
-    ],
-    cta: 'Comenzar',
-    ctaRuta: '/comenzar?plan=pro',
+    id: 'pro', nombre: '3 servicios', servicios: 3,
+    precioMensual: 129900, precioUsd: 259,
+    paraQuien: 'Para negocios con mucho movimiento.',
+    incluye: ['Elija 3 de los 4 servicios', 'Hasta 4.000 conversaciones con IA al mes', '6 automatizaciones incluidas', 'Soporte prioritario y ajustes mensuales'],
+    cta: 'Comenzar con 3 servicios', ctaRuta: '/comenzar?plan=pro',
   },
   {
     id: 'medida',

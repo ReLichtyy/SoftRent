@@ -34,6 +34,9 @@ export function PlanesGrid() {
     if (plan.id === 'medida') {
       return 'Desde ' + colones(plan.precioMensual ?? 0)
     }
+    if (plan.precioMensual === null && plan.precioUsd !== undefined) {
+      return `US$${Math.round(plan.precioUsd * (anual ? 10 / 12 : 1))}`
+    }
     const base = anual ? precioAnualMensual(plan) : plan.precioMensual
     return base === null ? 'A cotizar' : colones(base)
   }
