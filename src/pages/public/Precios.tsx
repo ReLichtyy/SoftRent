@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
-import symbol from '../../assets/brand/softrent-symbol.png'
-import scene from '../../assets/precios/hero-ferrari-dark.png'
+import symbol from '../../assets/brand/softrent-symbol.webp'
+import scene from '../../assets/precios/hero-ferrari-dark.webp'
+import sceneSm from '../../assets/precios/hero-ferrari-dark-800.webp'
 import { planes } from '../../content/planes'
 import { planPrice, pricingMoney } from '../../lib/pricing'
 import { usePricingCurrency } from './usePricingCurrency'
@@ -83,7 +84,7 @@ export function Precios() {
   const { currency, chooseCurrency, rate, rateStatus } = usePricingCurrency()
   return <div className="pricing-page">
     <div className="pricing-scene" aria-hidden="true">
-      <img src={scene} alt="" width="1672" height="941" fetchPriority="high" />
+      <img src={scene} srcSet={`${sceneSm} 800w, ${scene} 1672w`} sizes="100vw" alt="" width="1672" height="941" fetchPriority="high" />
       <div className="scene-light scene-light-red" /><div className="scene-light scene-light-amber" />
     </div>
     <div className="pricing-shell">

@@ -1,5 +1,5 @@
-import symbolSrc from '../../assets/brand/softrent-symbol.png'
-import wordmarkSrc from '../../assets/brand/softrent-wordmark.png'
+import symbolSrc from '../../assets/brand/softrent-symbol.webp'
+import wordmarkSrc from '../../assets/brand/softrent-wordmark.webp'
 import { cn } from '../../lib/cn'
 
 export type LogoSymbolProps = {

@@ -1,7 +1,7 @@
 import { Container } from '../../components/layout/Container'
 import { Section } from '../../components/layout/Section'
 import { DemoEnVivo } from '../../components/sections/DemoEnVivo'
-import supraPerfil from '../../assets/backgrounds/siluetas-v2/03-toyota-supra-perfil-izquierda.png'
+import supraPerfil from '../../assets/backgrounds/siluetas-v2/03-toyota-supra-perfil-izquierda.webp'
 
 /* El fondo de la foto es casi negro: la máscara difumina los cuatro
  * bordes hacia el fondo de la página, sin corte visible. */

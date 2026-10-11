@@ -13,12 +13,19 @@ import {
   type Icon,
 } from '@phosphor-icons/react'
 import heroBmw from '../../assets/soluciones/vehiculos/hero-bmw-completo-v5.webp'
+import heroBmwSm from '../../assets/soluciones/vehiculos/hero-bmw-completo-v5-800.webp'
 import heroAston from '../../assets/soluciones/vehiculos/hero-aston-completo-v5.webp'
+import heroAstonSm from '../../assets/soluciones/vehiculos/hero-aston-completo-v5-800.webp'
 import siluetaAmg from '../../assets/soluciones/vehiculos/agenda-amg-izquierda-ambiente-v4.webp'
+import siluetaAmgSm from '../../assets/soluciones/vehiculos/agenda-amg-izquierda-ambiente-v4-800.webp'
 import siluetaDbs from '../../assets/soluciones/vehiculos/cobros-dbs-derecha-ambiente-v4.webp'
+import siluetaDbsSm from '../../assets/soluciones/vehiculos/cobros-dbs-derecha-ambiente-v4-800.webp'
 import siluetaGtr from '../../assets/soluciones/vehiculos/operacion-gtr-izquierda-ambiente-v4.webp'
+import siluetaGtrSm from '../../assets/soluciones/vehiculos/operacion-gtr-izquierda-ambiente-v4-800.webp'
 import siluetaSupra from '../../assets/soluciones/vehiculos/clientes-supra-perfil-ambiente-v4.webp'
+import siluetaSupraSm from '../../assets/soluciones/vehiculos/clientes-supra-perfil-ambiente-v4-800.webp'
 import siluetaVantage from '../../assets/soluciones/vehiculos/cierre-ambiente-v4.webp'
+import siluetaVantageSm from '../../assets/soluciones/vehiculos/cierre-ambiente-v4-800.webp'
 import { Container } from '../../components/layout/Container'
 import { LinkButton } from '../../components/ui/LinkButton'
 import { SolucionFila } from '../../components/soluciones/SolucionFila'
@@ -37,11 +44,11 @@ import '../../styles/soluciones.css'
 const ordenAreas: SolucionArea[] = ['clientes', 'administracion', 'ventas']
 
 /* Cada carro acompaña el primer texto de su categoría. */
-const siluetasFondo: Partial<Record<SolucionCategoria, string>> = {
-  agenda: siluetaAmg,
-  'cobros-y-caja': siluetaDbs,
-  'dia-a-dia': siluetaGtr,
-  'clientes-nuevos': siluetaSupra,
+const siluetasFondo: Partial<Record<SolucionCategoria, { src: string; sm: string }>> = {
+  agenda: { src: siluetaAmg, sm: siluetaAmgSm },
+  'cobros-y-caja': { src: siluetaDbs, sm: siluetaDbsSm },
+  'dia-a-dia': { src: siluetaGtr, sm: siluetaGtrSm },
+  'clientes-nuevos': { src: siluetaSupra, sm: siluetaSupraSm },
 }
 
 type Filtro = 'todos' | SolucionNicho
@@ -178,8 +185,8 @@ export function Soluciones() {
           </div>
         </Container>
         <div className="sol-hero-cars" aria-hidden="true">
-          <img className="sol-hero-image sol-hero-image-left" src={heroBmw} alt="" width={1672} height={940} />
-          <img className="sol-hero-image sol-hero-image-right" src={heroAston} alt="" width={1672} height={941} />
+          <img className="sol-hero-image sol-hero-image-left" src={heroBmw} srcSet={`${heroBmwSm} 800w, ${heroBmw} 1672w`} sizes="100vw" alt="" width={1672} height={940} />
+          <img className="sol-hero-image sol-hero-image-right" src={heroAston} srcSet={`${heroAstonSm} 800w, ${heroAston} 1672w`} sizes="100vw" alt="" width={1672} height={941} />
         </div>
       </section>
 
@@ -243,6 +250,8 @@ export function Soluciones() {
         <img
           className="sol-silueta"
           src={siluetaVantage}
+          srcSet={`${siluetaVantageSm} 800w, ${siluetaVantage} 1672w`}
+          sizes="100vw"
           alt=""
           width={1672}
           height={941}

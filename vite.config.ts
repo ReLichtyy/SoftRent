@@ -17,7 +17,7 @@ export default defineConfig({
           groups: [
             {
               name: 'vendor-react',
-              test: /node_modules[\\/](react-dom|react-router|react\)|scheduler)/,
+              test: /node_modules[\\/](react-dom|react-router|react[/]|scheduler)/,
             },
             { name: 'vendor-gsap', test: /node_modules[\\/]gsap/ },
             {

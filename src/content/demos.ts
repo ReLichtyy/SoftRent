@@ -13,7 +13,7 @@ export const demos: Demo[] = [
     industria: 'Barberías, salones, veterinarias, tatuajes y consultorios',
     estado: 'publicada',
     demoUrl: 'https://reservas.softrent.dev/',
-    captura: '/ReservasImages/37_dashboard_dueno_agenda_diaria.png',
+    captura: '/ReservasImages/37_dashboard_dueno_agenda_diaria.webp',
     recorrido: [
       'Reserve una cita como si fuera cliente',
       'Búsquela en la agenda del negocio',

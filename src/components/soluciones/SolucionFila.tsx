@@ -13,7 +13,7 @@ gsap.registerPlugin(ScrollTrigger)
  * deja hecho. Al entrar en pantalla la flecha se dibuja y el
  * artefacto aparece con sus barras y pasos; el texto nunca se oculta.
  * Estática con movimiento reducido. */
-export function SolucionFila({ item, imagen }: { item: Solucion; imagen?: string }) {
+export function SolucionFila({ item, imagen }: { item: Solucion; imagen?: { src: string; sm: string } }) {
   const fila = useRef<HTMLElement>(null)
 
   useEffect(() => {
@@ -60,7 +60,9 @@ export function SolucionFila({ item, imagen }: { item: Solucion; imagen?: string
       {imagen && (
         <img
           className="sol-row-car"
-          src={imagen}
+          src={imagen.src}
+          srcSet={`${imagen.sm} 800w, ${imagen.src} 1672w`}
+          sizes="100vw"
           alt=""
           width={1672}
           height={941}
