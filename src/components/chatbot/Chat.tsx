@@ -48,7 +48,7 @@ function LeadCapture({
       'Origen: chatbot del sitio',
     ].join('\n')
     onEnviado('Gracias. Su solicitud quedó lista para que una persona de SoftRent le escriba en menos de un día hábil.')
-    window.location.href = `mailto:hola@softrent.com?subject=${encodeURIComponent(
+    window.location.href = `mailto:hola@softrent.dev?subject=${encodeURIComponent(
       `Diagnóstico SoftRent - ${negocio || nombre}`,
     )}&body=${encodeURIComponent(brief)}`
   }

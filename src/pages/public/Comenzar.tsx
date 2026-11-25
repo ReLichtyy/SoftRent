@@ -301,7 +301,7 @@ ${descripcion.trim()}` : '',
     'Origen: sitio web, flujo Comenzar',
   ].filter((linea) => linea !== '')
 
-  const mailto = `mailto:hola@softrent.com?subject=${encodeURIComponent(
+  const mailto = `mailto:hola@softrent.dev?subject=${encodeURIComponent(
     `Diagnóstico SoftRent - ${datos.negocio || 'nuevo interés'}`,
   )}&body=${encodeURIComponent(briefLineas.join('\n'))}`
 
@@ -680,7 +680,7 @@ ${descripcion.trim()}` : '',
                     </h2>
                     <p className="mt-1 text-sm leading-relaxed text-ink-muted">
                       Su correo se abrió con el mensaje completo. Si no se
-                      abrió, envíelo a hola@softrent.com. Le escribimos por{' '}
+                      abrió, envíelo a hola@softrent.dev. Le escribimos por{' '}
                       {datos.canal} en menos de un día hábil.
                     </p>
                   </div>

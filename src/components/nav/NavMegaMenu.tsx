@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react'
+import { useCallback, useEffect, useId, useRef, useState, useSyncExternalStore, type ReactNode } from 'react'
 import { createPortal } from 'react-dom'
 import { Link, NavLink } from 'react-router-dom'
 import { ArrowRight } from '@phosphor-icons/react'
@@ -38,8 +38,13 @@ export type NavMegaMenuProps = {
  * Escape o al elegir una opción. Con teclado, flecha
  * abajo entra a la lista. Va en un portal: dentro de la píldora de
  * vidrio, `fixed` quedaría atado a ella. */
+const sinSuscripcion = () => () => {}
+
 export function NavMegaMenu({ to, label, titulo, aviso, avisoTexto, pie, children }: NavMegaMenuProps) {
   const [open, setOpen] = useState(false)
+  /* El portal va a document.body, que no existe en el prerender: se monta
+   * después de hidratar, con el panel aún cerrado. */
+  const montado = useSyncExternalStore(sinSuscripcion, () => true, () => false)
   const id = useId()
   const relevo = useRef<number | undefined>(undefined)
   const triggerRef = useRef<HTMLAnchorElement>(null)
@@ -151,7 +156,7 @@ export function NavMegaMenu({ to, label, titulo, aviso, avisoTexto, pie, childre
         {aviso && avisoTexto && <span className="sr-only">, {avisoTexto}</span>}
       </NavLink>
 
-      {createPortal(
+      {montado && createPortal(
         <div
           ref={panelRef}
           inert={!open}

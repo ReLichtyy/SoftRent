@@ -112,7 +112,7 @@ function reglasCore(texto: string): RespuestaChat | null {
 
   if (/(humano|persona|alguien de carne|hablar con ustedes|agente real|asesor)/.test(t)) {
     return {
-      texto: 'Con gusto le atiende una persona. Puede escribirnos a hola@softrent.com y le respondemos en menos de un día hábil. Si prefiere, déjeme sus datos y le escribimos nosotros.',
+      texto: 'Con gusto le atiende una persona. Puede escribirnos a hola@softrent.dev y le respondemos en menos de un día hábil. Si prefiere, déjeme sus datos y le escribimos nosotros.',
       acciones: [{ tipo: 'handoff' }],
     }
   }

@@ -28,10 +28,10 @@ export default function Contact() {
           </p>
 
           <div data-reveal className="mt-9 flex flex-wrap items-center gap-5">
-            <Button href="mailto:hola@softrent.com" size="lg">
+            <Button href="mailto:hola@softrent.dev" size="lg">
               Comenzar
             </Button>
-            <span className="text-sm text-ink-inverse/60">hola@softrent.com</span>
+            <span className="text-sm text-ink-inverse/60">hola@softrent.dev</span>
           </div>
         </div>
       </Container>

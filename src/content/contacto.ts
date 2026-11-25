@@ -4,8 +4,8 @@
  */
 
 export const contacto = {
-  correo: 'hola@softrent.com',
-  correoSoporte: 'soporte@softrent.com',
+  correo: 'hola@softrent.dev',
+  correoSoporte: 'soporte@softrent.dev',
   // TODO: número real de WhatsApp de SoftRent (formato wa.me, sin +).
   whatsapp: '50600000000',
 } as const

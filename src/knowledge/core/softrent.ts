@@ -17,7 +17,7 @@ export const coreSoftrent: ModuloCore = {
     detalle: paso.softrentHace,
   })),
   contacto: {
-    correo: 'hola@softrent.com',
+    correo: 'hola@softrent.dev',
   },
   noHace: [
     'Inventar precios, funciones o demos que no estén en el catálogo',

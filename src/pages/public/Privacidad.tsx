@@ -50,7 +50,7 @@ export function Privacidad() {
             <h2 className="text-heading-md text-ink">Sus derechos</h2>
             <p className="mt-2">
               Puede pedirnos acceder, corregir, exportar o eliminar sus
-              datos escribiendo a hola@softrent.com. Al cancelar su
+              datos escribiendo a hola@softrent.dev. Al cancelar su
               suscripción, se los entregamos exportados y conservamos la
               copia por 30 días, después se elimina.
             </p>

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useSyncExternalStore } from 'react'
 
 export type Theme = 'light' | 'dark'
 
@@ -35,6 +35,13 @@ function aplicar(tema: Theme) {
   suscriptores.forEach((avisar) => avisar(tema))
 }
 
+function suscribir(avisar: () => void) {
+  suscriptores.add(avisar)
+  return () => {
+    suscriptores.delete(avisar)
+  }
+}
+
 function cambiarTema(tema: Theme) {
   if (tema !== temaActual) aplicar(tema)
 }
@@ -43,15 +50,9 @@ function cambiarTema(tema: Theme) {
  * elección del usuario y respeta el claro solo si la pidió.
  * Todas las instancias comparten el mismo estado. */
 export function useTheme() {
-  const [theme, setLocal] = useState<Theme>(temaActual)
-
-  useEffect(() => {
-    const avisar = (tema: Theme) => setLocal(tema)
-    suscriptores.add(avisar)
-    return () => {
-      suscriptores.delete(avisar)
-    }
-  }, [])
+  // En el servidor y durante la hidratación vale el tema del prerender
+  // (oscuro); después, el tema guardado.
+  const theme = useSyncExternalStore(suscribir, () => temaActual, () => 'dark' as Theme)
 
   return {
     theme,

@@ -1,16 +1,19 @@
-import { Navigate, createBrowserRouter } from 'react-router-dom'
+import { Navigate, type RouteObject } from 'react-router-dom'
 import { PublicLayout } from './pages/_layouts/PublicLayout'
 import { Home } from './pages/public/Home'
 
 /* Las pantallas se cargan por ruta (lazy): cada página baja solo su código.
  * El layout público y el Home quedan en el bundle inicial. */
 
-/* Mapa de pantallas (sección 2.6): 23 páginas en tres superficies. */
-export const router = createBrowserRouter([
+/* Mapa de pantallas (sección 2.6): 23 páginas en tres superficies.
+ * Se comparte entre el navegador (main.tsx) y el prerender (entry-server.tsx). */
+export const routes: RouteObject[] = [
   {
     path: '/',
     element: <PublicLayout />,
     HydrateFallback: () => null,
+    /* Ruta pública nueva: agregarla también a PUBLIC_PAGES (src/seo/site.ts).
+     * Sin eso no se prerenderiza, no tiene título propio ni entra al sitemap. */
     children: [
       { index: true, element: <Home /> },
       { path: 'soluciones', lazy: () => import('./pages/public/Soluciones').then((m) => ({ Component: m.Soluciones })) },
@@ -57,4 +60,4 @@ export const router = createBrowserRouter([
       { path: 'briefs', lazy: () => import('./pages/admin/Briefs').then((m) => ({ Component: m.AdminBriefs })) },
     ],
   },
-])
+]

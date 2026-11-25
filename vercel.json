@@ -4,8 +4,14 @@
   "installCommand": "npm ci",
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "cleanUrls": true,
+  "trailingSlash": false,
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/soluciones/:id", "destination": "/soluciones.html" },
+    { "source": "/app", "destination": "/app-shell.html" },
+    { "source": "/app/:path*", "destination": "/app-shell.html" },
+    { "source": "/admin", "destination": "/app-shell.html" },
+    { "source": "/admin/:path*", "destination": "/app-shell.html" }
   ],
   "headers": [
     {
@@ -21,10 +27,16 @@
       ]
     },
     {
-      "source": "/index.html",
-      "headers": [
-        { "key": "Cache-Control", "value": "no-cache" }
-      ]
+      "source": "/(app|admin)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/(app|admin)/(.*)",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
+    },
+    {
+      "source": "/app-shell",
+      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, follow" }]
     }
   ]
 }

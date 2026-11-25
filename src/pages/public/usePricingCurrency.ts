@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useSyncExternalStore } from 'react'
 import { validExchange, type Currency } from '../../lib/pricing'
 
 const CURRENCY_KEY = 'softrent-moneda'
@@ -14,14 +14,25 @@ function initialCurrency(): { currency: Currency; saved: boolean } {
   return { currency: Intl.DateTimeFormat().resolvedOptions().timeZone === 'America/Costa_Rica' ? 'CRC' : 'USD', saved: false }
 }
 
+/* Se lee una vez por carga: getSnapshot se llama en cada render. */
+let inicial: ReturnType<typeof initialCurrency> | null = null
+const leerInicial = () => (inicial ??= initialCurrency())
+const sinSuscripcion = () => () => {}
+
 export function usePricingCurrency() {
-  const [initial] = useState(initialCurrency)
-  const [currency, setCurrency] = useState<Currency>(initial.currency)
+  // En el prerender y durante la hidratación la moneda es el colón (el
+  // mercado del sitio); después, la guardada o la de la zona horaria. Leerla
+  // en useState rompía la hidratación de /precios.
+  const deInicio = useSyncExternalStore(sinSuscripcion, () => leerInicial().currency, () => 'CRC' as Currency)
+  const [elegida, setCurrency] = useState<Currency | null>(null)
+  const currency = elegida ?? deInicio
   const [rate, setRate] = useState<number | null>(null)
   const [rateStatus, setRateStatus] = useState<'loading' | 'ready' | 'error'>('loading')
-  const manual = useRef(initial.saved)
+  const manual = useRef(false)
 
   useEffect(() => {
+    const initial = leerInicial()
+    manual.current = initial.saved
     let active = true
     const countryController = new AbortController()
     const rateController = new AbortController()
@@ -86,7 +97,7 @@ export function usePricingCurrency() {
       countryController.abort()
       rateController.abort()
     }
-  }, [initial.saved])
+  }, [])
 
   function chooseCurrency(value: Currency) {
     manual.current = true

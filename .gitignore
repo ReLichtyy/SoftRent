@@ -28,3 +28,4 @@ tasks/report-*.json
 
 # Vercel
 .vercel
+dist-ssr

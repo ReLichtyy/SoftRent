@@ -9,15 +9,16 @@ import '../../styles/hero-showcase.css'
 /** The approved model hero, mounted directly with the site's real components. */
 export default function Hero() {
   const [paused, setPaused] = useState(false)
-  const [reducedMotion, setReducedMotion] = useState(() =>
-    typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
-  )
+  // false en el primer render, igual que en el prerender; la preferencia
+  // real se lee al montar.
+  const [reducedMotion, setReducedMotion] = useState(false)
   const [visible, setVisible] = useState(true)
   const previewRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)')
     const onPreference = () => setReducedMotion(preference.matches)
+    onPreference()
     let inView = true
     const onVisibility = () => setVisible(inView && !document.hidden)
     const observer = new IntersectionObserver(([entry]) => {

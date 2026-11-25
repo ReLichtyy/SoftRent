@@ -9,6 +9,9 @@ export default defineConfig({
   },
   plugins: [react(), tailwindcss()],
   build: {
+    /* scripts/prerender.mjs lee el manifest para enlazar el CSS y los
+     * chunks de cada ruta en su HTML estático. */
+    manifest: true,
     /* División de vendor: el núcleo de React, GSAP y los íconos se
      * cachean por separado del código de la app (iteración 4). */
     rolldownOptions: {
